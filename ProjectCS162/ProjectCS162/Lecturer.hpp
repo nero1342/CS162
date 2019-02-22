@@ -1,11 +1,3 @@
-//
-//  Lecturer.hpp
-//  Project
-//
-//  Created by Nguyen E Ro on 2/22/19.
-//  Copyright © 2019 Nguyen E Ro. All rights reserved.
-//
-
 #ifndef Lecturer_hpp
 #define Lecturer_hpp
 
