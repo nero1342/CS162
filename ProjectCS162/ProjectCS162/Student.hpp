@@ -1,11 +1,3 @@
-//
-//  Student.hpp
-//  Project
-//
-//  Created by Nguyen E Ro on 2/22/19.
-//  Copyright © 2019 Nguyen E Ro. All rights reserved.
-//
-
 #ifndef Student_hpp
 #define Student_hpp
 
