@@ -115,7 +115,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Account.cpp" />
+    <ClCompile Include="AccountList.cpp" />
+    <ClCompile Include="Importer.cpp" />
+    <ClCompile Include="Lecturer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Student.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Account.hpp" />
+    <ClInclude Include="AccountList.hpp" />
+    <ClInclude Include="Importer.h" />
+    <ClInclude Include="Lecturer.hpp" />
+    <ClInclude Include="Student.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

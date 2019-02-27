@@ -6,8 +6,9 @@
 using namespace std;
 
 struct Account {
+private:
     string username, password, type, Class;
-    
+public:
     Account();
     Account(string username, string password, string type, string Class);
 };
