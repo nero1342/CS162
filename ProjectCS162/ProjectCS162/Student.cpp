@@ -1,9 +1,25 @@
-//
-//  Student.cpp
-//  Project
-//
-//  Created by Nguyen E Ro on 2/22/19.
-//  Copyright © 2019 Nguyen E Ro. All rights reserved.
-//
-
 #include "Student.hpp"
+
+string Student::getStudentID() {
+    return StudentID;
+}
+
+string Student::getFirstname() {
+    return Firstname;
+}
+
+string Student::getLastname() {
+    return Lastname;
+}
+
+string Student::getGender() {
+    return Gender;
+}
+
+string Student::getDoB() {
+    return DoB;
+}
+
+string Student::getClass() {
+    return Class;
+}

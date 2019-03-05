@@ -6,8 +6,10 @@
 using namespace std;
 
 class Lecturer {
-public:
+private:
     string Name;
+public:
+    string getName();
 };
 
 #endif /* Lecturer_hpp */
