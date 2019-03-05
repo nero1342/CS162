@@ -1,2 +1,4 @@
 *.exe
 /**/debug/
+*.a
+main
