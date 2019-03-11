@@ -41,18 +41,3 @@ bool getline(ifstream &fin, string &st) {
 	st = buffer;
 	return true;
 }
-
-void ImportClass(string fileName) {
-	Import(fileName);
-	while (!fileName.empty() && fileName.back() != '.') fileName.pop_back();
-	std::ifstream fin(fileName + "txt");
-	string stt;
-	while (getline(fin, stt)) {
-		string id, firstname, lastname, gender, DoB;
-		getline(fin, id);
-		getline(fin, firstname);
-		getline(fin, lastname);
-		getline(fin, gender);
-		getline(fin, DoB);
-	}
-}
