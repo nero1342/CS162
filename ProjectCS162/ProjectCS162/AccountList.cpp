@@ -59,8 +59,7 @@ void AccountList::SaveData() {
 }
 
 void AccountList::ImportClass(string Class) {
-    cout << "Huhu\n";
-	Import(Class);
+    Import(Class);
 	while (Class.back() != '.') Class.pop_back();
     Class.pop_back();
 	std::ifstream fin(Class + ".txt");

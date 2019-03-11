@@ -1,8 +1,8 @@
 #ifndef AccountList_hpp
 #define AccountList_hpp
 
+#include "STL.hpp"
 #include <fstream>
-#include <vector>
 #include "Account.hpp"
 #include "Student.hpp"
 #include "Lecturer.hpp"
@@ -20,7 +20,7 @@ public:
     void LoadData();
     void SaveData();
 
-    void ImportClass(string fileName);
+    void ImportClass(string Class);
 };
 
 #endif /* AccountList_hpp */

@@ -30,7 +30,6 @@ void Import(string fileName)
 		tmp[n++] = '\0';
 		ou << tmp << '\n';
 	}
-	std::cerr << "Import successfully!\n";
 }
 
 bool getline(ifstream &fin, string &st) {
