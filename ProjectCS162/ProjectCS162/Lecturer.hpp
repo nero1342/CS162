@@ -9,7 +9,7 @@ class Lecturer {
 private:
     string Name;
 public:
-    string getName();
+    string getName(); 
 };
 
 #endif /* Lecturer_hpp */

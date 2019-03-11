@@ -7,7 +7,8 @@ using namespace std;
 
 int main() 
 {
-	Import("Class-1.csv");
-	system("pause");
+	AccountList acclist;
+	acclist.ImportClass("Class-1.csv");
+	//system("pause");
 	return 0;
 }

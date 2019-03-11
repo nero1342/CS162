@@ -6,6 +6,11 @@
 #include <fstream>
 #include <string>
 
-void Import(std::string fileName);
+using namespace std;
+
+void Import(string fileName);
+
+bool getline(ifstream &fin, string &st);
+
 
 #endif

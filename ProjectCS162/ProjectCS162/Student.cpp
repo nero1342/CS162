@@ -1,5 +1,15 @@
 #include "Student.hpp"
+#include "Importer.h"
 
+void Student::ReadData(ifstream &fin, string Class) {
+    this -> Class = Class;
+    getline(fin, StudentID);
+    getline(fin, Firstname);
+    getline(fin, Lastname);
+    getline(fin, Gender);
+    getline(fin, DoB);
+        
+}
 string Student::getStudentID() {
     return StudentID;
 }

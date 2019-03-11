@@ -1,12 +1,12 @@
 #include "AccountList.hpp"
 #include "Importer.h"
 
-//bool AccountList::isExist(string username) {
-//    for (Account acc : list) if (acc.username == username) {
-//        return true;
-//    }
-//    return false;
-//}
+bool AccountList::isExist(string username) {
+    for (Account acc : list) if (acc.getUsername() == username) {
+        return true;
+    }
+    return false;
+}
 
 void AccountList::Add(Student student) {
     list.push_back(Account(student.getStudentID(), student.getDoB(), "Student", student.getClass()));
@@ -56,4 +56,21 @@ void AccountList::SaveData() {
         cout << acc.getLink() << endl;
     }
     cout.close();
+}
+
+void AccountList::ImportClass(string Class) {
+    cout << "Huhu\n";
+	Import(Class);
+	while (Class.back() != '.') Class.pop_back();
+    Class.pop_back();
+	std::ifstream fin(Class + ".txt");
+	string stt;
+	while (getline(fin, stt)) {
+		Student student;
+        student.ReadData(fin, Class);
+        if (!isExist(student.getStudentID())) {
+            Add(student);
+        }
+	}
+    SaveData();
 }

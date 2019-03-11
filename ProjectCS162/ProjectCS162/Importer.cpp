@@ -1,6 +1,6 @@
 #include "Importer.h"
 
-void Import(std::string fileName)
+void Import(string fileName)
 {
 	char buffer[5000], tmp[5000];
 	std::ifstream in(fileName);
@@ -29,5 +29,30 @@ void Import(std::string fileName)
 		}
 		tmp[n++] = '\0';
 		ou << tmp << '\n';
+	}
+	std::cerr << "Import successfully!\n";
+}
+
+bool getline(ifstream &fin, string &st) {
+	char buffer[5000];
+	fin.get(buffer, 5000, '\n');
+	if (fin.fail()) return false;
+	fin.ignore(10000, '\n');
+	st = buffer;
+	return true;
+}
+
+void ImportClass(string fileName) {
+	Import(fileName);
+	while (!fileName.empty() && fileName.back() != '.') fileName.pop_back();
+	std::ifstream fin(fileName + "txt");
+	string stt;
+	while (getline(fin, stt)) {
+		string id, firstname, lastname, gender, DoB;
+		getline(fin, id);
+		getline(fin, firstname);
+		getline(fin, lastname);
+		getline(fin, gender);
+		getline(fin, DoB);
 	}
 }

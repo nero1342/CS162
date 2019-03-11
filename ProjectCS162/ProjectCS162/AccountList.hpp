@@ -11,7 +11,7 @@ class AccountList {
 private:
     vector<Account> list;
 public:
-    //bool isExist(string username);
+    bool isExist(string username);
     void Add(Student student);
     void Add(Lecturer lecturer);
     bool Login(string username, string password);
@@ -19,6 +19,8 @@ public:
 
     void LoadData();
     void SaveData();
+
+    void ImportClass(string fileName);
 };
 
 #endif /* AccountList_hpp */

@@ -12,6 +12,8 @@ private:
     //
     string Class;
 public:
+
+    void ReadData(ifstream &fin, string Class);
     string getStudentID();
     string getLastname();
     string getFirstname();
