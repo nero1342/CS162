@@ -26,6 +26,14 @@ bool Account::Login(string user, string pass) {
     return user == username && HashPassword(pass) == password;
 }
 
+void Account::ViewProfile() {
+
+}
+
+void Account::EditLink(string newLink) {
+    link = newLink;
+}
+
 string HashPassword(string password) {
     return password;
 }

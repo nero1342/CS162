@@ -6,8 +6,12 @@
 
 class ClassList {
 private:
-    vector<Class> list;
+    map<string, Class> listClass;
 public:
+    void AddClass(string Class);
+    void AddStudent(Student student);
+    void Reload();
+    void SaveData();
     void ViewList();
 };
 #endif // ClassList_hpp

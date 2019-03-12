@@ -18,7 +18,8 @@ public:
     string getLink();
     
     bool Login(string user, string pass);
-    void EditProfile(Account newProfile);
+    void ViewProfile();
+    void EditLink(string newLink);
     void ChangePassword(string newPassword);
 };
 

@@ -2,7 +2,6 @@
 #define AccountList_hpp
 
 #include "STL.hpp"
-#include <fstream>
 #include "Account.hpp"
 #include "Student.hpp"
 #include "Lecturer.hpp"
@@ -17,7 +16,7 @@ public:
     bool Login(string username, string password);
     void Remove(string username);
 
-    void LoadData();
+    void Reload();
     void SaveData();
 
     void ImportClass(string Class);

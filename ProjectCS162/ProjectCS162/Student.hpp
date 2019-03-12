@@ -14,6 +14,7 @@ private:
 public:
 
     void ReadData(ifstream &fin, string Class);
+    void Edit(Student newProfile);
     string getStudentID();
     string getLastname();
     string getFirstname();

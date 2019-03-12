@@ -9,10 +9,12 @@ bool AccountList::isExist(string username) {
 }
 
 void AccountList::Add(Student student) {
+    if (isExist(student.getStudentID())) return;
     list.push_back(Account(student.getStudentID(), student.getDoB(), "Student", student.getClass()));
 }
 
 void AccountList::Add(Lecturer lecturer) {
+    if (isExist(lecturer.getName())) return;
     list.push_back(Account(lecturer.getName(), lecturer.getName(), "Lecturer", "Lecturer"));
 }
 
@@ -32,7 +34,7 @@ void AccountList::Remove(string username) {
     } else ++i;
 }
 
-void AccountList::LoadData() {
+void AccountList::Reload() {
     list.clear();
     ifstream cin("Account.txt");
     int n;

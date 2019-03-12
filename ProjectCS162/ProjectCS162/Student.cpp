@@ -10,6 +10,11 @@ void Student::ReadData(ifstream &fin, string Class) {
     getline(fin, DoB);
         
 }
+
+void Student::Edit(Student newProfile) {
+    *this = newProfile;
+}
+
 string Student::getStudentID() {
     return StudentID;
 }
