@@ -117,17 +117,34 @@
   <ItemGroup>
     <ClCompile Include="Account.cpp" />
     <ClCompile Include="AccountList.cpp" />
+    <ClCompile Include="Class.cpp" />
+    <ClCompile Include="ClassList.cpp" />
+    <ClCompile Include="control.cpp" />
+    <ClCompile Include="graphics.cpp" />
     <ClCompile Include="Importer.cpp" />
     <ClCompile Include="Lecturer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="main_menu.cpp" />
+    <ClCompile Include="SMS.cpp" />
+    <ClCompile Include="STL.cpp" />
     <ClCompile Include="Student.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.hpp" />
     <ClInclude Include="AccountList.hpp" />
+    <ClInclude Include="Class.hpp" />
+    <ClInclude Include="ClassList.hpp" />
+    <ClInclude Include="control.h" />
+    <ClInclude Include="graphics.h" />
     <ClInclude Include="Importer.h" />
     <ClInclude Include="Lecturer.hpp" />
+    <ClInclude Include="main_menu.h" />
+    <ClInclude Include="menu.h" />
+    <ClInclude Include="SMS.hpp" />
+    <ClInclude Include="STL.hpp" />
     <ClInclude Include="Student.hpp" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
