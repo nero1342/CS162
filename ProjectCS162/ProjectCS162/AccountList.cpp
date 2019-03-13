@@ -13,6 +13,15 @@ void AccountList::Add(Student student) {
     list.push_back(Account(student.getStudentID(), student.getDoB(), "Student", student.getClass()));
 }
 
+void AccountList::Edit(Student student) {
+    for (Account &acc : list) {
+        if (acc.getUsername() == student.getStudentID()) {
+            acc.EditLink(student.getClass());
+            return;
+        }
+    }
+}
+
 void AccountList::Add(Lecturer lecturer) {
     if (isExist(lecturer.getName())) return;
     list.push_back(Account(lecturer.getName(), lecturer.getName(), "Lecturer", "Lecturer"));

@@ -11,4 +11,6 @@ std::ofstream& operator<<(std::ofstream& ou, std::string s);
 
 std::ifstream& operator>>(std::ifstream& in, std::string & s);
 
+bool getline(std::ifstream &fin, std::string &st);
+
 #endif // STL_hpp

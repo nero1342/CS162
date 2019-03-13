@@ -15,6 +15,14 @@ public:
 
     void ReadData(ifstream &fin, string Class);
     void Edit(Student newProfile);
+    
+    void SetStudentID(string newStudentID);
+    void SetLastname(string newLastname);
+    void SetFirstname(string newFirstname);
+    void SetGender(string newGender);
+    void SetDoB(string newDoB);
+    void SetClass(string newClass);
+    
     string getStudentID();
     string getLastname();
     string getFirstname();

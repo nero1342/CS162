@@ -31,12 +31,3 @@ void Import(string fileName)
 		ou << tmp << '\n';
 	}
 }
-
-bool getline(ifstream &fin, string &st) {
-	char buffer[5000];
-	fin.get(buffer, 5000, '\n');
-	if (fin.fail()) return false;
-	fin.ignore(10000, '\n');
-	st = buffer;
-	return true;
-}

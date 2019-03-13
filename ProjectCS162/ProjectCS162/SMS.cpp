@@ -27,3 +27,30 @@ void StudentManagementSystem::AddNewStudent() {
     acclist.SaveData();
     classlist.SaveData();
 }
+
+void StudentManagementSystem::RemoveStudent() {
+    // Get info of student here
+    Student student;
+
+    //
+    acclist.Remove(student.getStudentID());
+    classlist.RemoveStudent(student);
+    acclist.SaveData();
+    classlist.SaveData();
+}
+
+void StudentManagementSystem::ChangeClassOfStudent() {
+    // Get info of student here
+    Student student;
+
+    // Get name of new class
+    string newClass;
+
+    //
+    classlist.RemoveStudent(student);
+    student.SetClass(newClass);
+    classlist.AddStudent(student);
+    acclist.Edit(student);
+    classlist.SaveData();
+    acclist.SaveData();
+}
