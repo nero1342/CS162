@@ -6,6 +6,9 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
+
+using namespace std;
 
 std::ofstream& operator<<(std::ofstream& ou, std::string s);
 

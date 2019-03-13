@@ -3,6 +3,7 @@
 
 #include "AccountList.hpp"
 #include "ClassList.hpp"
+#include "CourseList.h"
 
 class StudentManagementSystem {
 private:
@@ -17,5 +18,7 @@ public:
     void ChangeClassOfStudent();
     void ViewListClasses();
     void ViewListStudentsOfClass();
+
+	void ImportCourse();
 };
 #endif // SMS_hpp

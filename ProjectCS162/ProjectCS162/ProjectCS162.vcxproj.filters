@@ -57,6 +57,12 @@
     <ClCompile Include="STL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CourseList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Course.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Account.hpp">
@@ -99,6 +105,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Course.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CourseList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

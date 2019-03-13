@@ -54,3 +54,11 @@ void StudentManagementSystem::ChangeClassOfStudent() {
     classlist.SaveData();
     acclist.SaveData();
 }
+
+void StudentManagementSystem::ImportCourse()
+{
+	// get info of course 
+
+
+	
+}

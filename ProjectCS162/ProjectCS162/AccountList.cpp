@@ -73,7 +73,7 @@ void AccountList::ImportClass(string Class) {
     Import(Class);
 	while (Class.back() != '.') Class.pop_back();
     Class.pop_back();
-	std::ifstream fin(Class + ".txt");
+	std::ifstream fin(Class + "txt");
 	string stt;
 	while (getline(fin, stt)) {
 		Student student;
