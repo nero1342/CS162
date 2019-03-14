@@ -11,11 +11,15 @@ private:
     vector<Account> list;
 public:
     bool isExist(string username);
-    void Add(Student student);
-    void Add(Lecturer lecturer);
-    bool Login(string username, string password);
     void Remove(string username);
 
+    void Add(Student student);
+    void Edit(Student student);
+
+    void Add(Lecturer lecturer);
+    
+    bool Login(string username, string password);
+    
     void Reload();
     void SaveData();
 

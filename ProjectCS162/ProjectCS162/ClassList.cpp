@@ -18,6 +18,12 @@ void ClassList::AddStudent(Student student) {
     myClass.SaveData();
 }
 
+void ClassList::RemoveStudent(Student student) {
+    Class &myClass = listClass[student.getClass()];
+    myClass.Remove(student);
+    myClass.SaveData();
+}
+
 void ClassList::Reload() {
     listClass.clear();
     ifstream cin("Class.txt");

@@ -1,7 +1,6 @@
 #ifndef ClassList_hpp
 #define ClassList_hpp
 
-#include "STL.hpp"
 #include "Class.hpp"
 
 class ClassList {
@@ -10,6 +9,7 @@ private:
 public:
     void AddClass(string Class);
     void AddStudent(Student student);
+    void RemoveStudent(Student student);
     void Reload();
     void SaveData();
     void ViewList();

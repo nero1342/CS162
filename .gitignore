@@ -3,3 +3,6 @@
 *.a
 main
 a.out
+A
+/**/.vs/
+.DS_Store

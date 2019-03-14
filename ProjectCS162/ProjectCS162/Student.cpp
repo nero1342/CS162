@@ -1,5 +1,4 @@
 #include "Student.hpp"
-#include "Importer.h"
 
 void Student::ReadData(ifstream &fin, string Class) {
     this -> Class = Class;
@@ -13,6 +12,30 @@ void Student::ReadData(ifstream &fin, string Class) {
 
 void Student::Edit(Student newProfile) {
     *this = newProfile;
+}
+
+void Student::SetStudentID(string newStudentID) {
+    StudentID = newStudentID;
+}
+
+void Student::SetLastname(string newLastname) {
+    Lastname = newLastname;
+}
+
+void Student::SetFirstname(string newFirstname) {
+    Firstname = newFirstname;
+}
+
+void Student::SetGender(string newGender) {
+    Gender = newGender;
+}
+
+void Student::SetDoB(string newDoB) {
+    DoB = newDoB;
+}
+
+void Student::SetClass(string newClass) {
+    Class = newClass;
 }
 
 string Student::getStudentID() {

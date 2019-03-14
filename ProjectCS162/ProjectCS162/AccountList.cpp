@@ -1,5 +1,4 @@
 #include "AccountList.hpp"
-#include "Importer.h"
 
 bool AccountList::isExist(string username) {
     for (Account acc : list) if (acc.getUsername() == username) {
@@ -11,6 +10,15 @@ bool AccountList::isExist(string username) {
 void AccountList::Add(Student student) {
     if (isExist(student.getStudentID())) return;
     list.push_back(Account(student.getStudentID(), student.getDoB(), "Student", student.getClass()));
+}
+
+void AccountList::Edit(Student student) {
+    for (Account &acc : list) {
+        if (acc.getUsername() == student.getStudentID()) {
+            acc.EditLink(student.getClass());
+            return;
+        }
+    }
 }
 
 void AccountList::Add(Lecturer lecturer) {
@@ -64,7 +72,7 @@ void AccountList::ImportClass(string Class) {
     Import(Class);
 	while (Class.back() != '.') Class.pop_back();
     Class.pop_back();
-	std::ifstream fin(Class + ".txt");
+	std::ifstream fin(Class + "txt");
 	string stt;
 	while (getline(fin, stt)) {
 		Student student;
