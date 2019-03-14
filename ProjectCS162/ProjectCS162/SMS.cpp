@@ -2,15 +2,16 @@
 
 
 void StudentManagementSystem::Reload() {
+	system("md Data\\Class");
+
     acclist.Reload();
     classlist.Reload();
 }
 
 void StudentManagementSystem::ImportClass() {
     // Get info of class here
-    string Class;
-
-    // 
+	string Class = "Class-1.csv";
+	// 
     acclist.ImportClass(Class);
     classlist.AddClass(Class);
     acclist.SaveData();
@@ -54,3 +55,11 @@ void StudentManagementSystem::ChangeClassOfStudent() {
     classlist.SaveData();
     acclist.SaveData();
 }
+
+void StudentManagementSystem::Run()
+{
+	ImportClass();
+	//Main_menu();
+}
+
+

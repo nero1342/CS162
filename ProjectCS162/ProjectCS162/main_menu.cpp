@@ -21,7 +21,13 @@ void Main_menu() {
 		}
 		if (key){
 			if (main_menu.chosen == 1) {
-				//login();
+				login X;
+				if (X.login_menu()) {
+					window tool;
+					tool.clrscr();
+					ok = 0;
+					continue;
+				}
 			}
 			return;
 		}

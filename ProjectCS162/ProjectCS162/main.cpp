@@ -1,14 +1,11 @@
-#include "Account.hpp"
-#include "AccountList.hpp"
 #include <iostream>
-#include "Importer.h"
+#include "SMS.hpp"
 
 using namespace std;
 
 int main() 
 {
-	AccountList acclist;
-	acclist.ImportClass("Class-1.csv");
-	//system("pause");
+	StudentManagementSystem System;
+	System.Run();
 	return 0;
 }

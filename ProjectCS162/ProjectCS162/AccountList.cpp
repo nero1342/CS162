@@ -1,5 +1,4 @@
 #include "AccountList.hpp"
-#include "Importer.h"
 
 bool AccountList::isExist(string username) {
     for (Account acc : list) if (acc.getUsername() == username) {
@@ -45,7 +44,8 @@ void AccountList::Remove(string username) {
 
 void AccountList::Reload() {
     list.clear();
-    ifstream cin("Account.txt");
+    ifstream cin("Data\\Account.txt");
+	if (!cin.is_open()) return;
     int n;
     string username, password, type, link;
     while (cin >> n) {
@@ -56,7 +56,7 @@ void AccountList::Reload() {
 }
 
 void AccountList::SaveData() {
-    ofstream cout("Account.txt");
+    ofstream cout("Data\\Account.txt");
     int n = 0;
     for (Account acc : list) {
         ++n;
@@ -73,7 +73,7 @@ void AccountList::ImportClass(string Class) {
     Import(Class);
 	while (Class.back() != '.') Class.pop_back();
     Class.pop_back();
-	std::ifstream fin(Class + ".txt");
+	std::ifstream fin(Class + "txt");
 	string stt;
 	while (getline(fin, stt)) {
 		Student student;

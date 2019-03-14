@@ -5,7 +5,9 @@ void Class::SetName(string newName) {
 }
 
 void Class::Reload() {
-    std::ifstream fin(name + ".txt");
+	list.clear();
+    std::ifstream fin("Data\\Class\\" + name + ".txt");
+	if (!fin.is_open()) return;
 	string stt;
 	while (fin >> stt) {
 		Student student;
@@ -32,15 +34,11 @@ void Class::ViewList() {
 }
 
 void Class::SaveData() {
-	ofstream ou(name + ".txt");
+	ofstream ou("Data\\Class\\" + name + ".txt");
 	int cnt = 0;
 	for (auto i : list)
 	{
 		ou << ++cnt << '\n';
 		ou << i.getStudentID() << '\n';
-		ou << i.getLastname() << '\n';
-		ou << i.getFirstname() << '\n';
-		ou << i.getGender() << '\n';
-		ou << i.getDoB() << '\n';
 	}
 }

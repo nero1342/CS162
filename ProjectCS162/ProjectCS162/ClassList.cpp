@@ -26,7 +26,8 @@ void ClassList::RemoveStudent(Student student) {
 
 void ClassList::Reload() {
     listClass.clear();
-    ifstream cin("Class.txt");
+    ifstream cin("Data\\ClassList.txt");
+	if (!cin.is_open()) return;
     string nameClass;
     while (cin >> nameClass) {
         Class newClass;
@@ -39,7 +40,7 @@ void ClassList::Reload() {
 }
 
 void ClassList::SaveData() {
-    ofstream cout("Class.txt");
+    ofstream cout("Data\\Class\\ClassList.txt");
     for (auto nameClass : listClass) {
         cout << nameClass.first << endl;
     }
