@@ -1,5 +1,4 @@
 #include "AccountList.hpp"
-#include "Importer.h"
 
 bool AccountList::isExist(string username) {
     for (Account acc : list) if (acc.getUsername() == username) {

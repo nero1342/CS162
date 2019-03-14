@@ -16,4 +16,6 @@ std::ifstream& operator>>(std::ifstream& in, std::string & s);
 
 bool getline(std::ifstream &fin, std::string &st);
 
+void Import(string fileName);
+
 #endif // STL_hpp

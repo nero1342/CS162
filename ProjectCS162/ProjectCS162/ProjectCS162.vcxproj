@@ -123,7 +123,6 @@
     <ClCompile Include="Course.cpp" />
     <ClCompile Include="CourseList.cpp" />
     <ClCompile Include="graphics.cpp" />
-    <ClCompile Include="Importer.cpp" />
     <ClCompile Include="Lecturer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="main_menu.cpp" />
@@ -141,7 +140,6 @@
     <ClInclude Include="Course.h" />
     <ClInclude Include="CourseList.h" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="Importer.h" />
     <ClInclude Include="Lecturer.hpp" />
     <ClInclude Include="main_menu.h" />
     <ClInclude Include="menu.h" />
