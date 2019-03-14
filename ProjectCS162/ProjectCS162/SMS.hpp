@@ -20,5 +20,12 @@ public:
     void ViewListStudentsOfClass();
 
 	void ImportCourse();
+	void run();
+	/*
+		show login
+		check login
+		load data
+		perform task
+	*/
 };
 #endif // SMS_hpp
