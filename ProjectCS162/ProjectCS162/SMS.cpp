@@ -10,7 +10,7 @@ void StudentManagementSystem::Reload() {
 
 void StudentManagementSystem::ImportClass() {
     // Get info of class here
-	string Class = "Class-1.csv";
+	string Class = "Class-2.csv";
 	// 
     acclist.ImportClass(Class);
 	classlist.AddClass(Class);
