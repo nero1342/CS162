@@ -3,9 +3,9 @@
 
 void StudentManagementSystem::Reload() {
 	system("md Data\\Class");
-
-    acclist.Reload();
-    classlist.Reload();
+	system("md Data\\Student");
+    //acclist.Reload();
+    //classlist.Reload();
 }
 
 void StudentManagementSystem::ImportClass() {
@@ -13,9 +13,7 @@ void StudentManagementSystem::ImportClass() {
 	string Class = "Class-1.csv";
 	// 
     acclist.ImportClass(Class);
-    classlist.AddClass(Class);
-    acclist.SaveData();
-    classlist.SaveData();
+	classlist.AddClass(Class);
 }
 
 void StudentManagementSystem::AddNewStudent() {
@@ -23,21 +21,22 @@ void StudentManagementSystem::AddNewStudent() {
     Student student;
     
     //
+	acclist.Reload();
     acclist.Add(student);
-    classlist.AddStudent(student);
-    acclist.SaveData();
-    classlist.SaveData();
+	acclist.SaveData();
+
+	classlist.AddStudent(student);
 }
 
 void StudentManagementSystem::RemoveStudent() {
-    // Get info of student here
+	// Get info of student here
     Student student;
 
     //
-    acclist.Remove(student.getStudentID());
-    classlist.RemoveStudent(student);
-    acclist.SaveData();
-    classlist.SaveData();
+	acclist.Reload();
+	acclist.Remove(student.getStudentID());
+
+	classlist.RemoveStudent(student);
 }
 
 void StudentManagementSystem::ChangeClassOfStudent() {
@@ -51,15 +50,16 @@ void StudentManagementSystem::ChangeClassOfStudent() {
     classlist.RemoveStudent(student);
     student.SetClass(newClass);
     classlist.AddStudent(student);
+	acclist.Reload();
     acclist.Edit(student);
-    classlist.SaveData();
     acclist.SaveData();
 }
 
 void StudentManagementSystem::Run()
 {
+	Reload();
 	ImportClass();
-	//Main_menu();
+//	Main_menu();
 }
 
 

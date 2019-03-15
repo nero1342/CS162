@@ -7,14 +7,11 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include <string>
 
 using namespace std;
 
-std::ofstream& operator<<(std::ofstream& ou, std::string s);
-
-std::ifstream& operator>>(std::ifstream& in, std::string & s);
-
-bool getline(std::ifstream &fin, std::string &st);
+//bool getline(std::ifstream &fin, std::string &st);
 
 void Import(string fileName);
 

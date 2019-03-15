@@ -10,6 +10,8 @@ class AccountList {
 private:
     vector<Account> list;
 public:
+
+	void ChangePass(string username, string newPassword);
     bool isExist(string username);
     void Remove(string username);
 

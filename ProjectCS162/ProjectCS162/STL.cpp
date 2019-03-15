@@ -1,20 +1,5 @@
 #include "STL.hpp"
-
-std::ofstream & operator<<(std::ofstream & ou, std::string s)
-{
-	for (int i = 0; i < s.length(); ++i) ou << s[i];
-	return ou;
-}
-
-std::ifstream & operator>>(std::ifstream & in, std::string & s)
-{
-	s = "";
-	char x;
-	while (in >> x && x != ' ' && x != '\n') s += x;
-	return in;
-}
-
-
+/*
 bool getline(std::ifstream &fin, std::string &st) {
 	char buffer[5000];
 	fin.get(buffer, 5000, '\n');
@@ -23,13 +8,13 @@ bool getline(std::ifstream &fin, std::string &st) {
 	st = buffer;
 	return true;
 }
-
+*/
 void Import(string fileName)
 {
 	char buffer[5000], tmp[5000];
 	std::ifstream in(fileName);
 	while (!fileName.empty() && fileName.back() != '.') fileName.pop_back();
-	std::ofstream ou(fileName + "txt");
+	std::ofstream ou("Data\\Class\\" + fileName + "txt");
 
 	in.get(buffer, 5000, '\n');
 	in.ignore(1000, '\n');

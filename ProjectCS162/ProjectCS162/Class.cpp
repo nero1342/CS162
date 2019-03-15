@@ -4,17 +4,31 @@ void Class::SetName(string newName) {
     name = newName;
 }
 
-void Class::Reload() {
+void Class::Import() {
 	list.clear();
     std::ifstream fin("Data\\Class\\" + name + ".txt");
 	if (!fin.is_open()) return;
 	string stt;
 	while (fin >> stt) {
+		getline(fin, stt);
 		Student student;
         student.ReadData(fin, name);
-        Add(student);
+		student.SaveData();
+		Add(student);
 	}
-} 
+}
+void Class::Reload()
+{
+	list.clear();
+	std::ifstream fin("Data\\Class\\" + name + ".txt");
+	if (!fin.is_open()) return;
+	string ID;
+	while (fin >> ID) {
+		Student student;
+		student.SetStudentID(ID);
+		Add(student);
+	}
+}
 
 void Class::Add(Student student) {
 	list.push_back(student);
@@ -38,7 +52,8 @@ void Class::SaveData() {
 	int cnt = 0;
 	for (auto i : list)
 	{
-		ou << ++cnt << '\n';
+		//ou << ++cnt << '\n';
 		ou << i.getStudentID() << '\n';
 	}
+	list.clear();
 }

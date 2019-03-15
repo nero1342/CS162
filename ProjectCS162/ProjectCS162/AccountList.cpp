@@ -1,5 +1,16 @@
 #include "AccountList.hpp"
 
+void AccountList::ChangePass(string username, string newPassword)
+{
+	for (Account acc : list)
+		if (acc.getUsername() == username)
+		{
+			acc.ChangePassword(newPassword);
+			SaveData();
+			return;
+		}
+}
+
 bool AccountList::isExist(string username) {
     for (Account acc : list) if (acc.getUsername() == username) {
         return true;
@@ -34,7 +45,7 @@ bool AccountList::Login(string username, string password) {
 }
 
 void AccountList::Remove(string username) {
-    int i = 0;
+	int i = 0;
     for (Account acc : list) if (acc.getUsername() == username) {
         list.erase(list.begin() + i);
         SaveData();
@@ -66,14 +77,16 @@ void AccountList::SaveData() {
         cout << acc.getType() << endl;
         cout << acc.getLink() << endl;
     }
-    cout.close();
+	list.clear();
+	cout.close();
 }
 
 void AccountList::ImportClass(string Class) {
-    Import(Class);
+	Reload();
+	Import(Class);
 	while (Class.back() != '.') Class.pop_back();
     Class.pop_back();
-	std::ifstream fin(Class + "txt");
+	std::ifstream fin("Data\\Class\\" + Class + ".txt");
 	string stt;
 	while (getline(fin, stt)) {
 		Student student;

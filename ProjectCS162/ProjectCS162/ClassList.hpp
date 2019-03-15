@@ -5,10 +5,10 @@
 
 class ClassList {
 private:
-    map<string, Class> listClass;
+    vector<string> listClass;
 public:
     void AddClass(string Class);
-    void AddStudent(Student student);
+	void AddStudent(Student student);
     void RemoveStudent(Student student);
     void Reload();
     void SaveData();

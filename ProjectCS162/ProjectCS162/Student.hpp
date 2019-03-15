@@ -12,10 +12,15 @@ private:
     string StudentID, Lastname, Firstname, Gender, DoB;
     //
     string Class;
+	//
+	vector<string> Course;
 public:
 
+	void Reload();
+	void SaveData();
+
     void ReadData(ifstream &fin, string Class);
-    void Edit(Student newProfile);
+	void Edit(Student newProfile);
     
     void SetStudentID(string newStudentID);
     void SetLastname(string newLastname);

@@ -30,6 +30,11 @@ void Account::EditLink(string newLink) {
     link = newLink;
 }
 
+void Account::ChangePassword(string newPassword)
+{
+	password = newPassword;
+}
+
 string HashPassword(string password) {
     return password;
 }
