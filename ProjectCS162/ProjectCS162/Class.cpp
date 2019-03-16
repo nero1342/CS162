@@ -13,7 +13,6 @@ void Class::Import() {
 		getline(fin, stt);
 		Student student;
         student.ReadData(fin, name);
-		student.SaveData();
 		Add(student);
 	}
 }
@@ -31,10 +30,12 @@ void Class::Reload()
 }
 
 void Class::Add(Student student) {
+	student.SaveData();
 	list.push_back(student);
 }
 
 void Class::Remove(Student student) {
+	DeleteFile(("Data\\Student\\" + student.getStudentID() + ".txt").c_str());
 	for (int i = 0; i < list.size(); ++i) if (list[i].getStudentID() == student.getStudentID())
 	{
 		swap(list[i], list.back());

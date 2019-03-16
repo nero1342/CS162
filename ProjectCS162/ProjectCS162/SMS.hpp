@@ -13,11 +13,11 @@ private:
 	string accountLogin;
 public:
     void Reload();
-    void ImportClass();
-    void AddNewStudent();
+    void ImportClass(); // Checked
+    void AddNewStudent(); // Checked
     void EditExistStudent();
-    void RemoveStudent();
-    void ChangeClassOfStudent();
+    void RemoveStudent(); // Checked
+    void ChangeClassOfStudent(); // Checked
     void ViewListClasses();
     void ViewListStudentsOfClass();
 

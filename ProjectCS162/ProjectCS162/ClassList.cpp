@@ -43,7 +43,7 @@ void ClassList::Reload() {
 }
 
 void ClassList::SaveData() {
-    ofstream cout("Data\\Class\\ClassList.txt");
+    ofstream cout("Data\\ClassList.txt");
     for (string nameClass : listClass) {
         cout << nameClass << endl;
     }

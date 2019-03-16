@@ -20,6 +20,7 @@ bool AccountList::isExist(string username) {
 
 void AccountList::Add(Student student) {
     if (isExist(student.getStudentID())) return;
+	student.SaveData();
     list.push_back(Account(student.getStudentID(), student.getDoB(), "Student", student.getClass()));
 }
 

@@ -1,13 +1,14 @@
 #include "Student.hpp"
 
 void Student::Reload() {
-	ifstream cin("Data\\Class\\" + Class + "\\" + StudentID + ".txt");
+	ifstream cin("Data\\Student\\" + StudentID + ".txt");
 	if (!cin.is_open()) return;
 	getline(cin, StudentID);
-	getline(cin, Lastname);
 	getline(cin, Firstname);
+	getline(cin, Lastname);
 	getline(cin, Gender);
 	getline(cin, DoB);
+	getline(cin, Class);
 	//Course
 	string courseID;
 	Course.clear();
@@ -25,6 +26,7 @@ void Student::SaveData()
 	cout << Firstname << endl;
 	cout << Gender << endl;
 	cout << DoB << endl;
+	cout << Class << endl;
 	for (string courseID : Course) {
 		cout << courseID << endl;
 	}
@@ -34,8 +36,8 @@ void Student::SaveData()
 void Student::ReadData(ifstream &fin, string Class) {
     this -> Class = Class;
     getline(fin, StudentID);
-    getline(fin, Firstname);
     getline(fin, Lastname);
+    getline(fin, Firstname);
     getline(fin, Gender);
     getline(fin, DoB);
 }

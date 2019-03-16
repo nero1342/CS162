@@ -4,6 +4,7 @@
 void StudentManagementSystem::Reload() {
 	system("md Data\\Class");
 	system("md Data\\Student");
+	system("md Data\\Course");
     //acclist.Reload();
     //classlist.Reload();
 }
@@ -19,30 +20,26 @@ void StudentManagementSystem::ImportClass() {
 void StudentManagementSystem::AddNewStudent() {
     // Get info of student here
     Student student;
-    
-    //
+	//
 	acclist.Reload();
     acclist.Add(student);
 	acclist.SaveData();
-
 	classlist.AddStudent(student);
 }
 
 void StudentManagementSystem::RemoveStudent() {
 	// Get info of student here
     Student student;
-
-    //
+	//
 	acclist.Reload();
 	acclist.Remove(student.getStudentID());
-
 	classlist.RemoveStudent(student);
 }
 
 void StudentManagementSystem::ChangeClassOfStudent() {
     // Get info of student here
     Student student;
-
+	
     // Get name of new class
     string newClass;
 
@@ -58,7 +55,8 @@ void StudentManagementSystem::ChangeClassOfStudent() {
 void StudentManagementSystem::Run()
 {
 	Reload();
-	ImportClass();
+	//ImportClass();
+	ChangeClassOfStudent();
 //	Main_menu();
 }
 
