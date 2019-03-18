@@ -1,5 +1,6 @@
 18125007
-Duy
 Vu Tran
+Duy
 Male
 2000-01-03
+Class-1

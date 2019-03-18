@@ -7,5 +7,6 @@ int main()
 {
 	StudentManagementSystem System;
 	System.Run();
+	system("pause");
 	return 0;
 }

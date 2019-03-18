@@ -11,6 +11,7 @@ private:
     AccountList acclist;
     ClassList classlist;
 	string accountLogin;
+	CourseList courselist;
 public:
     void Reload();
     void ImportClass(); // Checked
@@ -21,7 +22,12 @@ public:
     void ViewListClasses();
     void ViewListStudentsOfClass();
 
+	void CreateAcademicYear();
+	void CreateSemester();
+	void DeleteAcademicYear();
+	void DeleteSemester();
 	void ImportCourse();
+
 	void Run();
 	/*
 		show login

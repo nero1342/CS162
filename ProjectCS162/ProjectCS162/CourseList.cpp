@@ -19,6 +19,33 @@ void CourseList::RemoveCourse(Course x)
 	Reload();
 }
 
+void CourseList::CreateAcademicYear(string name)
+{
+#define SaveLocation "Data\\AcademicYear.txt"
+
+	vector<string> year;
+	ifstream in(SaveLocation);
+	string x;
+	while (in >> x)
+	{
+		if (x == name)
+		{
+			in.close();
+			return;
+		}
+		year.push_back(x);
+	}
+	in.close();
+
+	ofstream ou(SaveLocation);
+	for (auto i : year) ou << i << '\n';
+	ou << name;
+	ou.close();
+
+	name = "md Data\\Course\\" + name;
+	system(name.c_str());
+}
+
 void CourseList::Reload()
 {
 	courseList.clear();
