@@ -9,12 +9,12 @@ bool getline(std::ifstream &fin, std::string &st) {
 	return true;
 }
 */
-void Import(string fileName)
+void Import(string fileName,string link)
 {
 	char buffer[5000], tmp[5000];
 	std::ifstream in(fileName);
 	while (!fileName.empty() && fileName.back() != '.') fileName.pop_back();
-	std::ofstream ou("Data\\Class\\" + fileName + "txt");
+	std::ofstream ou(link + fileName + "txt");
 
 	in.get(buffer, 5000, '\n');
 	in.ignore(1000, '\n');

@@ -11,7 +11,7 @@ void StudentManagementSystem::Reload() {
 
 void StudentManagementSystem::ImportClass() {
     // Get info of class here
-	string Class = "Class-2.csv";
+	string Class = "Class-1.csv";
 	// 
     acclist.ImportClass(Class);
 	classlist.AddClass(Class);
@@ -74,31 +74,8 @@ void StudentManagementSystem::CreateSemester()
 		enter a semester to create
 	*/
 	string sem = "Fall";
-
-	name = "Data\\Course\\" + name;
-	vector<string> sems;
-	string link = name + "\\Semester.txt";
-
-	ifstream in(link);
-	string x;
-	while (in >> x)
-	{
-		if (x == sem)
-		{
-			in.close();
-			return;
-		}
-		sems.push_back(x);
-	}
-	in.close();
-
-	ofstream ou(link);
-	for (auto i : sems) ou << i << '\n';
-	ou << sem << '\n';
-	ou.close();
-
-	name = "md " + name + "\\" + sem;
-	system(name.c_str());
+	
+	courselist.CreateSemester(name, sem);
 }
 
 void StudentManagementSystem::DeleteAcademicYear()
@@ -109,26 +86,7 @@ void StudentManagementSystem::DeleteAcademicYear()
 	*/
 	string name = "2018-2019";
 
-	string link = "Data\\AcademicYear.txt";
-	vector<string> year;
-	string x;
-
-	ifstream in(link);
-	while (in >> x) year.push_back(x);
-	in.close();
-
-	for (int i = 0; i < year.size(); ++i) if (year[i] == name)
-	{
-		swap(year[i], year.back());
-		year.pop_back();
-	}
-
-	ofstream ou(link);
-	for (auto i : year) ou << i << '\n';
-	ou.close();
-
-	name = "rmdir /s /q Data\\Course\\" + name;
-	system(name.c_str());
+	courselist.DeleteAcademicYear(name);
 }
 
 void StudentManagementSystem::DeleteSemester()
@@ -145,27 +103,11 @@ void StudentManagementSystem::DeleteSemester()
 	string name = "2018-2019";
 	string sem = "Fall";
 
-	name = "Data\\Course\\" + name;
-	vector<string> sems;
-	string link = name + "\\Semester.txt";
-	string x;
+	courselist.DeleteSemester(name, sem);
+}
 
-	ifstream in(link);
-	while (in >> x) sems.push_back(x);
-	in.close();
-
-	for (int i = 0; i < sems.size(); ++i) if (sems[i] == sem)
-	{
-		swap(sems[i], sems.back());
-		sems.pop_back();
-	}
-
-	ofstream ou(link);
-	for (auto i : sems) ou << i << '\n';
-	ou.close();
-
-	name = "rmdir /s /q " + name + "\\" + sem;
-	system(name.c_str());
+void StudentManagementSystem::ImportCourse()
+{
 }
 
 void StudentManagementSystem::Run()
@@ -173,7 +115,7 @@ void StudentManagementSystem::Run()
 	//CreateAcademicYear();
 	//CreateSemester();
 	//DeleteAcademicYear();
-	DeleteSemester();
+	//DeleteSemester();
 	//Reload();
 	//ImportClass();
 	//ChangeClassOfStudent();

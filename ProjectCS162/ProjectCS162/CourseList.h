@@ -13,8 +13,10 @@ public:
 	void AddCourse(Course x);
 	void RemoveCourse(Course x); // not done yet
 
-	void CreateAcademicYear(string name);
-	//void
+	void CreateAcademicYear(string &name);
+	void CreateSemester(string &name, string &sem);
+	void DeleteAcademicYear(string &name);
+	void DeleteSemester(string &name, string &sem);
 
 	void Reload();
 	void SaveData();

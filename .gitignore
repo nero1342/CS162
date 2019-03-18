@@ -6,3 +6,7 @@ a.out
 A
 /**/.vs/
 .DS_Store
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
