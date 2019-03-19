@@ -70,6 +70,12 @@ void Student::SetClass(string newClass) {
     Class = newClass;
 }
 
+void Student::AddCourse(string course)
+{
+	for (auto i : Course) if (i == course) return;
+	Course.push_back(course);
+}
+
 string Student::getStudentID() {
     return StudentID;
 }

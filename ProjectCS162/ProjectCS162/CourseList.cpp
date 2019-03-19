@@ -1,22 +1,38 @@
 #include "CourseList.h"
 
-void CourseList::AddCourse(Course x)
+void CourseList::ImportCourse(string & year, string &sem, string & name)
 {
-	courseList.push_back(x);
-}
-
-void CourseList::RemoveCourse(Course x)
-{
-	for (auto i : courseList) if (i.GetID() == x.GetID())
+	year = "Data\\Course\\" + year + "\\" + sem + "\\";
+	Import(name, year);
+	
+	while (name.back() != '.') name.pop_back();
+	name += "txt";
+	ifstream in(year + name);
+	string No;
+	vector<Course> course;
+	while (getline(in, No))
 	{
-		string tmp = "Data\\Course\\" + i.GetID();
-		DeleteFile(tmp.c_str());
-		swap(i, courseList.back());
-		courseList.pop_back();
-		break;
+		Course tmp;
+		tmp.ReadInput(in);
+
+		course.push_back(tmp);
 	}
-	SaveData();
-	Reload();
+	in.close();
+
+	string link = year + name;
+	DeleteFile(link.c_str());
+
+	ofstream ou(year + "CourseList.txt");
+	for (auto i : course) ou << i.GetID() << '\n';
+	ou.close();
+
+	for (auto i : course)
+	{
+		ou.open(year + i.GetID() + ".txt");
+		i.SaveData(ou);
+		ou.close();
+	}
+	for (auto i : course) i.Import();
 }
 
 void CourseList::CreateAcademicYear(string &name)
@@ -123,29 +139,3 @@ void CourseList::DeleteSemester(string & name, string &sem)
 	system(name.c_str());
 }
 
-void CourseList::Reload()
-{
-	courseList.clear();
-	ifstream in("Data\\Course\\CourseList.txt");
-	string name;
-	while (in >> name)
-	{
-		Course tmp;
-		tmp.SetID(name);
-		tmp.Reload();
-		courseList.push_back(tmp);
-	}
-	in.close();
-}
-
-void CourseList::SaveData()
-{
-	ofstream ou("Data\\Course\\CourseList.txt");
-	for (auto i : courseList) ou << i.GetID() << '\n';
-}
-
-bool CourseList::isExisted(Course x)
-{
-	for (auto i : courseList) if (i.GetID() == x.GetID()) return true;
-	return false;
-}

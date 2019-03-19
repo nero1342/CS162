@@ -3,4 +3,6 @@ Pham Quoc
 Huy
 Male
 2000-02-11
-Class-1
+18APCS1
+CM101
+MTH251

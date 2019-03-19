@@ -7,11 +7,9 @@
 class CourseList
 {
 private:
-	vector<Course> courseList;
+	vector<string> courseList;
 public:
-	void ImportCourse(string course);
-	void AddCourse(Course x);
-	void RemoveCourse(Course x); // not done yet
+	void ImportCourse(string &year, string &sem, string &name);
 
 	void CreateAcademicYear(string &name);
 	void CreateSemester(string &name, string &sem);

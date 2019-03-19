@@ -26,7 +26,10 @@ public:
 	void CreateSemester();
 	void DeleteAcademicYear();
 	void DeleteSemester();
-	void ImportCourse();
+	void ImportCourse(); 
+	/*
+		need to add create account for lecturer in file course.cpp function named "Import"
+	*/
 
 	void Run();
 	/*

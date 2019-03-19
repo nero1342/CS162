@@ -3,4 +3,6 @@ Vu Tran
 Duy
 Male
 2000-01-03
-Class-1
+18APCS1
+CM101
+MTH251

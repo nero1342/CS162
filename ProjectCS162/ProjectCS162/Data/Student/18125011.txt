@@ -3,4 +3,6 @@ Dang Khanh
 Mai
 Female
 2000-12-29
-Class-1
+18APCS1
+CM101
+MTH251

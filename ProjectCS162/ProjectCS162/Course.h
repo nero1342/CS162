@@ -3,16 +3,19 @@
 #define Course_h
 
 #include "STL.hpp"
+#include "Student.hpp"
 
 class Course
 {
 private:
-	string ID, name, Class, startDate, endDate, dayOfWeek, startHour, endHour, room;
+	string ID, name, Class, Lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
 public:
 	string GetID();
 
 	void SetID(string name);
-	void Reload();
+	void ReadInput(istream & in); 
+	void SaveData(ofstream & ou);
+	void Import();
 };
 
 #endif

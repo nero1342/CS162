@@ -11,7 +11,7 @@ void StudentManagementSystem::Reload() {
 
 void StudentManagementSystem::ImportClass() {
     // Get info of class here
-	string Class = "Class-1.csv";
+	string Class = "18APCS1.csv";
 	// 
     acclist.ImportClass(Class);
 	classlist.AddClass(Class);
@@ -108,17 +108,28 @@ void StudentManagementSystem::DeleteSemester()
 
 void StudentManagementSystem::ImportCourse()
 {
+	/*
+		get info of the year
+		get info of the semester
+		get info of the course to import
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string name = "Course1.csv";
+
+	courselist.ImportCourse(year, sem, name);
 }
 
 void StudentManagementSystem::Run()
 {
+	Reload();
 	//CreateAcademicYear();
 	//CreateSemester();
 	//DeleteAcademicYear();
 	//DeleteSemester();
-	//Reload();
 	//ImportClass();
 	//ChangeClassOfStudent();
+	ImportCourse();
 //	Main_menu();
 }
 

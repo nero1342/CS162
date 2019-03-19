@@ -28,7 +28,9 @@ public:
     void SetGender(string newGender);
     void SetDoB(string newDoB);
     void SetClass(string newClass);
-    
+
+	void AddCourse(string course);
+
     string getStudentID();
     string getLastname();
     string getFirstname();

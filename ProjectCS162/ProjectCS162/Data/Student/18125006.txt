@@ -3,4 +3,6 @@ Pham Le Thuy
 Dung
 Female
 2000-04-02
-Class-1
+18APCS1
+CM101
+MTH251
