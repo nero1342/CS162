@@ -120,6 +120,19 @@ void StudentManagementSystem::ImportCourse()
 	courselist.ImportCourse(year, sem, name);
 }
 
+void StudentManagementSystem::AddACourse()
+{
+	/*
+		get info for the Course
+		pass by ref
+		Course tmp(....)
+	*/
+	Course tmp;
+	string year = "2018-2019";
+	string sem = "Fall";
+	courselist.AddCourse(year,sem,tmp);
+}
+
 void StudentManagementSystem::Run()
 {
 	Reload();

@@ -28,8 +28,9 @@ public:
 	void DeleteSemester();
 	void ImportCourse(); 
 	/*
-		need to add create account for lecturer in file course.cpp function named "Import"
+		need to add create account for lecturer in file course.h function CreateAccountForLecturer();
 	*/
+	void AddACourse();
 
 	void Run();
 	/*

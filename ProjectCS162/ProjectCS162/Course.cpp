@@ -55,7 +55,12 @@ void Course::Import()
 		x.SaveData();
 	}
 
-	/*
-		need to create account for lecturer here
-	*/
+	CreateAccountForLecturer();
+}
+
+Course::Course(string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
+	ID(a), name(b), Class(c), Lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
+
+Course::Course()
+{
 }

@@ -16,6 +16,13 @@ public:
 	void ReadInput(istream & in); 
 	void SaveData(ofstream & ou);
 	void Import();
+	void CreateAccountForLecturer(); 
+	/*
+		need to add create account here
+	*/
+	
+	Course(string &, string &, string &, string &, string &, string &, string &, string &, string &, string &);
+	Course();
 };
 
 #endif

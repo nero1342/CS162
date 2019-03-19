@@ -35,6 +35,16 @@ void CourseList::ImportCourse(string & year, string &sem, string & name)
 	for (auto i : course) i.Import();
 }
 
+void CourseList::AddCourse(string &year, string &sem, Course & a)
+{
+	a.CreateAccountForLecturer();
+
+	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + a.GetID() + ".txt");
+	a.SaveData(ou);
+	ou.close();
+	a.Import();
+}
+
 void CourseList::CreateAcademicYear(string &name)
 {
 #define SaveLocation "Data\\AcademicYear.txt"
