@@ -76,6 +76,16 @@ void Student::AddCourse(string course)
 	Course.push_back(course);
 }
 
+void Student::RemoveCourse(string & course)
+{
+	for (unsigned int i = 0; i < Course.size(); ++i) if (Course[i] == course)
+	{
+		swap(Course[i], Course.back());
+		Course.pop_back();
+		break;
+	}
+}
+
 string Student::getStudentID() {
     return StudentID;
 }

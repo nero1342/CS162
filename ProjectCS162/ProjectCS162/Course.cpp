@@ -22,6 +22,8 @@ void Course::ReadInput(istream & in)
 	getline(in, startHour);
 	getline(in, endHour);
 	getline(in, room);
+	string x;
+	while (in >> x) listOfStudent.push_back(x);
 }
 
 void Course::SaveData(ofstream & ou)
@@ -36,6 +38,7 @@ void Course::SaveData(ofstream & ou)
 	ou << startHour << "\n";
 	ou << endHour << "\n";
 	ou << room << "\n";
+	for (auto i : listOfStudent) ou << i << '\n';
 }
 
 void Course::Import()
@@ -50,6 +53,7 @@ void Course::Import()
 	for (auto i : studentlist)
 	{
 		x.SetStudentID(i);
+		listOfStudent.push_back(x.getStudentID());
 		x.Reload();
 		x.AddCourse(ID);
 		x.SaveData();
@@ -65,6 +69,46 @@ void Course::CreateAccountForLecturer()
 	acclist.Reload();
 	acclist.Add(lect);
 	acclist.SaveData();
+}
+
+void Course::CreateAccountForLecturer()
+{
+}
+
+void Course::DeleteCourse()
+{
+	ifstream in("Data\\Class\\" + Class + ".txt");
+	string tmp;
+	vector<string> studentlist;
+	while (in >> tmp) studentlist.push_back(tmp);
+	in.close();
+	
+	Student x;
+	for (auto i : studentlist)
+	{
+		x.SetStudentID(i);
+		x.Reload();
+		x.RemoveCourse(ID);
+		x.SaveData();
+	}
+}
+
+string Course::GetClass()
+{
+	return Class;
+}
+
+string Course::GetStudentID(int & pos)
+{
+	if (pos >= 0 && pos < listOfStudent.size()) return listOfStudent[pos];
+	return "";
+}
+
+void Course::RemoveStudent(int & pos)
+{
+	if (pos < 0 || pos >= listOfStudent.size()) return;
+	swap(listOfStudent[pos], listOfStudent.back());
+	listOfStudent.pop_back();
 }
 
 Course::Course(string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
