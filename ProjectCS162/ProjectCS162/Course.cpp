@@ -15,7 +15,7 @@ void Course::ReadInput(istream & in)
 	getline(in, ID);
 	getline(in, name);
 	getline(in, Class);
-	getline(in, Lecturer);
+	getline(in, lecturer);
 	getline(in, startDate);
 	getline(in, endDate);
 	getline(in, dayOfWeek);
@@ -29,7 +29,7 @@ void Course::SaveData(ofstream & ou)
 	ou << ID << "\n";
 	ou << name << "\n";
 	ou << Class << "\n";
-	ou << Lecturer << "\n";
+	ou << lecturer << "\n";
 	ou << startDate << "\n";
 	ou << endDate << "\n";
 	ou << dayOfWeek << "\n";
@@ -58,8 +58,17 @@ void Course::Import()
 	CreateAccountForLecturer();
 }
 
+void Course::CreateAccountForLecturer()
+{
+	Lecturer lect(lecturer);
+	AccountList acclist;
+	acclist.Reload();
+	acclist.Add(lect);
+	acclist.SaveData();
+}
+
 Course::Course(string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
-	ID(a), name(b), Class(c), Lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
+	ID(a), name(b), Class(c), lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
 
 Course::Course()
 {

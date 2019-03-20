@@ -1,4 +1,7 @@
 #include "Class.hpp"
+#include "menu.h"
+#include "control.h"
+#include <sstream>
 
 void Class::SetName(string newName) {
     name = newName;
@@ -25,6 +28,7 @@ void Class::Reload()
 	while (fin >> ID) {
 		Student student;
 		student.SetStudentID(ID);
+		student.Reload();
 		Add(student);
 	}
 }
@@ -44,8 +48,49 @@ void Class::Remove(Student student) {
 	}
 }
 
-void Class::ViewList() {
+string Class::ViewList() {
+	string title = "STUDENT LIST OF" + name;
+	vector<string> matrix_class;
+	Reload();
+	stringstream ff;
 
+	ff  << left << setw(5) << "No"
+		<< left << setw(15) << "Student ID"
+		<< left << setw(30) << "Lastname"
+		<< left << setw(10) << "Firstname"
+		<< left << setw(10) << "Gender"
+		<< left << setw(15) << "Day of Birth" << endl;
+
+	string feature;
+	getline(ff, feature);
+	matrix_class.push_back(feature);
+	int cnt = 0;
+	for (Student student : list) {
+		student.Reload();
+		ff << left << setw(5) << ++cnt
+			<< left << setw(15) << student.getStudentID()
+			<< left << setw(30) << student.getLastname()
+			<< left << setw(10) << student.getFirstname()
+			<< left << setw(10) << student.getGender()
+			<< left << setw(15) << student.getDoB() << endl;
+		getline(ff, feature);
+		matrix_class.push_back(feature);
+	}
+	menu studentList(title, matrix_class, 2);
+
+	string result = menu_choose(studentList);
+	cnt = 0;
+	for (Student student : list) {
+		student.Reload();
+		ff << left << setw(5) << ++cnt
+			<< left << setw(15) << student.getStudentID()
+			<< left << setw(30) << student.getLastname()
+			<< left << setw(10) << student.getFirstname()
+			<< left << setw(10) << student.getGender()
+			<< left << setw(15) << student.getDoB() << endl;
+		getline(ff, feature);
+		if (feature == result) return student.getStudentID();
+	}
 }
 
 void Class::SaveData() {

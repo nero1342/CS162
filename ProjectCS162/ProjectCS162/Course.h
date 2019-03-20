@@ -4,11 +4,13 @@
 
 #include "STL.hpp"
 #include "Student.hpp"
+#include "Lecturer.hpp"
+#include "AccountList.hpp"
 
 class Course
 {
 private:
-	string ID, name, Class, Lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
+	string ID, name, Class, lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
 public:
 	string GetID();
 

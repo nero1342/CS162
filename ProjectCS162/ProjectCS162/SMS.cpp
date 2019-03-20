@@ -1,26 +1,40 @@
 #include "SMS.hpp"
 
-
 void StudentManagementSystem::Reload() {
 	system("md Data\\Class");
 	system("md Data\\Student");
 	system("md Data\\Course");
+	acclist.Reload();
+	acclist.Add(Account("admin", "admin", "Staff", "Staff"));
+	acclist.SaveData();
     //acclist.Reload();
     //classlist.Reload();
 }
 
 void StudentManagementSystem::ImportClass() {
-    // Get info of class here
-	string Class = "18APCS1.csv";
+	// Get info of class here
+	string pattern = "*.csv";
+	vector<string> listClass;
+	WIN32_FIND_DATA data;
+	HANDLE hFind;
+	if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE) {
+		do {
+			string filename = data.cFileName;
+			listClass.push_back(filename);
+		} while (FindNextFile(hFind, &data) != 0);
+		FindClose(hFind);
+	}
+	menu import_menu("Choose class", listClass, 1);
+	string Class = menu_choose(import_menu);
 	// 
-    acclist.ImportClass(Class);
+	acclist.ImportClass(Class);
 	classlist.AddClass(Class);
 }
 
 void StudentManagementSystem::AddNewStudent() {
     // Get info of student here
-    Student student;
-	//
+	Student student;
+	// 
 	acclist.Reload();
     acclist.Add(student);
 	acclist.SaveData();
@@ -29,7 +43,11 @@ void StudentManagementSystem::AddNewStudent() {
 
 void StudentManagementSystem::RemoveStudent() {
 	// Get info of student here
-    Student student;
+    Class myClass;
+	myClass.SetName(classlist.ViewList());
+	Student student;
+	student.SetStudentID(myClass.ViewList());
+	student.Reload();
 	//
 	acclist.Reload();
 	acclist.Remove(student.getStudentID());
@@ -38,11 +56,13 @@ void StudentManagementSystem::RemoveStudent() {
 
 void StudentManagementSystem::ChangeClassOfStudent() {
     // Get info of student here
-    Student student;
-	
+	Class myClass;
+	myClass.SetName(classlist.ViewList());
+	Student student;
+	student.SetStudentID(myClass.ViewList());
+	student.Reload();
     // Get name of new class
-    string newClass;
-
+    string newClass = classlist.ViewList();
     //
     classlist.RemoveStudent(student);
     student.SetClass(newClass);
@@ -133,17 +153,35 @@ void StudentManagementSystem::AddACourse()
 	courselist.AddCourse(year,sem,tmp);
 }
 
+void StudentManagementSystem::Do(string &choose) {
+	if (choose == "Import Class") ImportClass();
+	if (choose == "Add New Student") AddNewStudent();
+	if (choose == "Remove A Student") RemoveStudent();
+	if (choose == "Change class of student") ChangeClassOfStudent();
+}
+
 void StudentManagementSystem::Run()
 {
 	Reload();
-	//CreateAcademicYear();
-	//CreateSemester();
-	//DeleteAcademicYear();
-	//DeleteSemester();
-	//ImportClass();
-	//ChangeClassOfStudent();
-	ImportCourse();
-//	Main_menu();
+	login Log;
+	acclist.Reload();
+	while (1) {
+		accountLogin = Log.login_menu(acclist);
+		menu main_menu;
+		staff_menu(main_menu);
+		//if (type == "Staff") staff_menu(main_menu);
+		//if (type==2) lecturer
+		//if (type==3) student
+		while (1) {
+			string choose = menu_choose(main_menu);
+			if (choose == "Logout") {
+				Log.user = "";
+				Log.password = "";
+				break;
+			}
+			Do(choose);
+		}
+	}
 }
 
 

@@ -4,7 +4,9 @@
 #include "AccountList.hpp"
 #include "ClassList.hpp"
 #include "CourseList.h"
-#include "main_menu.h"
+#include "menu.h"
+#include "control.h"
+#include "login.h"
 
 class StudentManagementSystem {
 private:
@@ -31,6 +33,8 @@ public:
 		need to add create account for lecturer in file course.h function CreateAccountForLecturer();
 	*/
 	void AddACourse();
+
+	void Do(string & choose);
 
 	void Run();
 	/*

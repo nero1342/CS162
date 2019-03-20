@@ -4,8 +4,8 @@ void Student::Reload() {
 	ifstream cin("Data\\Student\\" + StudentID + ".txt");
 	if (!cin.is_open()) return;
 	getline(cin, StudentID);
-	getline(cin, Firstname);
 	getline(cin, Lastname);
+	getline(cin, Firstname);
 	getline(cin, Gender);
 	getline(cin, DoB);
 	getline(cin, Class);

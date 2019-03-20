@@ -14,7 +14,7 @@ public:
     void Reload();
     void Add(Student student);
     void Remove(Student student);
-    void ViewList();
+    string ViewList();
 
     void SaveData();
 };

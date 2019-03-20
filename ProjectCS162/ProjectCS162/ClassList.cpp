@@ -1,4 +1,6 @@
 #include "ClassList.hpp"
+#include "menu.h"
+#include "control.h"
 
 void ClassList::AddClass(string nameClass) {
 	Reload();
@@ -51,6 +53,8 @@ void ClassList::SaveData() {
     cout.close();
 }
 
-void ClassList::ViewList() {
-
+string ClassList::ViewList() {
+	Reload();
+	menu classList("LIST OF CLASS", listClass, 1);
+	return menu_choose(classList);
 }

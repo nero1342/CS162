@@ -54,6 +54,12 @@ void AccountList::Remove(string username) {
     } else ++i;
 }
 
+void AccountList::Add(Account account)
+{
+	if (isExist(account.getUsername())) return;
+	list.push_back(account);
+}
+
 void AccountList::Reload() {
     list.clear();
     ifstream cin("Data\\Account.txt");

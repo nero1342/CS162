@@ -12,6 +12,6 @@ public:
     void RemoveStudent(Student student);
     void Reload();
     void SaveData();
-    void ViewList();
+    string ViewList(); // Return a student is chosen
 };
 #endif // ClassList_hpp

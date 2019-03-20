@@ -15,6 +15,8 @@ public:
     bool isExist(string username);
     void Remove(string username);
 
+	void Add(Account account);
+
     void Add(Student student);
     void Edit(Student student);
 
