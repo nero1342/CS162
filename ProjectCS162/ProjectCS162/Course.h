@@ -8,9 +8,14 @@
 class Course
 {
 private:
-	string ID, name, Class, Lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
+	string ID, name, Class, lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
+	vector<string> listOfStudent;
 public:
 	string GetID();
+	string GetClass();
+	string GetStudentID(int &pos);
+
+	void RemoveStudent(int &pos);
 
 	void SetID(string name);
 	void ReadInput(istream & in); 
@@ -20,7 +25,8 @@ public:
 	/*
 		need to add create account here
 	*/
-	
+	void DeleteCourse();
+
 	Course(string &, string &, string &, string &, string &, string &, string &, string &, string &, string &);
 	Course();
 };

@@ -133,16 +133,98 @@ void StudentManagementSystem::AddACourse()
 	courselist.AddCourse(year,sem,tmp);
 }
 
+void StudentManagementSystem::EditCourse()
+{
+	/*
+		get info for new course
+		choose year and sem
+		load vector course for edit
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	courselist.Load(year, sem);
+	/*
+		return a number of course in the vector to edit
+	*/
+	int chosen = 1;
+	string tmp=courselist.GetCourse(chosen);
+	tmp = "Data\\Course\\" + year + "\\" + sem + "\\" + tmp + ".txt";
+
+	ifstream in(tmp);
+	Course Change;
+	Change.ReadInput(in);
+	in.close();
+
+	/*
+		output to change
+		Change.SetName(...)......
+		......
+	*/
+
+	ofstream ou(tmp);
+	Change.SaveData(ou);
+	ou.close();
+}
+
+void StudentManagementSystem::RemoveCourse()
+{
+	/*
+		get info
+		choose year
+		choose sem
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string name = "CM101";
+
+	courselist.RemoveCourse(year, sem, name);
+}
+
+void StudentManagementSystem::RemoveAStudentFromCourse()
+{
+	/*
+		choose year 
+		choose sem
+		get info of the course (display the courselist)
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string name = "CM101";
+
+	Course course;
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt");
+	course.ReadInput(in);
+	in.close();
+
+	/*
+		show listOfStudent
+	*/
+	int chosen = 0;
+
+	Student student;
+	student.SetStudentID(course.GetStudentID(chosen));
+	student.Reload();
+	student.RemoveCourse(name);
+	student.SaveData();
+
+	course.RemoveStudent(chosen);
+	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt");
+	course.SaveData(ou);
+	ou.close();
+}
+
 void StudentManagementSystem::Run()
 {
-	Reload();
+	//Reload();
 	//CreateAcademicYear();
 	//CreateSemester();
 	//DeleteAcademicYear();
 	//DeleteSemester();
 	//ImportClass();
 	//ChangeClassOfStudent();
-	ImportCourse();
+	//ImportCourse();
+	//RemoveCourse();
+	//RemoveAStudentFromCourse();
 //	Main_menu();
 }
 

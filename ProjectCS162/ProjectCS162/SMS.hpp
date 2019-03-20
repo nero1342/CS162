@@ -31,6 +31,9 @@ public:
 		need to add create account for lecturer in file course.h function CreateAccountForLecturer();
 	*/
 	void AddACourse();
+	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
+	void RemoveCourse();
+	void RemoveAStudentFromCourse();
 
 	void Run();
 	/*

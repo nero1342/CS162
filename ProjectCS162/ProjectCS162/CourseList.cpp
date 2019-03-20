@@ -1,6 +1,27 @@
 #include "CourseList.h"
 
-void CourseList::ImportCourse(string & year, string &sem, string & name)
+string CourseList::GetCourse(int pos)
+{
+	if (pos >= 0 && pos < courseList.size()) return courseList[pos];
+	return "";
+}
+
+void CourseList::Load(string & year, string & sem)
+{
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\CourseList.txt");
+	string x;
+	while (in >> x) courseList.push_back(x);
+	in.close();
+}
+
+void CourseList::Save(string & year, string & sem)
+{
+	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\CourseList.txt");
+	for (auto i : courseList) ou << i << '\n';
+	ou.close();
+}
+
+void CourseList::ImportCourse(string year, string &sem, string & name)
 {
 	year = "Data\\Course\\" + year + "\\" + sem + "\\";
 	Import(name, year);
@@ -26,13 +47,13 @@ void CourseList::ImportCourse(string & year, string &sem, string & name)
 	for (auto i : course) ou << i.GetID() << '\n';
 	ou.close();
 
+	for (unsigned int i = 0; i < course.size(); ++i) course[i].Import();
 	for (auto i : course)
 	{
 		ou.open(year + i.GetID() + ".txt");
 		i.SaveData(ou);
 		ou.close();
 	}
-	for (auto i : course) i.Import();
 }
 
 void CourseList::AddCourse(string &year, string &sem, Course & a)
@@ -43,6 +64,28 @@ void CourseList::AddCourse(string &year, string &sem, Course & a)
 	a.SaveData(ou);
 	ou.close();
 	a.Import();
+}
+
+void CourseList::RemoveCourse(string year, string & sem, string & name)
+{
+	Load(year, sem);
+	for (unsigned int i = 0; i < courseList.size(); ++i) if (courseList[i] == name)
+	{
+		swap(courseList[i], courseList.back());
+		courseList.pop_back();
+		break;
+	}
+	Save(year, sem);
+
+	year = "Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt";
+	ifstream in(year);
+	Course tmp;
+	tmp.ReadInput(in);
+	in.close();
+
+	DeleteFile(year.c_str());
+
+	tmp.DeleteCourse();
 }
 
 void CourseList::CreateAcademicYear(string &name)

@@ -30,6 +30,7 @@ public:
     void SetClass(string newClass);
 
 	void AddCourse(string course);
+	void RemoveCourse(string &course);
 
     string getStudentID();
     string getLastname();
