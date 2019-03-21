@@ -40,3 +40,19 @@ void Import(string fileName,string link)
 		ou << string(tmp) << '\n';
 	}
 }
+
+void Export(vector<string>& row, vector<string>& col, string name, vector<vector<int>> &a)
+{
+	ofstream ou("Data\\Export\\" + name + ".csv");
+	int n = col.size() - 1, m = row.size();
+	for (auto i : col) ou << i << ","; ou << '\n';
+
+	for (int i = 0; i < m; ++i)
+	{
+		ou << row[i] << ",";
+		for (int j = 0; j < n; ++j) if (i < a.size() && j < a[i].size()) ou << a[i][j] << ",";
+		ou << '\n';
+	}
+	ou.close();
+}
+

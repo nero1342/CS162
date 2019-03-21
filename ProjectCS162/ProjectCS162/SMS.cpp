@@ -4,6 +4,7 @@ void StudentManagementSystem::Reload() {
 	system("md Data\\Class");
 	system("md Data\\Student");
 	system("md Data\\Course");
+	system("md Data\\Export");
 	acclist.Reload();
 	acclist.Add(Account("admin", "admin", "Staff", "Staff"));
 	acclist.SaveData();
@@ -243,25 +244,41 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 void StudentManagementSystem::Run()
 {
 	Reload();
-	login Log;
-	acclist.Reload();
-	while (1) {
-		accountLogin = Log.login_menu(acclist);
-		menu main_menu;
-		staff_menu(main_menu);
-		//if (type == "Staff") staff_menu(main_menu);
-		//if (type==2) lecturer
-		//if (type==3) student
-		while (1) {
-			string choose = menu_choose(main_menu);
-			if (choose == "Logout") {
-				Log.user = "";
-				Log.password = "";
-				break;
-			}
-			Do(choose);
-		}
-	}
+	//login Log;
+	//acclist.Reload();
+	//while (1) {
+	//	accountLogin = Log.login_menu(acclist);
+	//	menu main_menu;
+	//	staff_menu(main_menu);
+	//	//if (type == "Staff") staff_menu(main_menu);
+	//	//if (type==2) lecturer
+	//	//if (type==3) student
+	//	while (1) {
+	//		string choose = menu_choose(main_menu);
+	//		if (choose == "Logout") {
+	//			Log.user = "";
+	//			Log.password = "";
+	//			break;
+	//		}
+	//		Do(choose);
+	//	}
+	//}
+	/*
+		test exporter
+	
+	vector<string> row,col;
+	vector<vector<int>> a;
+	col.push_back("Student");
+	col.push_back("1");
+	col.push_back("2");
+
+	row.push_back("Nhan");
+	row.push_back("Mai");
+	a.resize(2);
+	for (int i = 0; i < 2; ++i) a[i].resize(2);
+	for (int i = 0; i < 2; ++i) for (int j = 0; j < 2; ++j) a[i][j] = i * 10 + j;
+
+	Export(row, col, "ahihi", a);*/
 }
 
 

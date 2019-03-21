@@ -15,4 +15,6 @@ using namespace std;
 
 void Import(string fileName,string link);
 
+void Export(vector<string> &row, vector<string> &col, string name, vector<vector<int>> &a);
+
 #endif // STL_hpp
