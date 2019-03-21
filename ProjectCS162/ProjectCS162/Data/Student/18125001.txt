@@ -4,4 +4,3 @@ Anh
 Male
 2000-10-06
 18APCS1
-MTH251

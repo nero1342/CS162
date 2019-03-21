@@ -24,20 +24,26 @@ public:
     void ViewListClasses();
     void ViewListStudentsOfClass();
 
+	void ImportCourse(); 
 	void CreateAcademicYear();
 	void CreateSemester();
 	void DeleteAcademicYear();
 	void DeleteSemester();
-	void ImportCourse(); 
-	/*
-		need to add create account for lecturer in file course.h function CreateAccountForLecturer();
-	*/
+	void ViewAcademicYear();
+	void ViewSemester();
 	
-	void Do(string & choose);
+	void ImportScoreboard();
+	void ExportScoreboard();
+	void ExportAttendaceList();
+	void ViewScoreboard();
+
 	void AddACourse();
 	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
 	void RemoveCourse();
 	void RemoveAStudentFromCourse();
+	void ViewListCourse();
+
+	void Do(string & choose);
 
 	void Run();
 	/*

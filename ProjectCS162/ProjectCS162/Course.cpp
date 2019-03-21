@@ -71,10 +71,6 @@ void Course::CreateAccountForLecturer()
 	acclist.SaveData();
 }
 
-void Course::CreateAccountForLecturer()
-{
-}
-
 void Course::DeleteCourse()
 {
 	ifstream in("Data\\Class\\" + Class + ".txt");
