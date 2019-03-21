@@ -11,6 +11,7 @@ private:
     vector<Account> list;
 public:
 
+	Account Find(string &username);
 	void ChangePass(string username, string newPassword);
     bool isExist(string username);
     void Remove(string username);

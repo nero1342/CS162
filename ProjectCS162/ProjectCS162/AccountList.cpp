@@ -1,5 +1,10 @@
 #include "AccountList.hpp"
 
+Account AccountList::Find(string &username)
+{
+	for (Account acc : list) if (acc.getUsername() == username) return acc;
+}
+
 void AccountList::ChangePass(string username, string newPassword)
 {
 	for (Account acc : list)

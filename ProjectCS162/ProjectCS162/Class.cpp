@@ -7,6 +7,10 @@ void Class::SetName(string newName) {
     name = newName;
 }
 
+string Class::GetName() {
+	return name;
+}
+
 void Class::Import() {
 	list.clear();
     std::ifstream fin("Data\\Class\\" + name + ".txt");
@@ -76,6 +80,7 @@ string Class::ViewList() {
 		getline(ff, feature);
 		matrix_class.push_back(feature);
 	}
+	matrix_class.push_back("RETURN");
 	menu studentList(title, matrix_class, 2);
 
 	string result = menu_choose(studentList);
@@ -91,6 +96,7 @@ string Class::ViewList() {
 		getline(ff, feature);
 		if (feature == result) return student.getStudentID();
 	}
+	return "RETURN";
 }
 
 void Class::SaveData() {

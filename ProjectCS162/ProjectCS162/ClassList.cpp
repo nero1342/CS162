@@ -55,6 +55,8 @@ void ClassList::SaveData() {
 
 string ClassList::ViewList() {
 	Reload();
+	listClass.push_back("RETURN");
 	menu classList("LIST OF CLASS", listClass, 1);
 	return menu_choose(classList);
+	listClass.pop_back();
 }
