@@ -12,7 +12,7 @@ class StudentManagementSystem {
 private:
     AccountList acclist;
     ClassList classlist;
-	string accountLogin;
+	Account AccountLogin;
 	CourseList courselist;
 public:
     void Reload();
@@ -22,8 +22,7 @@ public:
     void RemoveStudent(); // Checked
     void ChangeClassOfStudent(); // Checked
     void ViewListClasses();
-    void ViewListStudentsOfClass();
-
+  
 	void ImportCourse(); 
 	void CreateAcademicYear();
 	void CreateSemester();
@@ -44,6 +43,8 @@ public:
 	void ViewListCourse();
 
 	void Do(string & choose);
+
+	void Menu(menu & x);
 
 	void Run();
 	/*

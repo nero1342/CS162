@@ -3,11 +3,11 @@
 string login::login_menu(AccountList &acclist) {
 	menu log_menu;
 	log_menu.title = "LOGIN";
-	log_menu.chosen = 1;
+	log_menu.chosen = log_menu.minchosen = 1;
 	log_menu.name.push_back("USER");
 	log_menu.name.push_back("PASSWORD");
 	log_menu.name.push_back("ENTER");
-	log_menu.name.push_back("RETURN");
+	log_menu.name.push_back("EXIT");
 	graphics show;
 	window tool;
 	show.init_graphic();

@@ -1,5 +1,6 @@
 #include "SMS.hpp"
 
+
 void StudentManagementSystem::Reload() {
 	system("md Data\\Class");
 	system("md Data\\Student");
@@ -26,6 +27,8 @@ void StudentManagementSystem::ImportClass() {
 	}
 	menu import_menu("Choose class", listClass, 1);
 	string Class = menu_choose(import_menu);
+	if (Class == "RETURN") return;
+
 	// 
 	acclist.ImportClass(Class);
 	classlist.AddClass(Class);
@@ -41,12 +44,18 @@ void StudentManagementSystem::AddNewStudent() {
 	classlist.AddStudent(student);
 }
 
+void StudentManagementSystem::EditExistStudent()
+{
+}
+
 void StudentManagementSystem::RemoveStudent() {
 	// Get info of student here
     Class myClass;
 	myClass.SetName(classlist.ViewList());
+	if (myClass.GetName() == "RETURN") return;
 	Student student;
 	student.SetStudentID(myClass.ViewList());
+	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
 	//
 	acclist.Reload();
@@ -58,11 +67,14 @@ void StudentManagementSystem::ChangeClassOfStudent() {
     // Get info of student here
 	Class myClass;
 	myClass.SetName(classlist.ViewList());
+	if (myClass.GetName() == "RETURN") return;
 	Student student;
 	student.SetStudentID(myClass.ViewList());
+	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
     // Get name of new class
     string newClass = classlist.ViewList();
+	if (newClass == "RETURN") return;
     //
     classlist.RemoveStudent(student);
     student.SetClass(newClass);
@@ -70,6 +82,16 @@ void StudentManagementSystem::ChangeClassOfStudent() {
 	acclist.Reload();
     acclist.Edit(student);
     acclist.SaveData();
+}
+
+void StudentManagementSystem::ViewListClasses()
+{
+	Class myClass;
+	myClass.SetName(classlist.ViewList());
+	if (myClass.GetName() == "RETURN") {
+		return;
+	}
+	myClass.ViewList();
 }
 
 void StudentManagementSystem::CreateAcademicYear()
@@ -153,12 +175,6 @@ void StudentManagementSystem::AddACourse()
 	courselist.AddCourse(year,sem,tmp);
 }
 
-void StudentManagementSystem::Do(string &choose) {
-	if (choose == "Import Class") ImportClass();
-	if (choose == "Add New Student") AddNewStudent();
-	if (choose == "Remove A Student") RemoveStudent();
-	if (choose == "Change class of student") ChangeClassOfStudent();
-}
 
 void StudentManagementSystem::EditCourse()
 {
@@ -240,27 +256,65 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 	ou.close();
 }
 
+void StudentManagementSystem::Menu(menu &main_menu) {
+	while (1) {
+		string choose = menu_choose(main_menu);
+		if (choose == "LOGOUT" || choose == "RETURN") {
+			break;
+		}
+		Do(choose);
+	}
+}
+
+
+void StudentManagementSystem::Do(string &choose) {
+	// STAFF
+	MenuFunction mf;
+	if (choose == "CLASS") {
+		menu class_menu("STAFF MENU", mf.CLASS_MENU, 1);
+		Menu(class_menu);
+	}
+	// CLASS
+	if (choose == "IMPORT CLASS") ImportClass();
+	if (choose == "ADD NEW STUDENT") AddNewStudent();
+	if (choose == "EDIT EXIST STUDENT") EditExistStudent();
+	if (choose == "REMOVE A STUDENT") RemoveStudent();
+	if (choose == "CHANGE CLASS OF STUDENT") ChangeClassOfStudent();
+	if (choose == "VIEW LIST OF CLASSES") ViewListClasses();
+	// COURSES
+
+	// SCOREBOARD
+
+	// ATTENDANCE LIST
+
+// STUDENT
+
+// LECTURER
+
+}
+
 void StudentManagementSystem::Run()
 {
+	MenuFunction mf;
 	Reload();
-	login Log;
 	acclist.Reload();
 	while (1) {
-		accountLogin = Log.login_menu(acclist);
-		menu main_menu;
-		staff_menu(main_menu);
-		//if (type == "Staff") staff_menu(main_menu);
-		//if (type==2) lecturer
-		//if (type==3) student
-		while (1) {
-			string choose = menu_choose(main_menu);
-			if (choose == "Logout") {
-				Log.user = "";
-				Log.password = "";
-				break;
-			}
-			Do(choose);
+		login Log;
+		string accountLogin = Log.login_menu(acclist);
+		AccountLogin = acclist.Find(accountLogin);
+
+		if (AccountLogin.getType() == "Staff") {
+			menu main_menu("STAFF MENU", mf.STAFF_MENU, 1);
+			Menu(main_menu);
 		}
+		if (AccountLogin.getType() == "Student") {
+			menu main_menu("STUDENT MENU", mf.STUDENT_MENU, 1);
+			Menu(main_menu);
+		}
+		if (AccountLogin.getType() == "Lecturer") {
+			menu main_menu("LECTURER MENU", mf.LECTURER_MENU, 1);
+			Menu(main_menu);
+		}	
 	}
 }
 

@@ -10,9 +10,11 @@ void staff_menu(menu &now) {
 	now.name.push_back("Change class of student");
 	//now.name.push_back("Import Course");
 	now.name.push_back("Logout");
-	now.chosen = 1;
+	now.chosen = now.minchosen = 1;
 }
 
 menu::menu():chosen(1) {}
 
-menu::menu(string title, vector<string> &name, int minchosen) : title(title), name(name), chosen(minchosen), minchosen(minchosen) {}
+menu::menu(string title, vector<string> &name, int minchosen) : title(title), name(name), chosen(minchosen), minchosen(minchosen) {
+	//name.push_back("RETURN");
+}

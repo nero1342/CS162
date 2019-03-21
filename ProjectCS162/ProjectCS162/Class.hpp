@@ -10,6 +10,7 @@ private:
     string name;
 public:
     void SetName(string newName);
+	string GetName();
 	void Import();
     void Reload();
     void Add(Student student);
