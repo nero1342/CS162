@@ -149,6 +149,28 @@ void StudentManagementSystem::DeleteSemester()
 	courselist.DeleteSemester(name, sem);
 }
 
+void StudentManagementSystem::ImportScoreboard()
+{
+	/*
+		choose scoreboard
+		choose year 
+		choose semester
+		choose course
+	*/
+	string name = "scoreboard.csv";
+	string year = "2018-2019";
+	string sem = "Fall";
+	string course = "CM101";
+
+	Import(name, "Data\\Course\\" + year + "\\" + sem + "\\");
+
+	while (name.back() != '.') name.pop_back();
+	name += "txt";
+
+	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt"; 
+	system(year.c_str());
+}
+
 void StudentManagementSystem::ImportCourse()
 {
 	/*
@@ -296,7 +318,7 @@ void StudentManagementSystem::Do(string &choose) {
 
 void StudentManagementSystem::Run()
 {
-	MenuFunction mf;
+	/*MenuFunction mf;
 	Reload();
 	acclist.Reload();
 	while (1) {
@@ -316,7 +338,11 @@ void StudentManagementSystem::Run()
 			menu main_menu("LECTURER MENU", mf.LECTURER_MENU, 1);
 			Menu(main_menu);
 		}	
-	}
+	}*/
+	Reload();
+	CreateAcademicYear();
+	CreateSemester();
+	ImportScoreboard();
 }
 
 
