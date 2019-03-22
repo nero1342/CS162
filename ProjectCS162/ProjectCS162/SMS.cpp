@@ -171,6 +171,34 @@ void StudentManagementSystem::ImportScoreboard()
 	system(year.c_str());
 }
 
+void StudentManagementSystem::ExportScoreboard()
+{
+	/*
+		get info of year,sem,course
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string course = "CM101";
+
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt");
+	//if (in.fail()) cout << no scoreboard
+	vector<string> Col = { "Student ID","Midterm","Practice","Final" };
+	vector<string> Row;
+	vector<vector<int>> Scoreboard;
+	vector<int> tmp(3);
+
+	string x;
+	int n = 0;
+	while (in >> x)
+	{
+		Row.push_back(x);
+		Scoreboard.push_back(tmp);
+		for (int i = 0; i < 3; ++i) in >> Scoreboard[n][i];
+		n++;
+	}
+	Export(Row, Col, course + "-scoreboard", Scoreboard);
+}
+
 void StudentManagementSystem::ImportCourse()
 {
 	/*
@@ -343,6 +371,7 @@ void StudentManagementSystem::Run()
 	CreateAcademicYear();
 	CreateSemester();
 	ImportScoreboard();
+	ExportScoreboard();
 }
 
 
