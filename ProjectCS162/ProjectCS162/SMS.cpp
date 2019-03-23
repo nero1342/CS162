@@ -191,11 +191,22 @@ void StudentManagementSystem::ImportCourse()
 		get info of the semester
 		get info of the course to import
 	*/
-	string year = "2018-2019";
-	string sem = "Fall";
-	string name = "Course1.csv";
-
-	courselist.ImportCourse(year, sem, name);
+	while (true) {
+		string year = ViewAcademicYear();
+		if (year == "RETURN") return;
+		while (true) {
+			string sem = ViewSemester(year);
+			if (sem == "RETURN") break;
+			while (true) {
+				vector<string> listCourse = ListFileInDicrectory("*.csv");
+				menu import_menu("Choose class", listCourse, 1);
+				string CourseID = menu_choose(import_menu);
+				if (CourseID == "RETURN") return;
+				courselist.ImportCourse(year, sem, CourseID);
+				return;
+			}
+		}
+	}
 }
 
 void StudentManagementSystem::AddACourse()
@@ -330,11 +341,11 @@ void StudentManagementSystem::Menu(menu &main_menu) {
 void StudentManagementSystem::Do(string &choose) {
 // STAFF
 	MenuFunction mf;
+	// CLASS
 	if (choose == "CLASS") {
 		menu class_menu("STAFF MENU - CLASS", mf.CLASS_MENU, 1);
 		Menu(class_menu);
 	}
-	// CLASS
 		if (choose == "IMPORT CLASS") ImportClass();
 		if (choose == "ADD NEW STUDENT") AddNewStudent();
 		if (choose == "EDIT EXIST STUDENT") EditExistStudent();
@@ -346,6 +357,16 @@ void StudentManagementSystem::Do(string &choose) {
 		menu courses_menu("STAFF MENU - COURSES", mf.COURSES_MENU, 1);
 		Menu(courses_menu);
 	}
+		if (choose == "CREATE ACADEMIC YEAR") CreateAcademicYear();
+		if (choose == "DELETE ACADEMIC YEAR") DeleteAcademicYear();
+		if (choose == "CREATE SEMESTER") CreateSemester();
+		if (choose == "DELETE SEMESTER") DeleteSemester();
+		if (choose == "IMPORT COURSE") ImportCourse();
+		if (choose == "ADD NEW COURSE");
+		if (choose == "EDIT EXIST COURSE");
+		if (choose == "REMOVE COURSE");
+		if (choose == "REMOVE STUDENT FROM COURSE");
+		if (choose == "ADD STUDENT");
 	// SCOREBOARD
 	if (choose == "SCOREBOARD") {
 		menu sb_menu("STAFF MENU - SCOREBOARD", mf.SCOREBOARD_MENU, 1);

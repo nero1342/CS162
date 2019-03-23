@@ -47,13 +47,17 @@ public:
 									"CHANGE CLASS OF STUDENT",
 									"RETURN" };
 
-	vector<string> COURSES_MENU = { "ACADEMIC YEARS",
-								"SEMESTERS",
+	vector<string> COURSES_MENU = { 
+								"CREATE ACADEMIC YEAR",
+								"DELETE ACADEMIC YEAR",
+								"CREATE SEMESTER",
+								"DELETE SEMESTER",
+								"IMPORT COURSE",
 								"ADD NEW COURSE",
 								"EDIT EXIST COURSE",
-								"REMOVE A COURSE",
-								"REMOVE STUDENT",
-								"ADD NEW STUDENT",
+								"REMOVE COURSE",
+								"REMOVE STUDENT FROM COURSE",
+								"ADD  STUDENT",
 								"VIEW LIST OF CLASSES",
 								"VIEW LIST OF STUDENTS",
 								"VIEW ATTENDANCE OF COURSE",
