@@ -10,7 +10,7 @@ void Course::SetID(string name)
 	ID = name;
 }
 
-void Course::ReadInput(istream & in)
+void Course::Reload(istream & in)
 {
 	getline(in, ID);
 	getline(in, name);
@@ -24,6 +24,20 @@ void Course::ReadInput(istream & in)
 	getline(in, room);
 	string x;
 	while (in >> x) listOfStudent.push_back(x);
+}
+
+void Course::ReadInput(istream & in)
+{
+	getline(in, ID);
+	getline(in, name);
+	getline(in, Class);
+	getline(in, lecturer);
+	getline(in, startDate);
+	getline(in, endDate);
+	getline(in, dayOfWeek);
+	getline(in, startHour);
+	getline(in, endHour);
+	getline(in, room);
 }
 
 void Course::SaveData(ofstream & ou)
@@ -89,6 +103,19 @@ void Course::DeleteCourse()
 	}
 }
 
+void Course::CreateAttendanceList(string link)
+{
+	AttendanceList a;
+
+	for (auto i : listOfStudent)
+	{
+		Attendance tmp;
+		tmp.SetStudentID(i);
+		a.Add(tmp);
+	}
+	a.SaveData(link + ID + "-attendancelist.txt");
+}
+
 string Course::GetClass()
 {
 	return Class;
@@ -103,6 +130,9 @@ string Course::GetStudentID(int & pos)
 void Course::RemoveStudent(int & pos)
 {
 	if (pos < 0 || pos >= listOfStudent.size()) return;
+
+
+
 	swap(listOfStudent[pos], listOfStudent.back());
 	listOfStudent.pop_back();
 }
@@ -112,4 +142,51 @@ Course::Course(string & a, string & b, string & c, string & d, string & e, strin
 
 Course::Course()
 {
+}
+
+Attendance::Attendance()
+{
+	for (int i = 1; i <= 10; ++i) day.push_back(0);
+}
+
+void Attendance::SetStudentID(string ID)
+{
+	StudentID = ID;
+}
+
+void Attendance::SaveData(ostream & ou)
+{
+	ou << StudentID << ' ';
+	for (auto i : day) ou << i << ' ';
+	ou << '\n';
+}
+
+void Attendance::ReloadDay(istream & in)
+{
+	for (unsigned int i = 0; i < day.size(); ++i) in >> day[i];
+}
+
+void AttendanceList::Add(Attendance x)
+{
+	attend.push_back(x);
+}
+
+void AttendanceList::SaveData(string link)
+{
+	ofstream ou(link);
+	for (auto i : attend) i.SaveData(ou);
+	ou.close();
+}
+
+void AttendanceList::Reload(string link)
+{
+	ifstream in(link);
+	string x;
+	while (in >> x)
+	{
+		Attendance tmp;
+		tmp.SetStudentID(x);
+		tmp.ReloadDay(in);
+	}
+	in.close();
 }

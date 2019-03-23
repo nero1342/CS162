@@ -7,6 +7,29 @@
 #include "Lecturer.hpp"
 #include "AccountList.hpp"
 
+class Attendance
+{
+private:
+	vector<int> day;
+	string StudentID;
+public:
+	Attendance();
+	void SetStudentID(string ID);
+	void SaveData(ostream & ou);
+	void ReloadDay(istream & in);
+};
+
+class AttendanceList
+{
+private:
+	vector<Attendance> attend;
+public:
+	void Add(Attendance x);
+
+	void SaveData(string link);
+	void Reload(string link);
+};
+
 class Course
 {
 private:
@@ -20,11 +43,14 @@ public:
 	void RemoveStudent(int &pos);
 
 	void SetID(string name);
-	void ReadInput(istream & in); 
+	void Reload(istream & in); 
+	void ReadInput(istream & in);  // this is for import only
 	void SaveData(ofstream & ou);
 	void Import();
 	void CreateAccountForLecturer(); 
 	void DeleteCourse();
+
+	void CreateAttendanceList(string link);
 
 	Course(string &, string &, string &, string &, string &, string &, string &, string &, string &, string &);
 	Course();

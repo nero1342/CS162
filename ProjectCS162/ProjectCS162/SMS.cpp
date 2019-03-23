@@ -106,10 +106,10 @@ void StudentManagementSystem::ViewListClasses()
 void StudentManagementSystem::CreateAcademicYear()
 {
 	// get info
-	string tmp = "2018-2019";
+	string year = "2018-2019";
 
 	//
-	courselist.CreateAcademicYear(tmp);
+	courselist.CreateAcademicYear(year);
 }
 
 void StudentManagementSystem::CreateSemester()
@@ -174,7 +174,7 @@ string StudentManagementSystem::ViewSemester(string year)
 {
 	// Return a semester of a academic year
 	vector<string> list;
-	ifstream fin("Data\\" + year + "Semester.txt");
+	ifstream fin("Data\\Course\\" + year + "\\Semester.txt");
 	string st;
 	while (getline(fin, st)) {
 		list.push_back(st);
@@ -182,6 +182,73 @@ string StudentManagementSystem::ViewSemester(string year)
 	list.push_back("RETURN");
 	menu Menu(year + "- SEMESTER", list, 1);
 	return menu_choose(Menu);
+}
+
+void StudentManagementSystem::ImportScoreboard()
+{
+	/*
+		choose scoreboard
+		choose year
+		choose semester
+		choose course
+	*/
+	string name = "scoreboard.csv";
+	string year = "2018-2019";
+	string sem = "Fall";
+	string course = "CM101";
+
+	Import(name, "Data\\Course\\" + year + "\\" + sem + "\\");
+
+	while (name.back() != '.') name.pop_back();
+	name += "txt";
+
+	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
+	system(year.c_str());
+}
+
+void StudentManagementSystem::ExportScoreboard()
+{
+	/*
+		get info of year,sem,course
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string course = "CM101";
+
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt");
+	//if (in.fail()) cout << no scoreboard
+	vector<string> Col = { "Student ID","Midterm","Practice","Final" };
+	vector<string> Row;
+	vector<vector<int>> Scoreboard;
+	vector<int> tmp(3);
+
+	string x;
+	int n = 0;
+	while (in >> x)
+	{
+		Row.push_back(x);
+		Scoreboard.push_back(tmp);
+		for (int i = 0; i < 3; ++i) in >> Scoreboard[n][i];
+		n++;
+	}
+	Export(Row, Col, course + "-scoreboard", Scoreboard);
+}
+
+void StudentManagementSystem::ExportAttendaceList()
+{
+	/*
+		get info of year
+		get info of semester
+		get info of course
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string course = "CM101";
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-attendancelist.txt");
+
+	//if (in.fail())
+
+	//while (in>>)
 }
 
 void StudentManagementSystem::ImportCourse()
@@ -242,7 +309,7 @@ void StudentManagementSystem::EditCourse()
 
 	ifstream in(tmp);
 	Course Change;
-	Change.ReadInput(in);
+	Change.Reload(in);
 	in.close();
 
 	/*
@@ -293,7 +360,7 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 
 	Course course;
 	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt");
-	course.ReadInput(in);
+	course.Reload(in);
 	in.close();
 
 	/*

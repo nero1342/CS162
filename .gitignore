@@ -10,3 +10,5 @@ A
 *.vcxproj.filters
 *.vcxproj.user
 *.sln
+/**/Data/
+*.txt

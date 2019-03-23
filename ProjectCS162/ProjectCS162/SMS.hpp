@@ -23,7 +23,6 @@ public:
     void ChangeClassOfStudent(); // Checked
     void ViewListClasses();
   
-	void ImportCourse(); 
 	void CreateAcademicYear();
 	void CreateSemester();
 	void DeleteAcademicYear();
@@ -35,7 +34,9 @@ public:
 	void ExportScoreboard();
 	void ExportAttendaceList();
 	void ViewScoreboard();
+	void ViewAttendanceList();
 
+	void ImportCourse(); 
 	void AddACourse();
 	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
 	void RemoveCourse();

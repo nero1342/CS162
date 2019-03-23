@@ -47,7 +47,11 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 	for (auto i : course) ou << i.GetID() << '\n';
 	ou.close();
 
-	for (unsigned int i = 0; i < course.size(); ++i) course[i].Import();
+	for (unsigned int i = 0; i < course.size(); ++i)
+	{
+		course[i].Import();
+		course[i].CreateAttendanceList(year);
+	}
 	for (auto i : course)
 	{
 		ou.open(year + i.GetID() + ".txt");
@@ -58,12 +62,11 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 
 void CourseList::AddCourse(string &year, string &sem, Course & a)
 {
-	a.CreateAccountForLecturer();
-
 	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + a.GetID() + ".txt");
 	a.SaveData(ou);
 	ou.close();
 	a.Import();
+	a.CreateAttendanceList("Data\\Course\\" + year + "\\" + sem + "\\");
 }
 
 void CourseList::RemoveCourse(string year, string & sem, string & name)
@@ -80,7 +83,7 @@ void CourseList::RemoveCourse(string year, string & sem, string & name)
 	year = "Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt";
 	ifstream in(year);
 	Course tmp;
-	tmp.ReadInput(in);
+	tmp.Reload(in);
 	in.close();
 
 	DeleteFile(year.c_str());
@@ -115,11 +118,11 @@ void CourseList::CreateAcademicYear(string &name)
 	system(name.c_str());
 }
 
-void CourseList::CreateSemester(string & name, string & sem)
+void CourseList::CreateSemester(string & year, string & sem)
 {
-	name = "Data\\Course\\" + name;
+	year = "Data\\Course\\" + year;
 	vector<string> sems;
-	string link = name + "\\Semester.txt";
+	string link = year + "\\Semester.txt";
 
 	ifstream in(link);
 	string x;
@@ -139,8 +142,8 @@ void CourseList::CreateSemester(string & name, string & sem)
 	ou << sem << '\n';
 	ou.close();
 
-	name = "md " + name + "\\" + sem;
-	system(name.c_str());
+	year = "md " + year + "\\" + sem;
+	system(year.c_str());
 }
 
 void CourseList::DeleteAcademicYear(string & name)

@@ -13,7 +13,15 @@ void ClassList::AddClass(string nameClass) {
     newClass.SetName(nameClass);
 	newClass.Import();
 	newClass.SaveData();
-	listClass.push_back(nameClass);
+
+	bool found = false;
+	for (auto i : listClass) if (nameClass == i)
+	{
+		found = true;
+		break;
+	}
+
+	if (!found) listClass.push_back(nameClass);
     SaveData();
 }
 
