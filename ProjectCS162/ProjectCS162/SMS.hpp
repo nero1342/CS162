@@ -28,8 +28,8 @@ public:
 	void CreateSemester();
 	void DeleteAcademicYear();
 	void DeleteSemester();
-	void ViewAcademicYear();
-	void ViewSemester();
+	string ViewAcademicYear();
+	string ViewSemester(string year);
 	
 	void ImportScoreboard();
 	void ExportScoreboard();
@@ -40,7 +40,7 @@ public:
 	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
 	void RemoveCourse();
 	void RemoveAStudentFromCourse();
-	void ViewListCourse();
+	string ViewListCourse(string year, string semester);
 
 	void Do(string & choose);
 

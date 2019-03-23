@@ -13,19 +13,24 @@ void StudentManagementSystem::Reload() {
     //classlist.Reload();
 }
 
-void StudentManagementSystem::ImportClass() {
-	// Get info of class here
-	string pattern = "*.csv";
-	vector<string> listClass;
+vector<string> ListFileInDicrectory(string pattern) {
+	vector<string> result;
 	WIN32_FIND_DATA data;
 	HANDLE hFind;
 	if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE) {
 		do {
 			string filename = data.cFileName;
-			listClass.push_back(filename);
+			if (filename == "." || filename == "..") continue;
+			result.push_back(filename);
 		} while (FindNextFile(hFind, &data) != 0);
 		FindClose(hFind);
 	}
+	result.push_back("RETURN");
+	return result;
+}
+
+void StudentManagementSystem::ImportClass() {
+	vector<string> listClass = ListFileInDicrectory("*.csv");
 	menu import_menu("Choose class", listClass, 1);
 	string Class = menu_choose(import_menu);
 	if (Class == "RETURN") return;
@@ -92,7 +97,10 @@ void StudentManagementSystem::ViewListClasses()
 	if (myClass.GetName() == "RETURN") {
 		return;
 	}
-	myClass.ViewList();
+	while (true) {
+		string result = myClass.ViewList();
+		if (result == "RETURN") break;
+	}
 }
 
 void StudentManagementSystem::CreateAcademicYear()
@@ -112,13 +120,15 @@ void StudentManagementSystem::CreateSemester()
 			...
 		get info
 	*/
-	string name = "2018-2019";
+	string year = ViewAcademicYear();
+	if (year == "RETURN") return;
+
 	/*
 		enter a semester to create
 	*/
 	string sem = "Fall";
 	
-	courselist.CreateSemester(name, sem);
+	courselist.CreateSemester(year, sem);
 }
 
 void StudentManagementSystem::DeleteAcademicYear()
@@ -127,26 +137,51 @@ void StudentManagementSystem::DeleteAcademicYear()
 		display
 		choose a year
 	*/
-	string name = "2018-2019";
+	string year = ViewAcademicYear();
+	if (year == "RETURN") return;
 
-	courselist.DeleteAcademicYear(name);
+	//string name = "2018-2019";
+	courselist.DeleteAcademicYear(year);
 }
 
 void StudentManagementSystem::DeleteSemester()
 {
-	/*
-		show Academic year
-		choose
-		name = "2018-2019"
+	while (true) {
+		string year = ViewAcademicYear();
+		if (year == "RETURN") return;
+		string sem = ViewSemester(year);
+		if (sem == "RETURN") continue;
+		courselist.DeleteSemester(year, sem);
+		return;
+	}
+}
 
-		show Semester
-		choose 
-		sem = "Fall"
-	*/
-	string name = "2018-2019";
-	string sem = "Fall";
+string StudentManagementSystem::ViewAcademicYear()
+{
+	// Return a academic year
+	vector<string> list;
+	ifstream fin("Data\\AcademicYear.txt");
+	string st;
+	while (getline(fin, st)) {
+		list.push_back(st);
+	}
+	list.push_back("RETURN");
+	menu Menu("ACADEMIC YEAR", list, 1);
+	return menu_choose(Menu);
+}
 
-	courselist.DeleteSemester(name, sem);
+string StudentManagementSystem::ViewSemester(string year)
+{
+	// Return a semester of a academic year
+	vector<string> list;
+	ifstream fin("Data\\" + year + "Semester.txt");
+	string st;
+	while (getline(fin, st)) {
+		list.push_back(st);
+	}
+	list.push_back("RETURN");
+	menu Menu(year + "- SEMESTER", list, 1);
+	return menu_choose(Menu);
 }
 
 void StudentManagementSystem::ImportCourse()
@@ -216,11 +251,21 @@ void StudentManagementSystem::RemoveCourse()
 		get info
 		choose year
 		choose sem
-	*/
 	string year = "2018-2019";
 	string sem = "Fall";
 	string name = "CM101";
+	*/
+	string year, sem, name;
+	while (true) {
+		// Choose year
 
+		while (true) {
+			// Choose semester
+			while (true) {
+				// Chose Course ID
+			}
+		}
+	}
 	courselist.RemoveCourse(year, sem, name);
 }
 
@@ -257,6 +302,20 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 	ou.close();
 }
 
+string StudentManagementSystem::ViewListCourse(string year, string semester)
+{
+	// Return a course ID
+	vector<string> list;
+	ifstream fin("Data\\" + year + "\\" + semester + "\\CourseList.txt");
+	string st;
+	while (getline(fin, st)) {
+		list.push_back(st);
+	}
+	list.push_back("RETURN");
+	menu Menu(year + " - " + semester + " - COURSE", list, 1);
+	return menu_choose(Menu);
+}
+
 void StudentManagementSystem::Menu(menu &main_menu) {
 	while (1) {
 		string choose = menu_choose(main_menu);
@@ -269,25 +328,34 @@ void StudentManagementSystem::Menu(menu &main_menu) {
 
 
 void StudentManagementSystem::Do(string &choose) {
-	// STAFF
+// STAFF
 	MenuFunction mf;
 	if (choose == "CLASS") {
-		menu class_menu("STAFF MENU", mf.CLASS_MENU, 1);
+		menu class_menu("STAFF MENU - CLASS", mf.CLASS_MENU, 1);
 		Menu(class_menu);
 	}
 	// CLASS
-	if (choose == "IMPORT CLASS") ImportClass();
-	if (choose == "ADD NEW STUDENT") AddNewStudent();
-	if (choose == "EDIT EXIST STUDENT") EditExistStudent();
-	if (choose == "REMOVE A STUDENT") RemoveStudent();
-	if (choose == "CHANGE CLASS OF STUDENT") ChangeClassOfStudent();
-	if (choose == "VIEW LIST OF CLASSES") ViewListClasses();
+		if (choose == "IMPORT CLASS") ImportClass();
+		if (choose == "ADD NEW STUDENT") AddNewStudent();
+		if (choose == "EDIT EXIST STUDENT") EditExistStudent();
+		if (choose == "REMOVE A STUDENT") RemoveStudent();
+		if (choose == "CHANGE CLASS OF STUDENT") ChangeClassOfStudent();
+		if (choose == "VIEW LIST OF CLASSES") ViewListClasses();
 	// COURSES
-
+	if (choose == "COURSES") {
+		menu courses_menu("STAFF MENU - COURSES", mf.COURSES_MENU, 1);
+		Menu(courses_menu);
+	}
 	// SCOREBOARD
-
+	if (choose == "SCOREBOARD") {
+		menu sb_menu("STAFF MENU - SCOREBOARD", mf.SCOREBOARD_MENU, 1);
+		Menu(sb_menu);
+	}
 	// ATTENDANCE LIST
-
+	if (choose == "ATTENDANCE LIST") {
+		menu attendance_menu("STAFF MENU - ATTENDANCE LIST", mf.ATTENDANCE_MENU, 1);
+		Menu(attendance_menu);
+	}
 // STUDENT
 
 // LECTURER
@@ -297,25 +365,23 @@ void StudentManagementSystem::Do(string &choose) {
 void StudentManagementSystem::Run()
 {
 	MenuFunction mf;
+	menu main_menu;
 	Reload();
 	acclist.Reload();
 	while (1) {
 		login Log;
 		string accountLogin = Log.login_menu(acclist);
 		AccountLogin = acclist.Find(accountLogin);
-
 		if (AccountLogin.getType() == "Staff") {
-			menu main_menu("STAFF MENU", mf.STAFF_MENU, 1);
-			Menu(main_menu);
+			main_menu.Assign("STAFF MENU", mf.STAFF_MENU, 1);
 		}
 		if (AccountLogin.getType() == "Student") {
-			menu main_menu("STUDENT MENU", mf.STUDENT_MENU, 1);
-			Menu(main_menu);
+			main_menu.Assign("STUDENT MENU", mf.STUDENT_MENU, 1);
 		}
 		if (AccountLogin.getType() == "Lecturer") {
-			menu main_menu("LECTURER MENU", mf.LECTURER_MENU, 1);
-			Menu(main_menu);
+			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
 		}	
+		Menu(main_menu);
 	}
 }
 

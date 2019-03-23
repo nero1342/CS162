@@ -18,6 +18,7 @@ public:
 
 	menu();
 	menu(string title, vector<string> &name, int minchosen);
+	void Assign(string _title, vector<string>& _name, int _minchosen);
 };
 
 void staff_menu(menu &now);
@@ -26,27 +27,44 @@ void staff_menu(menu &now);
 
 class MenuFunction {
 public:
-	vector<string> STAFF_MENU = { "CLASS",
+	vector<string> STAFF_MENU = {	"CLASS",
 									"COURSES",
 									"SCOREBOARD",
 									"ATTENDANCE LIST",
 									"LOGOUT" };
-	vector<string> STUDENT_MENU = { "CLASS",
-									"COURSES",
-									"SCOREBOARD",
-									"ATTENDANCE LIST",
+
+	vector<string> STUDENT_MENU = {	
 									"RETURN" };
-	vector<string> LECTURER_MENU = { "CLASS",
-									"COURSES",
-									"SCOREBOARD",
-									"ATTENDANCE LIST",
+
+	vector<string> LECTURER_MENU = {
 									"RETURN" };
-	vector<string> CLASS_MENU = { "IMPORT CLASS",
+
+	vector<string> CLASS_MENU = {	"IMPORT CLASS",
+									"ADD A NEW STUDENT",
 									"EDIT EXIST STUDENT",
 									"REMOVE A STUDENT",
 									"VIEW LIST OF CLASSES",
 									"CHANGE CLASS OF STUDENT",
 									"RETURN" };
+
+	vector<string> COURSES_MENU = { "ACADEMIC YEARS",
+								"SEMESTERS",
+								"ADD NEW COURSE",
+								"EDIT EXIST COURSE",
+								"REMOVE A COURSE",
+								"REMOVE STUDENT",
+								"ADD NEW STUDENT",
+								"VIEW LIST OF CLASSES",
+								"VIEW LIST OF STUDENTS",
+								"VIEW ATTENDANCE OF COURSE",
+								"LECTURE",
+								"RETURN" };
+
+	vector<string> CUDV_MENU = { "CREATE", "UPDATE", "DELETE", "VIEW", "RETURN" };
+
+	vector<string> SCOREBOARD_MENU = { "VIEW SCOREBOARD", "EXPORT", "RETURN" };
+
+	vector<string> ATTENDANCE_MENU = { "VIEW ATTENDANCE LIST", "EXPORT", "RETURN" };
 };
 
 #endif // !NENU_H

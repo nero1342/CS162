@@ -18,3 +18,9 @@ menu::menu():chosen(1) {}
 menu::menu(string title, vector<string> &name, int minchosen) : title(title), name(name), chosen(minchosen), minchosen(minchosen) {
 	//name.push_back("RETURN");
 }
+
+void menu::Assign(string _title, vector<string> &_name, int _minchosen) {
+	title = _title;
+	name = _name;
+	minchosen = _minchosen;
+}
