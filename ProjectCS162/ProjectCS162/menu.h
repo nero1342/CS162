@@ -40,7 +40,7 @@ public:
 									"RETURN" };
 
 	vector<string> CLASS_MENU = {	"IMPORT CLASS",
-									"ADD A NEW STUDENT",
+									"ADD NEW STUDENT",
 									"EDIT EXIST STUDENT",
 									"REMOVE A STUDENT",
 									"VIEW LIST OF CLASSES",
