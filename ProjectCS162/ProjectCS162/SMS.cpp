@@ -50,7 +50,7 @@ void StudentManagementSystem::AddNewStudent() {
 	acclist.Reload();
 	acclist.Add(student);
 	acclist.SaveData();
-	classlist.AddStudent(student)
+	classlist.AddStudent(student);
 }
 
 void StudentManagementSystem::EditExistStudent(){
@@ -247,11 +247,11 @@ void StudentManagementSystem::ExportAttendaceList()
 	string year = "2018-2019";
 	string sem = "Fall";
 	string course = "CM101";
-	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-attendancelist.txt");
 
 	//if (in.fail())
-
-	//while (in>>)
+	AttendanceList a;
+	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-attendancelist.txt");
+	a.ExportAttend(course);
 }
 
 void StudentManagementSystem::ImportCourse()
@@ -370,6 +370,11 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 				student.RemoveCourse(courseID);
 				student.SaveData();
 
+				AttendanceList a;
+				a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+				a.Remove(student.getStudentID());
+				a.SaveData("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+
 				course.RemoveStudent(student.getStudentID());
 				ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
 				course.SaveData(ou);
@@ -436,6 +441,7 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "EDIT EXIST COURSE") EditCourse();
 		if (choose == "REMOVE COURSE") RemoveCourse();
 		if (choose == "REMOVE STUDENT FROM COURSE") RemoveAStudentFromCourse();
+		if (choose == "VIEW LIST OF COURSE");
 		if (choose == "ADD STUDENT");
 	// SCOREBOARD
 	if (choose == "SCOREBOARD") {

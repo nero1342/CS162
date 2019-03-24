@@ -192,6 +192,7 @@ void Course::RemoveStudent(string StudentID)
 	swap(listOfStudent[pos], listOfStudent.back());
 	listOfStudent.pop_back();
 }
+
 Course::Course(string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
 	ID(a), name(b), Class(c), lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
 
@@ -221,9 +222,35 @@ void Attendance::ReloadDay(istream & in)
 	for (unsigned int i = 0; i < day.size(); ++i) in >> day[i];
 }
 
+bool Attendance::CompareStudentID(string ID)
+{
+	if (ID == StudentID) return true;
+	return false;
+}
+
+string Attendance::GetStudentID()
+{
+	return StudentID;
+}
+
+vector<int> Attendance::GetAttend()
+{
+	return day;
+}
+
 void AttendanceList::Add(Attendance x)
 {
 	attend.push_back(x);
+}
+
+void AttendanceList::Remove(string ID)
+{
+	for (unsigned int i = 0; i < attend.size(); ++i) if (attend[i].CompareStudentID(ID))
+	{
+		swap(attend[i], attend.back());
+		attend.pop_back();
+		break;
+	}
 }
 
 void AttendanceList::SaveData(string link)
@@ -242,6 +269,22 @@ void AttendanceList::Reload(string link)
 		Attendance tmp;
 		tmp.SetStudentID(x);
 		tmp.ReloadDay(in);
+		attend.push_back(tmp);
 	}
 	in.close();
+}
+
+void AttendanceList::ExportAttend(string name)
+{
+	vector<string> Col = { "Student ID","1","2","3","4","5","6","7","8","9","10" };
+	vector<string> Row;
+	vector<vector<int>> a;
+	vector<int> tmp(10);
+	for (auto i : attend)
+	{
+		Row.push_back(i.GetStudentID());
+		a.push_back(tmp);
+		a.back() = i.GetAttend();
+	}
+	Export(Row, Col, name + "-attendancelist", a);
 }

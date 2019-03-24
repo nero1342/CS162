@@ -17,6 +17,10 @@ public:
 	void SetStudentID(string ID);
 	void SaveData(ostream & ou);
 	void ReloadDay(istream & in);
+	bool CompareStudentID(string ID);
+
+	string GetStudentID();
+	vector<int> GetAttend();
 };
 
 class AttendanceList
@@ -25,9 +29,11 @@ private:
 	vector<Attendance> attend;
 public:
 	void Add(Attendance x);
+	void Remove(string ID);
 
 	void SaveData(string link);
 	void Reload(string link);
+	void ExportAttend(string name);
 };
 
 class Course

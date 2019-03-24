@@ -87,6 +87,15 @@ void CourseList::RemoveCourse(string year, string & sem, string & name)
 	in.close();
 
 	DeleteFile(year.c_str());
+	while (!year.empty() && year.back() != '.') year.pop_back();
+	year.pop_back();
+	year += "-attendancelist.txt";
+	DeleteFile(year.c_str());
+
+	while (!year.empty() && year.back() != '-') year.pop_back();
+	year.pop_back();
+	year += "-scoreboard.txt";
+	DeleteFile(year.c_str());
 
 	tmp.DeleteCourse();
 }
