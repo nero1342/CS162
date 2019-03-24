@@ -1,4 +1,8 @@
 #include "Course.h"
+#include <sstream>
+#include <iomanip>
+#include "menu.h"
+#include "control.h"
 
 string Course::GetID()
 {
@@ -103,6 +107,56 @@ void Course::DeleteCourse()
 	}
 }
 
+string Course::ViewListStudent() {
+	string title = "STUDENT LIST OF" + name;
+	vector<string> matrix_class;
+	stringstream ff;
+
+	ff << left << setw(5) << "No"
+		<< left << setw(15) << "Student ID"
+		<< left << setw(30) << "Lastname"
+		<< left << setw(10) << "Firstname"
+		<< left << setw(10) << "Gender"
+		<< left << setw(15) << "Day of Birth" << endl;
+
+	string feature;
+	getline(ff, feature);
+	matrix_class.push_back(feature);
+	int cnt = 0;
+	for (string studentID : listOfStudent) {
+		Student student;
+		student.SetStudentID(studentID);
+		student.Reload();
+		ff << left << setw(5) << ++cnt
+			<< left << setw(15) << student.getStudentID()
+			<< left << setw(30) << student.getLastname()
+			<< left << setw(10) << student.getFirstname()
+			<< left << setw(10) << student.getGender()
+			<< left << setw(15) << student.getDoB() << endl;
+		getline(ff, feature);
+		matrix_class.push_back(feature);
+	}
+	matrix_class.push_back("RETURN");
+	menu studentList(title, matrix_class, 2);
+
+	string result = menu_choose(studentList);
+	cnt = 0;
+	for (string studentID : listOfStudent) {
+		Student student;
+		student.SetStudentID(studentID);
+		student.Reload();
+		ff << left << setw(5) << ++cnt
+			<< left << setw(15) << student.getStudentID()
+			<< left << setw(30) << student.getLastname()
+			<< left << setw(10) << student.getFirstname()
+			<< left << setw(10) << student.getGender()
+			<< left << setw(15) << student.getDoB() << endl;
+		getline(ff, feature);
+		if (feature == result) return studentID;
+	}
+	return "RETURN";
+}
+
 void Course::CreateAttendanceList(string link)
 {
 	AttendanceList a;
@@ -127,16 +181,17 @@ string Course::GetStudentID(int & pos)
 	return "";
 }
 
-void Course::RemoveStudent(int & pos)
+void Course::RemoveStudent(string StudentID)
 {
+	int pos = 0;
+	for (string id : listOfStudent) if (id == StudentID) {
+		break;
+	}
+	else ++pos;
 	if (pos < 0 || pos >= listOfStudent.size()) return;
-
-
-
 	swap(listOfStudent[pos], listOfStudent.back());
 	listOfStudent.pop_back();
 }
-
 Course::Course(string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
 	ID(a), name(b), Class(c), lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
 

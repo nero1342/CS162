@@ -40,7 +40,7 @@ public:
 	string GetClass();
 	string GetStudentID(int &pos);
 
-	void RemoveStudent(int &pos);
+	void RemoveStudent(string StudentID);
 
 	void SetID(string name);
 	void Reload(istream & in); 
@@ -49,6 +49,8 @@ public:
 	void Import();
 	void CreateAccountForLecturer(); 
 	void DeleteCourse();
+
+	string ViewListStudent();
 
 	void CreateAttendanceList(string link);
 

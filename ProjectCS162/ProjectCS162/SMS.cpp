@@ -60,6 +60,7 @@ void StudentManagementSystem::RemoveStudent() {
 	myClass.SetName(classlist.ViewList());
 	if (myClass.GetName() == "RETURN") return;
 	Student student;
+	Student t = student;
 	student.SetStudentID(myClass.ViewList());
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
@@ -114,12 +115,6 @@ void StudentManagementSystem::CreateAcademicYear()
 
 void StudentManagementSystem::CreateSemester()
 {
-	/*
-		display the AcademicYear to choose
-			ifstream in("Data\\AcademicYear.txt");
-			...
-		get info
-	*/
 	string year = ViewAcademicYear();
 	if (year == "RETURN") return;
 
@@ -133,14 +128,8 @@ void StudentManagementSystem::CreateSemester()
 
 void StudentManagementSystem::DeleteAcademicYear()
 {
-	/*
-		display
-		choose a year
-	*/
 	string year = ViewAcademicYear();
 	if (year == "RETURN") return;
-
-	//string name = "2018-2019";
 	courselist.DeleteAcademicYear(year);
 }
 
@@ -283,101 +272,101 @@ void StudentManagementSystem::AddACourse()
 		pass by ref
 		Course tmp(....)
 	*/
-	Course tmp;
-	string year = "2018-2019";
-	string sem = "Fall";
-	courselist.AddCourse(year,sem,tmp);
+	while (true) {
+		string year = ViewAcademicYear();
+		if (year == "RETURN") return;
+		while (true) {
+			string sem = ViewSemester(year);
+			if (sem == "RETURN") break;
+			// Show info new Course here
+			Course tmp;
+			courselist.AddCourse(year, sem, tmp);
+			return;
+		}
+	}
+	
 }
 
 
 void StudentManagementSystem::EditCourse()
 {
-	/*
-		get info for new course
-		choose year and sem
-		load vector course for edit
-	*/
-	string year = "2018-2019";
-	string sem = "Fall";
-	courselist.Load(year, sem);
-	/*
-		return a number of course in the vector to edit
-	*/
-	int chosen = 1;
-	string tmp=courselist.GetCourse(chosen);
-	tmp = "Data\\Course\\" + year + "\\" + sem + "\\" + tmp + ".txt";
-
-	ifstream in(tmp);
-	Course Change;
-	Change.Reload(in);
-	in.close();
-
-	/*
-		output to change
-		Change.SetName(...)......
-		......
-	*/
-
-	ofstream ou(tmp);
-	Change.SaveData(ou);
-	ou.close();
+	while (true) {
+		string year = ViewAcademicYear();
+		if (year == "RETURN") return;
+		while (true) {
+			string sem = ViewSemester(year);
+			if (sem == "RETURN") break;
+			while (true) {
+				string courseID = ViewListCourse(year, sem);
+				if (courseID == "RETURN") break;
+				courseID = "Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt";
+				ifstream in(courseID);
+				Course Change;
+				Change.Reload(in);
+				in.close();
+				// Edit course here
+				/*
+				
+				*/
+				ofstream ou(courseID);
+				Change.SaveData(ou);
+				ou.close();
+			}
+		}
+	}
 }
 
 void StudentManagementSystem::RemoveCourse()
 {
-	/*
-		get info
-		choose year
-		choose sem
-	string year = "2018-2019";
-	string sem = "Fall";
-	string name = "CM101";
-	*/
-	string year, sem, name;
 	while (true) {
-		// Choose year
-
+		string year = ViewAcademicYear();
+		if (year == "RETURN") return;
 		while (true) {
-			// Choose semester
+			string sem = ViewSemester(year);
+			if (sem == "RETURN") break;
 			while (true) {
-				// Chose Course ID
+				string courseID = ViewListCourse(year, sem);
+				if (courseID == "RETURN") break;
+				courselist.RemoveCourse(year, sem, courseID);
+				return;
 			}
 		}
 	}
-	courselist.RemoveCourse(year, sem, name);
 }
 
 void StudentManagementSystem::RemoveAStudentFromCourse()
 {
-	/*
-		choose year 
-		choose sem
-		get info of the course (display the courselist)
-	*/
-	string year = "2018-2019";
-	string sem = "Fall";
-	string name = "CM101";
+	while (true) {
+		string year = ViewAcademicYear();
+		if (year == "RETURN") return;
+		while (true) {
+			string sem = ViewSemester(year);
+			if (sem == "RETURN") break;
+			while (true) {
+				string courseID = ViewListCourse(year, sem);
+				if (courseID == "RETURN") break;
+				Course course;
+				ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+				course.Reload(in);
+				in.close();
+			
+				Student student;
+				student.SetStudentID(course.ViewListStudent());
+				student.Reload();
+				student.RemoveCourse(courseID);
+				student.SaveData();
 
-	Course course;
-	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt");
-	course.Reload(in);
-	in.close();
+				course.RemoveStudent(student.getStudentID());
+				ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+				course.SaveData(ou);
+				ou.close();
+				return;
+			}
+		}
+	}
+	
 
-	/*
-		show listOfStudent
-	*/
-	int chosen = 0;
-
-	Student student;
-	student.SetStudentID(course.GetStudentID(chosen));
-	student.Reload();
-	student.RemoveCourse(name);
-	student.SaveData();
-
-	course.RemoveStudent(chosen);
-	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt");
-	course.SaveData(ou);
-	ou.close();
+	
 }
 
 string StudentManagementSystem::ViewListCourse(string year, string semester)
