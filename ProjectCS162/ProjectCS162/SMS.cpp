@@ -41,6 +41,19 @@ void StudentManagementSystem::ImportClass() {
 }
 
 void StudentManagementSystem::AddNewStudent() {
+	// Get info of student here
+	Student student;
+	student.SetStudentID("");
+	NewStudentInfo(student);
+	if (student.getStudentID() == "") return;
+	//
+	acclist.Reload();
+	acclist.Add(student);
+	acclist.SaveData();
+	classlist.AddStudent(student)
+}
+
+void StudentManagementSystem::EditExistStudent(){
 	Class myClass;
 	myClass.SetName(classlist.ViewList());
 	if (myClass.GetName() == "RETURN") return;
@@ -49,11 +62,10 @@ void StudentManagementSystem::AddNewStudent() {
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
 	EditInfo(student);
+	// cai nay cung khong can
+	// class cuoi cung chi luu ID lai thoi
+	//
 	student.SaveData();
-}
-
-void StudentManagementSystem::EditExistStudent()
-{
 }
 
 void StudentManagementSystem::RemoveStudent() {
