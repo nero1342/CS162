@@ -57,7 +57,7 @@ public:
 								"EDIT EXIST COURSE",
 								"REMOVE COURSE",
 								"REMOVE STUDENT FROM COURSE",
-								"ADD  STUDENT",
+								"ADD STUDENT TO COURSE",
 								"VIEW LIST OF CLASSES",
 								"VIEW LIST OF STUDENTS",
 								"VIEW ATTENDANCE OF COURSE",

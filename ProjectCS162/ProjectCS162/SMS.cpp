@@ -375,7 +375,7 @@ string StudentManagementSystem::ViewListCourse(string year, string semester)
 {
 	// Return a course ID
 	vector<string> list;
-	ifstream fin("Data\\" + year + "\\" + semester + "\\CourseList.txt");
+	ifstream fin("Data\\Course\\" + year + "\\" + semester + "\\CourseList.txt");
 	string st;
 	while (getline(fin, st)) {
 		list.push_back(st);
@@ -420,10 +420,10 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "CREATE SEMESTER") CreateSemester();
 		if (choose == "DELETE SEMESTER") DeleteSemester();
 		if (choose == "IMPORT COURSE") ImportCourse();
-		if (choose == "ADD NEW COURSE");
-		if (choose == "EDIT EXIST COURSE");
-		if (choose == "REMOVE COURSE");
-		if (choose == "REMOVE STUDENT FROM COURSE");
+		if (choose == "ADD NEW COURSE") AddACourse();
+		if (choose == "EDIT EXIST COURSE") EditCourse();
+		if (choose == "REMOVE COURSE") RemoveCourse();
+		if (choose == "REMOVE STUDENT FROM COURSE") RemoveAStudentFromCourse();
 		if (choose == "ADD STUDENT");
 	// SCOREBOARD
 	if (choose == "SCOREBOARD") {
