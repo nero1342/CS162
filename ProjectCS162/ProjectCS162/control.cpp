@@ -21,61 +21,24 @@ void NewStudentInfo(Student &x) {
 				"Firstname:",
 				"Gender:",
 				"DoB:",
-				"Class:",
 				"Aplly",
 				"Cancel"
 	};
 	Menu.minchosen = 1;
 	Menu.chosen = 1;
-	graphics show;
-	window tool;
-	show.init_graphic();
-	Student tmp;
-	tmp = x;
-	int ok = 0;
-	while (1) {
-		show.show_menu(Menu, ok);
-		ok = 1;
-		int key;
-		while (1) {
-			key = menu_move(Menu);
-			if (key == -1) Sleep(1);
-			else break;
-		}
-		if (key) {
-			if (Menu.chosen == 1) {
-				tmp.SetStudentID(get_info(Menu, tmp.getStudentID()));
-				continue;
-			}
-			if (Menu.chosen == 2) {
-				tmp.SetLastname(get_info(Menu, tmp.getLastname()));
-				continue;
-			}
-			if (Menu.chosen == 3) {
-				tmp.SetFirstname(get_info(Menu, tmp.getFirstname()));
-				continue;
-			}
-			if (Menu.chosen == 4) {
-				tmp.SetGender(get_info(Menu, tmp.getGender()));
-				continue;
-			}
-			if (Menu.chosen == 5) {
-				tmp.SetDoB(get_info(Menu, tmp.getDoB()));
-				continue;
-			}
-			if (Menu.chosen == 6) {
-				tmp.SetClass(get_info(Menu, tmp.getClass()));
-				continue;
-			}
-			if (Menu.chosen == 7) {
-				x = tmp;
-				return;
-			}
-			if (Menu.chosen == 8) {
-				return;
-			}
-		}
+	vector<string> answer;
+	answer.clear();
+	for (int i = 1; i <= 5; i++) answer.push_back("");
+	if (fill_menu(Menu, answer) == 0) return;
+	else {
+		x.SetStudentID(answer[0]);
+		x.SetLastname(answer[1]);
+		x.SetFirstname(answer[2]);
+		x.SetGender(answer[3]);
+		x.SetDoB(answer[4]);
+		return;
 	}
+	
 }
 
 void EditInfo(Student &x) {
@@ -91,56 +54,19 @@ void EditInfo(Student &x) {
 	};
 	Menu.minchosen = 1;
 	Menu.chosen = 1;
-	graphics show;
-	window tool;
-	show.init_graphic();
-	Student tmp;
-	tmp = x;
-	int ok = 0;
-	while (1) {
-		show.show_menu(Menu, ok);
-		if (!ok) {
-			tool.gotoXY(35, 1 + Menu.begin - 1);
-			cout << tmp.getLastname();
-			tool.gotoXY(35, 2 + Menu.begin - 1);
-			cout << tmp.getFirstname();
-			tool.gotoXY(35, 3 + Menu.begin - 1);
-			cout << tmp.getGender();
-			tool.gotoXY(35, 4 + Menu.begin - 1);
-			cout << tmp.getDoB();
-		}
-		ok = 1;
-		int key;
-		while (1) {
-			key = menu_move(Menu);
-			if (key == -1) Sleep(1);
-			else break;
-		}
-		if (key) {
-			if (Menu.chosen == 1) {
-				tmp.SetLastname(get_info(Menu, tmp.getLastname()));
-				continue;
-			}
-			if (Menu.chosen == 2) {
-				tmp.SetFirstname(get_info(Menu, tmp.getFirstname()));
-				continue;
-			}
-			if (Menu.chosen == 3) {
-				tmp.SetGender(get_info(Menu, tmp.getGender()));
-				continue;
-			}
-			if (Menu.chosen == 4) {
-				tmp.SetDoB(get_info(Menu, tmp.getDoB()));
-				continue;
-			}
-			if (Menu.chosen == 5) {
-				x = tmp;
-				return;
-			}
-			if (Menu.chosen == 6) {
-				return;
-			}
-		}
+	vector<string > answer;
+	answer.clear();
+	answer.push_back(x.getLastname());
+	answer.push_back(x.getFirstname());
+	answer.push_back(x.getGender());
+	answer.push_back(x.getDoB());
+	if (fill_menu(Menu, answer) == 0) return;
+	else {
+		x.SetLastname(answer[0]);
+		x.SetFirstname(answer[1]);
+		x.SetGender(answer[2]);
+		x.SetDoB(answer[3]);
+		return;
 	}
 }
 
@@ -194,6 +120,34 @@ string menu_choose(menu &main_menu) {
 		}
 		if (key) {
 			return main_menu.name[main_menu.chosen - 1];
+		}
+	}
+}
+
+bool fill_menu(menu &Menu, vector<string > &answer) {
+	graphics show;
+	window tool;
+	show.init_graphic();
+	int ok = 0;
+	while (1) {
+		show.show_menu(Menu, ok);
+		if (!ok) {
+			for (int i = 0; i < answer.size(); ++i) {
+				tool.gotoXY(35, i + Menu.begin );
+				cout << answer[i];
+			}
+		}
+		ok = 1;
+		int key;
+		while (1) {
+			key = menu_move(Menu);
+			if (key == -1) Sleep(1);
+			else break;
+		}
+		if (key) {
+			if (Menu.chosen == Menu.name.size()) return 0;
+			if (Menu.chosen == Menu.name.size() - 1) return 1;
+			answer[Menu.chosen - 1] = get_info(Menu, answer[Menu.chosen - 1]);
 		}
 	}
 }

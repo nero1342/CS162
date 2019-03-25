@@ -41,9 +41,13 @@ void StudentManagementSystem::ImportClass() {
 }
 
 void StudentManagementSystem::AddNewStudent() {
+	Class myClass;
+	myClass.SetName(classlist.ViewList());
+	if (myClass.GetName() == "RETURN") return;
 	// Get info of student here
 	Student student;
 	student.SetStudentID("");
+	student.SetClass(myClass.GetName());
 	NewStudentInfo(student);
 	if (student.getStudentID() == "") return;
 	//

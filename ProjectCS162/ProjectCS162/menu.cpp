@@ -24,3 +24,4 @@ void menu::Assign(string _title, vector<string> &_name, int _minchosen) {
 	name = _name;
 	minchosen = _minchosen;
 }
+
