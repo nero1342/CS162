@@ -194,23 +194,18 @@ string StudentManagementSystem::ViewSemester(string year)
 void StudentManagementSystem::ImportScoreboard()
 {
 	/*
-		choose scoreboard
 		choose year
 		choose semester
 		choose course
+		choose scoreboard
 	*/
 	string name = "scoreboard.csv";
 	string year = "2018-2019";
 	string sem = "Fall";
 	string course = "CM101";
 
-	Import(name, "Data\\Course\\" + year + "\\" + sem + "\\");
-
-	while (name.back() != '.') name.pop_back();
-	name += "txt";
-
-	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
-	system(year.c_str());
+	Scoreboard a;
+	a.ImportScoreboard(year, sem, course, name);
 }
 
 void StudentManagementSystem::ExportScoreboard()
@@ -222,23 +217,8 @@ void StudentManagementSystem::ExportScoreboard()
 	string sem = "Fall";
 	string course = "CM101";
 
-	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt");
-	//if (in.fail()) cout << no scoreboard
-	vector<string> Col = { "Student ID","Midterm","Practice","Final" };
-	vector<string> Row;
-	vector<vector<int>> Scoreboard;
-	vector<int> tmp(3);
-
-	string x;
-	int n = 0;
-	while (in >> x)
-	{
-		Row.push_back(x);
-		Scoreboard.push_back(tmp);
-		for (int i = 0; i < 3; ++i) in >> Scoreboard[n][i];
-		n++;
-	}
-	Export(Row, Col, course + "-scoreboard", Scoreboard);
+	Scoreboard a;
+	if (a.ExportScoreboard(year, sem, course)) cout << "Export succeeded\n"; else cout << "Export failed\n";
 }
 
 void StudentManagementSystem::ExportAttendaceList()
@@ -465,7 +445,7 @@ void StudentManagementSystem::Do(string &choose) {
 
 void StudentManagementSystem::Run()
 {
-	MenuFunction mf;
+	/*MenuFunction mf;
 	menu main_menu;
 	Reload();
 	acclist.Reload();
@@ -483,7 +463,8 @@ void StudentManagementSystem::Run()
 			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
 		}	
 		Menu(main_menu);
-	}
+	}*/
+	ImportScoreboard();
+	ExportScoreboard();
 }
-
 

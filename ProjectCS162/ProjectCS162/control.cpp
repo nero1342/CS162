@@ -49,7 +49,7 @@ void EditInfo(Student &x) {
 				"Firstname:",
 				"Gender:",
 				"DoB:",
-				"Aplly",
+				"Apply",
 				"Cancel"
 	};
 	Menu.minchosen = 1;

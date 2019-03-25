@@ -62,10 +62,10 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 
 void CourseList::AddCourse(string &year, string &sem, Course & a)
 {
+	a.Import();
 	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + a.GetID() + ".txt");
 	a.SaveData(ou);
 	ou.close();
-	a.Import();
 	a.CreateAttendanceList("Data\\Course\\" + year + "\\" + sem + "\\");
 }
 

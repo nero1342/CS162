@@ -7,6 +7,16 @@
 #include "Lecturer.hpp"
 #include "AccountList.hpp"
 
+class Scoreboard
+{
+private:
+	vector<vector<int>> scoreboard;
+	vector<string> StudentID;
+public:
+	void ImportScoreboard(string year, string &sem, string &course, string &name);
+	bool ExportScoreboard(string & year, string &sem, string &course);
+};
+
 class Attendance
 {
 private:
@@ -21,6 +31,7 @@ public:
 
 	string GetStudentID();
 	vector<int> GetAttend();
+	void UpdateAttend(vector<int> & a);
 };
 
 class AttendanceList
@@ -34,6 +45,8 @@ public:
 	void SaveData(string link);
 	void Reload(string link);
 	void ExportAttend(string name);
+	vector<int> GetAttend(string & ID);
+	void UpdateAttend(vector<int> &a, string &ID);
 };
 
 class Course

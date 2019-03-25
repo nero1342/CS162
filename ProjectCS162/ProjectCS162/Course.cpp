@@ -238,6 +238,12 @@ vector<int> Attendance::GetAttend()
 	return day;
 }
 
+void Attendance::UpdateAttend(vector<int>& a)
+{
+	day.clear();
+	day = a;
+}
+
 void AttendanceList::Add(Attendance x)
 {
 	attend.push_back(x);
@@ -287,4 +293,52 @@ void AttendanceList::ExportAttend(string name)
 		a.back() = i.GetAttend();
 	}
 	Export(Row, Col, name + "-attendancelist", a);
+}
+
+vector<int> AttendanceList::GetAttend(string & ID)
+{
+	for (auto i : attend) if (i.CompareStudentID(ID)) return i.GetAttend();
+}
+
+void AttendanceList::UpdateAttend(vector<int>& a, string & ID)
+{
+	for (unsigned int i = 0; i < attend.size(); ++i) if (attend[i].CompareStudentID(ID))
+	{
+		attend[i].UpdateAttend(a);
+		break;
+	}
+}
+
+void Scoreboard::ImportScoreboard(string year, string & sem, string & course, string & name)
+{
+	Import(name, "Data\\Course\\" + year + "\\" + sem + "\\");
+
+	while (name.back() != '.') name.pop_back();
+	name += "txt";
+
+	string tmp = "Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt";
+	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
+	DeleteFile(tmp.c_str());
+
+	system(year.c_str());
+}
+
+bool Scoreboard::ExportScoreboard(string & year, string & sem, string & course)
+{
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt");
+	if (in.fail()) return false;
+
+	vector<string> Col = { "Student ID","Midterm","Practice","Final" };
+	vector<int> tmp(3);
+
+	string x;
+	int n = 0;
+	while (in >> x)
+	{
+		StudentID.push_back(x);
+		scoreboard.push_back(tmp);
+		for (int i = 0; i < 3; ++i) in >> scoreboard[n][i];
+		n++;
+	}
+	Export(StudentID, Col, course + "-scoreboard", scoreboard);
 }
