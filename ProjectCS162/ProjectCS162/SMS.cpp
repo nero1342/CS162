@@ -414,6 +414,23 @@ string StudentManagementSystem::ViewCourse(string &year, string &semester)
 	return "RETURN";
 }
 
+string StudentManagementSystem::ViewListStudentInCourse()
+{
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return "";
+	Course course;
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+	course.Reload(in);
+	in.close();
+
+	Student student;
+	while (true) {
+		student.SetStudentID(course.ViewListStudent());
+		if (student.getStudentID() == "RETURN") return "RETURN";
+	}
+}
+
 void StudentManagementSystem::Menu(menu &main_menu) {
 	while (1) {
 		string choose = menu_choose(main_menu);
@@ -452,10 +469,9 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "ADD NEW COURSE") AddACourse();
 		if (choose == "EDIT EXIST COURSE") EditCourse();
 		if (choose == "REMOVE COURSE") RemoveCourse();
-		if (choose == "ADD STUDENT TO COURSE")
+		if (choose == "ADD STUDENT TO COURSE") AddAStudentToCourse();
 		if (choose == "REMOVE STUDENT FROM COURSE") RemoveAStudentFromCourse();
-		if (choose == "VIEW LIST OF COURSE");
-		if (choose == "ADD STUDENT");
+		if (choose == "VIEW LIST OF COURSE") ViewListStudentInCourse();
 	// SCOREBOARD
 	if (choose == "SCOREBOARD") {
 		menu sb_menu("STAFF MENU - SCOREBOARD", mf.SCOREBOARD_MENU, 1);

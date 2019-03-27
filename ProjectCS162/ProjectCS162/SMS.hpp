@@ -44,6 +44,7 @@ public:
 	void RemoveAStudentFromCourse();
 	string ViewListCourse(string year, string semester);
 	string ViewCourse(string &year, string &semester);
+	string ViewListStudentInCourse();
 	void Do(string & choose);
 
 	void Menu(menu & x);
