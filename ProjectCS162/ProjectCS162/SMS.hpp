@@ -40,9 +40,10 @@ public:
 	void AddACourse();
 	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
 	void RemoveCourse();
+	void AddAStudentToCourse();
 	void RemoveAStudentFromCourse();
 	string ViewListCourse(string year, string semester);
-
+	string ViewCourse(string &year, string &semester);
 	void Do(string & choose);
 
 	void Menu(menu & x);

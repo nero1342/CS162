@@ -309,6 +309,11 @@ void AttendanceList::UpdateAttend(vector<int>& a, string & ID)
 	}
 }
 
+void AttendanceList::View()
+{
+	cout << "Bi lua r";
+}
+
 void Scoreboard::ImportScoreboard(string year, string & sem, string & course, string & name)
 {
 	Import(name, "Data\\Course\\" + year + "\\" + sem + "\\");

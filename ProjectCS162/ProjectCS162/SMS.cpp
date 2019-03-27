@@ -200,12 +200,12 @@ void StudentManagementSystem::ImportScoreboard()
 		choose scoreboard
 	*/
 	string name = "scoreboard.csv";
-	string year = "2018-2019";
-	string sem = "Fall";
-	string course = "CM101";
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
 
 	Scoreboard a;
-	a.ImportScoreboard(year, sem, course, name);
+	a.ImportScoreboard(year, sem, courseID, name);
 }
 
 void StudentManagementSystem::ExportScoreboard()
@@ -213,29 +213,42 @@ void StudentManagementSystem::ExportScoreboard()
 	/*
 		get info of year,sem,course
 	*/
-	string year = "2018-2019";
-	string sem = "Fall";
-	string course = "CM101";
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
 
 	Scoreboard a;
-	if (a.ExportScoreboard(year, sem, course)) cout << "Export succeeded\n"; else cout << "Export failed\n";
+	if (a.ExportScoreboard(year, sem, courseID)) cout << "Export succeeded\n"; else cout << "Export failed\n";
 }
 
 void StudentManagementSystem::ExportAttendaceList()
 {
-	/*
-		get info of year
-		get info of semester
-		get info of course
-	*/
-	string year = "2018-2019";
-	string sem = "Fall";
-	string course = "CM101";
-
-	//if (in.fail())
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
 	AttendanceList a;
-	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-attendancelist.txt");
-	a.ExportAttend(course);
+	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+	a.ExportAttend(courseID);
+}
+
+void StudentManagementSystem::ViewAttendanceList()
+{
+	while (true) {
+		string year = ViewAcademicYear();
+		if (year == "RETURN") break;
+		while (true) {
+			string sem = ViewSemester(year);
+			if (sem == "RETURN") break;
+			while (true) {
+				string courseID = ViewListCourse(year, sem);
+				if (courseID == "RETURN") break;
+				AttendanceList a;
+				a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+				a.View();
+				return;
+			}
+		}
+	}
 }
 
 void StudentManagementSystem::ImportCourse()
@@ -272,11 +285,14 @@ void StudentManagementSystem::AddACourse()
 	*/
 	while (true) {
 		string year = ViewAcademicYear();
-		if (year == "RETURN") return;
+		if (year == "RETURN") break;
 		while (true) {
 			string sem = ViewSemester(year);
 			if (sem == "RETURN") break;
+			
 			// Show info new Course here
+
+
 			Course tmp;
 			courselist.AddCourse(year, sem, tmp);
 			return;
@@ -288,88 +304,82 @@ void StudentManagementSystem::AddACourse()
 
 void StudentManagementSystem::EditCourse()
 {
-	while (true) {
-		string year = ViewAcademicYear();
-		if (year == "RETURN") return;
-		while (true) {
-			string sem = ViewSemester(year);
-			if (sem == "RETURN") break;
-			while (true) {
-				string courseID = ViewListCourse(year, sem);
-				if (courseID == "RETURN") break;
-				courseID = "Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt";
-				ifstream in(courseID);
-				Course Change;
-				Change.Reload(in);
-				in.close();
-				// Edit course here
-				/*
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
+	courseID = "Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt";
+	ifstream in(courseID);
+	Course Change;
+	Change.Reload(in);
+	in.close();
+	// Edit course here
+	/*
 				
-				*/
-				ofstream ou(courseID);
-				Change.SaveData(ou);
-				ou.close();
-			}
-		}
-	}
+	*/
+	ofstream ou(courseID);
+	Change.SaveData(ou);
+	ou.close();
 }
 
 void StudentManagementSystem::RemoveCourse()
 {
-	while (true) {
-		string year = ViewAcademicYear();
-		if (year == "RETURN") return;
-		while (true) {
-			string sem = ViewSemester(year);
-			if (sem == "RETURN") break;
-			while (true) {
-				string courseID = ViewListCourse(year, sem);
-				if (courseID == "RETURN") break;
-				courselist.RemoveCourse(year, sem, courseID);
-				return;
-			}
-		}
-	}
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
+	courselist.RemoveCourse(year, sem, courseID);
+}
+
+void StudentManagementSystem::AddAStudentToCourse()
+{
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
+	Course course;
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+	course.Reload(in);
+	in.close();
+				
+	// Choose student from Class
+	Class myClass;
+	myClass.SetName(classlist.ViewList());
+	if (myClass.GetName() == "RETURN") return;
+	Student student;
+	Student t = student;
+	student.SetStudentID(myClass.ViewList());
+	if (student.getStudentID() == "RETURN") return;
+	student.Reload();
+				
+	//Add student to course, add attendance here
+
+	return;	
 }
 
 void StudentManagementSystem::RemoveAStudentFromCourse()
 {
-	while (true) {
-		string year = ViewAcademicYear();
-		if (year == "RETURN") return;
-		while (true) {
-			string sem = ViewSemester(year);
-			if (sem == "RETURN") break;
-			while (true) {
-				string courseID = ViewListCourse(year, sem);
-				if (courseID == "RETURN") break;
-				Course course;
-				ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
-				course.Reload(in);
-				in.close();
-			
-				Student student;
-				student.SetStudentID(course.ViewListStudent());
-				student.Reload();
-				student.RemoveCourse(courseID);
-				student.SaveData();
+	string year, sem;
+	string courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
+	Course course;
+	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+	course.Reload(in);
+	in.close();
+				
+	Student student;
+	student.SetStudentID(course.ViewListStudent());
+	if (student.getStudentID() == "RETURN") return;
+	student.Reload();
+	student.RemoveCourse(courseID);
+	student.SaveData();
 
-				AttendanceList a;
-				a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
-				a.Remove(student.getStudentID());
-				a.SaveData("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+	AttendanceList a;
+	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+	a.Remove(student.getStudentID());
+	a.SaveData("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
 
-				course.RemoveStudent(student.getStudentID());
-				ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
-				course.SaveData(ou);
-				ou.close();
-				return;
-			}
-		}
-	}
-	
-
-	
+	course.RemoveStudent(student.getStudentID());
+	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+	course.SaveData(ou);
+	ou.close();	
 }
 
 string StudentManagementSystem::ViewListCourse(string year, string semester)
@@ -384,6 +394,24 @@ string StudentManagementSystem::ViewListCourse(string year, string semester)
 	list.push_back("RETURN");
 	menu Menu(year + " - " + semester + " - COURSE", list, 1);
 	return menu_choose(Menu);
+}
+
+string StudentManagementSystem::ViewCourse(string &year, string &semester)
+{
+	while (true) {
+		year = ViewAcademicYear();
+		if (year == "RETURN") break;
+		while (true) {
+			semester = ViewSemester(year);
+			if (semester == "RETURN") break;
+			while (true) {
+				string courseID = ViewListCourse(year, semester);
+				if (courseID == "RETURN") break;
+				return courseID;
+			}
+		}
+	}
+	return "RETURN";
 }
 
 void StudentManagementSystem::Menu(menu &main_menu) {
@@ -424,6 +452,7 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "ADD NEW COURSE") AddACourse();
 		if (choose == "EDIT EXIST COURSE") EditCourse();
 		if (choose == "REMOVE COURSE") RemoveCourse();
+		if (choose == "ADD STUDENT TO COURSE")
 		if (choose == "REMOVE STUDENT FROM COURSE") RemoveAStudentFromCourse();
 		if (choose == "VIEW LIST OF COURSE");
 		if (choose == "ADD STUDENT");
@@ -445,7 +474,7 @@ void StudentManagementSystem::Do(string &choose) {
 
 void StudentManagementSystem::Run()
 {
-	/*MenuFunction mf;
+	MenuFunction mf;
 	menu main_menu;
 	Reload();
 	acclist.Reload();
@@ -463,8 +492,8 @@ void StudentManagementSystem::Run()
 			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
 		}	
 		Menu(main_menu);
-	}*/
-	ImportScoreboard();
-	ExportScoreboard();
+	}
+	//ImportScoreboard();
+	//ExportScoreboard();
 }
 

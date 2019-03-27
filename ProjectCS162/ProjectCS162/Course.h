@@ -47,6 +47,7 @@ public:
 	void ExportAttend(string name);
 	vector<int> GetAttend(string & ID);
 	void UpdateAttend(vector<int> &a, string &ID);
+	void View();
 };
 
 class Course
