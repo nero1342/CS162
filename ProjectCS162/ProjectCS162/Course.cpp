@@ -44,7 +44,7 @@ void Course::ReadInput(istream & in)
 	getline(in, room);
 }
 
-void Course::SaveData(ofstream & ou)
+void Course::SaveData(ostream & ou)
 {
 	ou << ID << "\n";
 	ou << name << "\n";
@@ -105,6 +105,11 @@ void Course::DeleteCourse()
 		x.RemoveCourse(ID);
 		x.SaveData();
 	}
+}
+
+void Course::AddNewStudent(Student & x)
+{
+	listOfStudent.push_back(x.getStudentID());
 }
 
 string Course::ViewListStudent() {
@@ -257,6 +262,13 @@ void AttendanceList::Remove(string ID)
 		attend.pop_back();
 		break;
 	}
+}
+
+void AttendanceList::AddStudent(Student & x)
+{
+	Attendance tmp;
+	tmp.SetStudentID(x.getStudentID());
+	attend.push_back(tmp);
 }
 
 void AttendanceList::SaveData(string link)

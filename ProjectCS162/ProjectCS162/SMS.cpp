@@ -350,6 +350,15 @@ void StudentManagementSystem::AddAStudentToCourse()
 	student.Reload();
 				
 	//Add student to course, add attendance here
+	course.AddNewStudent(student);
+	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
+	course.SaveData(ou);
+	ou.close();
+
+	AttendanceList x;
+	x.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+	x.AddStudent(student);
+	x.SaveData("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
 
 	return;	
 }

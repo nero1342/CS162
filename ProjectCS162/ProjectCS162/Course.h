@@ -42,6 +42,8 @@ public:
 	void Add(Attendance x);
 	void Remove(string ID);
 
+	void AddStudent(Student & x);
+
 	void SaveData(string link);
 	void Reload(string link);
 	void ExportAttend(string name);
@@ -65,10 +67,11 @@ public:
 	void SetID(string name);
 	void Reload(istream & in); 
 	void ReadInput(istream & in);  // this is for import only
-	void SaveData(ofstream & ou);
+	void SaveData(ostream & ou);
 	void Import();
 	void CreateAccountForLecturer(); 
 	void DeleteCourse();
+	void AddNewStudent(Student & x);
 
 	string ViewListStudent();
 
