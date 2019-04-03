@@ -320,7 +320,7 @@ void StudentManagementSystem::AddACourse()
 			courselist.Load(year, sem);
 			courselist.AddCourse(year, sem, tmp);
 			courselist.Save(year, sem);
-			return; return;
+			return; 
 		}
 	}
 	

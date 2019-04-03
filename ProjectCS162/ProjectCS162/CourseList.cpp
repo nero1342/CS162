@@ -67,6 +67,7 @@ void CourseList::AddCourse(string &year, string &sem, Course & a)
 	a.SaveData(ou);
 	ou.close();
 	a.CreateAttendanceList("Data\\Course\\" + year + "\\" + sem + "\\");
+	courseList.push_back(a.GetCourseID());
 }
 
 void CourseList::RemoveCourse(string year, string & sem, string & name)
