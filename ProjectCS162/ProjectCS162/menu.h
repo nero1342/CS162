@@ -27,19 +27,28 @@ void staff_menu(menu &now);
 
 class MenuFunction {
 public:
-	vector<string> STAFF_MENU = {	"CLASS",
+	vector<string> STAFF_MENU = { "CLASS",
 									"COURSES",
 									"SCOREBOARD",
 									"ATTENDANCE LIST",
 									"LOGOUT" };
 
-	vector<string> STUDENT_MENU = {	
+	vector<string> STUDENT_MENU = { "CHECK-IN",
+									"VIEW CHECK-IN RESULT",
+									"VIEW SCHEDULES",
+									"VIEW SCORES OF A COURSE",
 									"RETURN" };
 
-	vector<string> LECTURER_MENU = {
+	vector<string> LECTURER_MENU = { "VIEW LIST OF COURSES",
+									"VIEW LIST OF STUDENTS OF A COURSE",
+									"VIEW ATTENDANCE LIST OF A COURSE",
+									"EDIT AN ATTENDANCE",
+									"IMPORT SCOREBOARD OF A COURSE",
+									"EDIT GRADE OF A STUDENT",
+									"VIEW A SCOREBOARD",
 									"RETURN" };
 
-	vector<string> CLASS_MENU = {	"IMPORT CLASS",
+	vector<string> CLASS_MENU = { "IMPORT CLASS",
 									"ADD NEW STUDENT",
 									"EDIT EXIST STUDENT",
 									"REMOVE A STUDENT",
