@@ -58,16 +58,30 @@ private:
 	string ID, name, Class, lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
 	vector<string> listOfStudent;
 public:
-	string GetID();
+
+	void SetName(string newname);
+	void SetClass(string newclass);
+	void SetLecturer(string newlecturer);
+	void SetStartDate(string newStartDate);
+	void SetEndDate(string newEndDate);
+	void SetDOW(string newDOW);
+	void SetStartHour(string newStartHour);
+	void SetEndHour(string newEndHour);
+	void SetRoom(string newRoom);
+	string GetCourseID();
+	void SetID(string name);
+
+	void NewCourseInfo();
+
 	string GetClass();
 	string GetStudentID(int &pos);
 
 	void RemoveStudent(string StudentID);
 
-	void SetID(string name);
 	void Reload(istream & in); 
 	void ReadInput(istream & in);  // this is for import only
-	void SaveData(ostream & ou);
+	void SaveData(ofstream & ou);
+
 	void Import();
 	void CreateAccountForLecturer(); 
 	void DeleteCourse();

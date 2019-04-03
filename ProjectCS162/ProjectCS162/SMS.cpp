@@ -126,8 +126,20 @@ void StudentManagementSystem::CreateAcademicYear()
 {
 	// get info
 	string year = "2018-2019";
-
-	//
+	menu Menu;
+	Menu.title = "NEW ACADEMIC YEAR INFOMATION";
+	Menu.name.clear();
+	Menu.name = { "Year:",
+				"Apply",
+				"Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	vector<string> answer;
+	answer.clear();
+	for (int i = 1; i <= 1; i++) answer.push_back("");
+	if (fill_menu(Menu, answer) == 0) return;
+	year = answer[0];
 	courselist.CreateAcademicYear(year);
 }
 
@@ -136,11 +148,20 @@ void StudentManagementSystem::CreateSemester()
 	string year = ViewAcademicYear();
 	if (year == "RETURN") return;
 
-	/*
-		enter a semester to create
-	*/
-	string sem = "Fall";
-	
+	menu Menu;
+	Menu.title = "NEW SEMESTER INFOMATION";
+	Menu.name.clear();
+	Menu.name = { "Semester:",
+				"Apply",
+				"Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	vector<string> answer;
+	answer.clear();
+	for (int i = 1; i <= 1; i++) answer.push_back("");
+	if (fill_menu(Menu, answer) == 0) return;
+	string sem = answer[0];
 	courselist.CreateSemester(year, sem);
 }
 
@@ -291,11 +312,15 @@ void StudentManagementSystem::AddACourse()
 			if (sem == "RETURN") break;
 			
 			// Show info new Course here
-
-
 			Course tmp;
+			tmp.SetID("");
+			tmp.NewCourseInfo();
+			if (tmp.GetCourseID() == "") return;
+			//
+			courselist.Load(year, sem);
 			courselist.AddCourse(year, sem, tmp);
-			return;
+			courselist.Save(year, sem);
+			return; return;
 		}
 	}
 	

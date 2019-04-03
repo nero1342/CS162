@@ -44,7 +44,7 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 	DeleteFile(link.c_str());
 
 	ofstream ou(year + "CourseList.txt");
-	for (auto i : course) ou << i.GetID() << '\n';
+	for (auto i : course) ou << i.GetCourseID() << '\n';
 	ou.close();
 
 	for (unsigned int i = 0; i < course.size(); ++i)
@@ -54,7 +54,7 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 	}
 	for (auto i : course)
 	{
-		ou.open(year + i.GetID() + ".txt");
+		ou.open(year + i.GetCourseID() + ".txt");
 		i.SaveData(ou);
 		ou.close();
 	}
@@ -63,7 +63,7 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 void CourseList::AddCourse(string &year, string &sem, Course & a)
 {
 	a.Import();
-	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + a.GetID() + ".txt");
+	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + a.GetCourseID() + ".txt");
 	a.SaveData(ou);
 	ou.close();
 	a.CreateAttendanceList("Data\\Course\\" + year + "\\" + sem + "\\");

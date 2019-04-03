@@ -70,6 +70,7 @@ void EditInfo(Student &x) {
 	}
 }
 
+
 string get_info(menu &Menu, string old) {
 	string tmp = old;
 	window tool;

@@ -4,7 +4,8 @@
 #include "menu.h"
 #include "control.h"
 
-string Course::GetID()
+
+string Course::GetCourseID()
 {
 	return ID;
 }
@@ -12,6 +13,89 @@ string Course::GetID()
 void Course::SetID(string name)
 {
 	ID = name;
+}
+
+void Course::SetName(string newname)
+{
+	name = newname;
+}
+
+void Course::SetClass(string newclass)
+{
+	Class = newclass;
+}
+
+void Course::SetLecturer(string newlecturer)
+{
+	lecturer = newlecturer;
+}
+
+void Course::SetStartDate(string newStartDate)
+{
+	startDate = newStartDate;
+}
+
+void Course::SetEndDate(string newEndDate)
+{
+	endDate = newEndDate;
+}
+
+void Course::SetDOW(string newDOW)
+{
+	dayOfWeek = newDOW;
+}
+
+void Course::SetStartHour(string newStartHour)
+{
+	startHour = newStartHour;
+}
+
+void Course::SetEndHour(string newEndHour)
+{
+	endHour = newEndHour;
+}
+void Course::SetRoom(string newRoom)
+{
+	room = newRoom;
+}
+
+void Course::NewCourseInfo() {
+	menu Menu;
+	Menu.title = "NEW COURSE INFOMATION";
+	Menu.name.clear();
+	Menu.name = { "CourseID:",
+				"Name:",
+				"Class:",
+				"Lecturer:",
+				"StartDate:",
+				"EndDate:",
+				"Day Of Week:",
+				"Start Hour:",
+				"End Hour:",
+				"Room:",
+				"Apply",
+				"Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	vector<string> answer;
+	answer.clear();
+	for (int i = 1; i <= 10; i++) answer.push_back("");
+	if (fill_menu(Menu, answer) == 0) return;
+	else {
+		SetID(answer[0]);
+		SetName(answer[1]);
+		SetClass(answer[2]);
+		SetLecturer(answer[3]);
+		SetStartDate(answer[4]);
+		SetEndDate(answer[5]);
+		SetDOW(answer[6]);
+		SetStartHour(answer[7]);
+		SetEndHour(answer[8]);
+		SetRoom(answer[9]);
+		return;
+	}
+
 }
 
 void Course::Reload(istream & in)
@@ -44,7 +128,8 @@ void Course::ReadInput(istream & in)
 	getline(in, room);
 }
 
-void Course::SaveData(ostream & ou)
+
+void Course::SaveData(ofstream & ou)
 {
 	ou << ID << "\n";
 	ou << name << "\n";
