@@ -76,7 +76,7 @@ string get_info(menu &Menu, string old) {
 	window tool;
 	tool.gotoXY(100, Menu.chosen + Menu.begin - 1);
 	cout << "<";
-	tool.gotoXY(35, Menu.chosen + Menu.begin - 1);
+	tool.gotoXY(45, Menu.chosen + Menu.begin - 1);
 	cout << tmp;
 	while (1) {
 		int key;
@@ -97,10 +97,10 @@ string get_info(menu &Menu, string old) {
 			if (tmp.size() == 20) continue;
 			tmp = tmp + char(key);
 		}
-		tool.gotoXY(35, Menu.chosen + Menu.begin - 1);
+		tool.gotoXY(45, Menu.chosen + Menu.begin - 1);
 		for (int i = 1; i <= 20; ++i)
 			cout << " ";
-		tool.gotoXY(35, Menu.chosen + Menu.begin - 1);
+		tool.gotoXY(45, Menu.chosen + Menu.begin - 1);
 		cout << tmp;
 	}
 }
@@ -134,7 +134,7 @@ bool fill_menu(menu &Menu, vector<string > &answer) {
 		show.show_menu(Menu, ok);
 		if (!ok) {
 			for (int i = 0; i < answer.size(); ++i) {
-				tool.gotoXY(35, i + Menu.begin );
+				tool.gotoXY(45, i + Menu.begin );
 				cout << answer[i];
 			}
 		}
