@@ -506,6 +506,7 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "ADD STUDENT TO COURSE") AddAStudentToCourse();
 		if (choose == "REMOVE STUDENT FROM COURSE") RemoveAStudentFromCourse();
 		if (choose == "VIEW LIST OF COURSE") ViewListStudentInCourse();
+		if (choose == "VIEW ATTENDANCE OF COURSE") ViewAttendanceList();
 	// SCOREBOARD
 	if (choose == "SCOREBOARD") {
 		menu sb_menu("STAFF MENU - SCOREBOARD", mf.SCOREBOARD_MENU, 1);
