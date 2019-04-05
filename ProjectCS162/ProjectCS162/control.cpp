@@ -152,3 +152,14 @@ bool fill_menu(menu &Menu, vector<string > &answer) {
 		}
 	}
 }
+
+void Message(string message) {
+	window Window;
+	Window.clrscr();
+	int x = 1, y = 1;
+	Window.gotoXY(x, y);
+	cout << message;
+	Window.gotoXY(x, y + 1);
+	cout << "Press any key to continue...";
+	while (Window.inputkey() == -1);
+}

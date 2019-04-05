@@ -35,7 +35,8 @@ public:
 	void ExportAttendaceList();
 	void ViewScoreboard();
 	void ViewAttendanceList();
-
+	void CreateNewLecturer();
+	void ViewAllLecturers();
 	void ImportCourse(); 
 	void AddACourse();
 	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
@@ -45,7 +46,12 @@ public:
 	string ViewListCourse(string year, string semester);
 	string ViewCourse(string &year, string &semester);
 	string ViewListStudentInCourse();
+	void Lecturer_ViewCourse();
 	void Do(string & choose);
+
+	void Lecturer_ViewAttendance();
+
+	void Lecturer_ViewScoreboard();
 
 	void Menu(menu & x);
 

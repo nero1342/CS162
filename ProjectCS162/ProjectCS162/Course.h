@@ -86,7 +86,7 @@ public:
 	void SaveData(ofstream & ou);
 
 	void Import();
-	void CreateAccountForLecturer(); 
+	void CreateAccountForLecturer(string year, string sem); 
 	void DeleteCourse();
 	void AddNewStudent(Student & x);
 

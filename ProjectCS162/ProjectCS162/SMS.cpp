@@ -21,7 +21,7 @@ vector<string> ListFileInDicrectory(string pattern) {
 	if ((hFind = FindFirstFile(pattern.c_str(), &data)) != INVALID_HANDLE_VALUE) {
 		do {
 			string filename = data.cFileName;
-			if (filename == "." || filename == "..") continue;
+			if (filename == "" || filename == "." || filename == "..") continue;
 			result.push_back(filename);
 		} while (FindNextFile(hFind, &data) != 0);
 		FindClose(hFind);
@@ -215,32 +215,43 @@ string StudentManagementSystem::ViewSemester(string year)
 
 void StudentManagementSystem::ImportScoreboard()
 {
-	/*
-		choose year
-		choose semester
-		choose course
-		choose scoreboard
-	*/
-	string name = "scoreboard.csv";
-	string year, sem;
-	string courseID = ViewCourse(year, sem);
+	Lecturer lecturer(AccountLogin.getUsername());
+	lecturer.Reload();
+	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
+	string courseID = menu_choose(courseMenu);
 	if (courseID == "RETURN") return;
 
+	vector<string> scoreboard = ListFileInDicrectory("*.csv");
+	menu import_menu("Choose class", scoreboard, 1);
+	string nameScoreboard = menu_choose(import_menu);
+	if (nameScoreboard == "RETURN") return;
+
+	//CourseID format: year//sem//courseID, splitted below
+	string year, sem;
+	reverse(courseID.begin(), courseID.end());
+	while (courseID.back() != '\\') year.push_back(courseID.back()), courseID.pop_back();
+	courseID.pop_back();
+	while (courseID.back() != '\\') sem.push_back(courseID.back()), courseID.pop_back();
+	courseID.pop_back();
+	reverse(courseID.begin(), courseID.end());
+	reverse(sem.begin(), sem.end());
+	reverse(year.begin(), year.end());
+	//
+
 	Scoreboard a;
-	a.ImportScoreboard(year, sem, courseID, name);
+	a.ImportScoreboard(year, sem, courseID, nameScoreboard);
 }
 
 void StudentManagementSystem::ExportScoreboard()
 {
-	/*
-		get info of year,sem,course
-	*/
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
 
 	Scoreboard a;
-	if (a.ExportScoreboard(year, sem, courseID)) cout << "Export succeeded\n"; else cout << "Export failed\n";
+	if (a.ExportScoreboard(year, sem, courseID))
+		Message("Export scoreboard succeeded");
+	else Message("Export scoreboard failed");
 }
 
 void StudentManagementSystem::ExportAttendaceList()
@@ -251,44 +262,45 @@ void StudentManagementSystem::ExportAttendaceList()
 	AttendanceList a;
 	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
 	a.ExportAttend(courseID);
+	Message("Export scoreboard succeeded");
 }
 
 void StudentManagementSystem::ViewScoreboard()
 {
-	/*
-		get info
-	*/
-	string year = "2018-2019";
-	string sem = "Fall";
-	string course = "CM101";
+	string year, sem, courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
 	Scoreboard score;
-
-	if (!score.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt")) 
-		cout << "NO SCOREBOARDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n";
-
-	score.View();
+	if (!score.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-scoreboard.txt")) 
+		Message("You have no scoreboard here!!");
+	else score.View();
 }
 
 void StudentManagementSystem::ViewAttendanceList()
 {
-	while (true) {
-		string year = ViewAcademicYear();
-		if (year == "RETURN") break;
-		while (true) {
-			string sem = ViewSemester(year);
-			if (sem == "RETURN") break;
-			while (true) {
-				string courseID = ViewListCourse(year, sem);
-				if (courseID == "RETURN") break;
-				AttendanceList a;
-				a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
-				a.View();
-				return;
-			}
-		}
-	}
+	string year, sem, courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
+	AttendanceList a;
+	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+	a.View();
 }
 
+
+void StudentManagementSystem::CreateNewLecturer()
+{
+
+}
+
+void StudentManagementSystem::ViewAllLecturers()
+{
+	vector<string> listLecturer = ListFileInDicrectory("Data\\Lecturer\\*.txt");
+	for (string & lecturer : listLecturer) {
+		if (lecturer == "RETURN") continue;
+		while (!lecturer.empty() && lecturer.back() != '.') lecturer.pop_back();
+		if (!lecturer.empty()) lecturer.pop_back();
+	}
+	menu import_menu("VIEW ALL LECTURERS", listLecturer, 1);
+	while (menu_choose(import_menu) != "RETURN");
+}
 void StudentManagementSystem::ImportCourse()
 {
 	/*
@@ -313,6 +325,7 @@ void StudentManagementSystem::ImportCourse()
 		}
 	}
 }
+
 
 void StudentManagementSystem::AddACourse()
 {
@@ -481,6 +494,48 @@ string StudentManagementSystem::ViewListStudentInCourse()
 	}
 }
 
+void StudentManagementSystem::Lecturer_ViewCourse() {
+	Lecturer lecturer(AccountLogin.getUsername());
+	lecturer.Reload();
+	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
+	string courseID = menu_choose(courseMenu);
+	if (courseID == "RETURN") return;
+
+	ifstream in("Data\\Course\\" + courseID + ".txt");
+	Course course;
+	course.Reload(in);
+	in.close();
+
+	Student student;
+	while (true) {
+		student.SetStudentID(course.ViewListStudent());
+		if (student.getStudentID() == "RETURN") return;
+	}
+}
+
+void StudentManagementSystem::Lecturer_ViewAttendance() {
+	Lecturer lecturer(AccountLogin.getUsername());
+	lecturer.Reload();
+	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
+	string courseID = menu_choose(courseMenu);
+	if (courseID == "RETURN") return;
+
+	AttendanceList a;
+	a.Reload("Data\\Course\\" + courseID + "-attendancelist.txt");
+	a.View();
+}
+
+void StudentManagementSystem::Lecturer_ViewScoreboard() {
+	Lecturer lecturer(AccountLogin.getUsername());
+	lecturer.Reload();
+	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
+	string courseID = menu_choose(courseMenu);
+	if (courseID == "RETURN") return;
+
+	//Show scoreboard of courseID here
+}
+
+
 void StudentManagementSystem::Menu(menu &main_menu) {
 	while (1) {
 		string choose = menu_choose(main_menu);
@@ -522,20 +577,31 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "REMOVE STUDENT FROM COURSE") RemoveAStudentFromCourse();
 		if (choose == "VIEW LIST OF COURSE") ViewListStudentInCourse();
 		if (choose == "VIEW ATTENDANCE OF COURSE") ViewAttendanceList();
+		if (choose == "CREATE NEW LECTURER") CreateNewLecturer();
+		if (choose == "VIEW ALL LECTURERS") ViewAllLecturers();
 	// SCOREBOARD
 	if (choose == "SCOREBOARD") {
 		menu sb_menu("STAFF MENU - SCOREBOARD", mf.SCOREBOARD_MENU, 1);
 		Menu(sb_menu);
 	}
+		if (choose == "VIEW SCOREBOARD") ViewScoreboard();
+		if (choose == "EXPORT SCOREBOARD") ExportScoreboard();
 	// ATTENDANCE LIST
 	if (choose == "ATTENDANCE LIST") {
 		menu attendance_menu("STAFF MENU - ATTENDANCE LIST", mf.ATTENDANCE_MENU, 1);
 		Menu(attendance_menu);
 	}
+		if (choose == "VIEW ATTENDANCE LIST") ViewAttendanceList();
+		if (choose == "EXPORT ATTENDANCE LIST") ExportAttendaceList();
 // STUDENT
 
 // LECTURER
-
+	if (choose == "VIEW LIST OF COURSES") Lecturer_ViewCourse();
+	if (choose == "VIEW ATTENDANCE LIST OF A COURSE") Lecturer_ViewAttendance();
+	if (choose == "EDIT AN ATTENDANCE");
+	if (choose == "IMPORT SCOREBOARD OF A COURSE") ImportScoreboard();
+	if (choose == "EDIT GRADE OF A STUDENT");
+	if (choose == "VIEW A SCOREBOARD") Lecturer_ViewScoreboard();
 }
 
 void StudentManagementSystem::Run()

@@ -69,14 +69,15 @@ public:
 								"ADD STUDENT TO COURSE",
 								"VIEW LIST OF COURSE",
 								"VIEW ATTENDANCE OF COURSE",
-								"LECTURE",
+								"CREATE NEW LECTURER",
+								"VIEW ALL LECTURERS",
 								"RETURN" };
 
 	vector<string> CUDV_MENU = { "CREATE", "UPDATE", "DELETE", "VIEW", "RETURN" };
 
-	vector<string> SCOREBOARD_MENU = { "VIEW SCOREBOARD", "EXPORT", "RETURN" };
+	vector<string> SCOREBOARD_MENU = { "VIEW SCOREBOARD", "EXPORT SCOREBOARD", "RETURN" };
 
-	vector<string> ATTENDANCE_MENU = { "VIEW ATTENDANCE LIST", "EXPORT", "RETURN" };
+	vector<string> ATTENDANCE_MENU = { "VIEW ATTENDANCE LIST", "EXPORT ATTENDANCE LIST", "RETURN" };
 };
 
 #endif // !NENU_H

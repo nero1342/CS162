@@ -23,12 +23,12 @@ void CourseList::Save(string & year, string & sem)
 
 void CourseList::ImportCourse(string year, string &sem, string & name)
 {
-	year = "Data\\Course\\" + year + "\\" + sem + "\\";
-	Import(name, year);
+	string yearsem = "Data\\Course\\" + year + "\\" + sem + "\\";
+	Import(name, yearsem);
 	
 	while (name.back() != '.') name.pop_back();
 	name += "txt";
-	ifstream in(year + name);
+	ifstream in(yearsem + name);
 	string No;
 	vector<Course> course;
 	while (getline(in, No))
@@ -40,21 +40,22 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 	}
 	in.close();
 
-	string link = year + name;
+	string link = yearsem + name;
 	DeleteFile(link.c_str());
 
-	ofstream ou(year + "CourseList.txt");
+	ofstream ou(yearsem + "CourseList.txt");
 	for (auto i : course) ou << i.GetCourseID() << '\n';
 	ou.close();
 
 	for (unsigned int i = 0; i < course.size(); ++i)
 	{
 		course[i].Import();
-		course[i].CreateAttendanceList(year);
+		course[i].CreateAttendanceList(yearsem);
+		course[i].CreateAccountForLecturer(year, sem);
 	}
 	for (auto i : course)
 	{
-		ou.open(year + i.GetCourseID() + ".txt");
+		ou.open(yearsem + i.GetCourseID() + ".txt");
 		i.SaveData(ou);
 		ou.close();
 	}

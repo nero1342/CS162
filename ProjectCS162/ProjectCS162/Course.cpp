@@ -162,16 +162,19 @@ void Course::Import()
 		x.SaveData();
 	}
 
-	CreateAccountForLecturer();
 }
 
-void Course::CreateAccountForLecturer()
+void Course::CreateAccountForLecturer(string year, string sem)
 {
 	Lecturer lect(lecturer);
 	AccountList acclist;
 	acclist.Reload();
 	acclist.Add(lect);
 	acclist.SaveData();
+	//
+	lect.Reload();
+	lect.AddCourse(year + "\\" + sem + "\\" + ID);
+	lect.SaveData();
 }
 
 void Course::DeleteCourse()

@@ -16,4 +16,6 @@ string get_info(menu &Menu, string old);
 void EditInfo(Student &x);
 bool fill_menu(menu &Menu, vector<string > &anwser);
 
+void Message(string message);
+
 #endif // !CONTROL_H
