@@ -6,6 +6,7 @@ void StudentManagementSystem::Reload() {
 	system("md Data\\Student");
 	system("md Data\\Course");
 	system("md Data\\Export");
+	system("md Data\\Lecturer");
 	acclist.Reload();
 	acclist.Add(Account("admin", "admin", "Staff", "Staff"));
 	acclist.SaveData();
@@ -525,10 +526,11 @@ void StudentManagementSystem::Do(string &choose) {
 void StudentManagementSystem::Run()
 {
 	MenuFunction mf;
-	menu main_menu;
 	Reload();
 	acclist.Reload();
 	while (1) {
+		menu main_menu;
+
 		login Log;
 		string accountLogin = Log.login_menu(acclist);
 		AccountLogin = acclist.Find(accountLogin);
