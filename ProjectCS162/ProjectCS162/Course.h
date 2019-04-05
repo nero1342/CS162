@@ -15,6 +15,9 @@ private:
 public:
 	void ImportScoreboard(string year, string &sem, string &course, string &name);
 	bool ExportScoreboard(string & year, string &sem, string &course);
+
+	bool Reload(string link);
+	void View();
 };
 
 class Attendance

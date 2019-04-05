@@ -476,3 +476,29 @@ bool Scoreboard::ExportScoreboard(string & year, string & sem, string & course)
 	}
 	Export(StudentID, Col, course + "-scoreboard", scoreboard);
 }
+
+bool Scoreboard::Reload(string link)
+{
+	ifstream in(link);
+	if (!in.is_open()) return false;
+
+	string tmp;
+	vector<int> tmpp(3, 0);
+	while (getline(in, tmp))
+	{
+		StudentID.push_back(tmp);
+		scoreboard.push_back(tmpp);
+		for (int i = 0; i < 3; ++i)
+		{
+			getline(in, tmp);
+			stringstream ss(tmp);
+			ss >> scoreboard.back()[i];
+		}
+	}
+	in.close();
+}
+
+void Scoreboard::View()
+{
+	cout << "liu liu\n";
+}

@@ -253,6 +253,22 @@ void StudentManagementSystem::ExportAttendaceList()
 	a.ExportAttend(courseID);
 }
 
+void StudentManagementSystem::ViewScoreboard()
+{
+	/*
+		get info
+	*/
+	string year = "2018-2019";
+	string sem = "Fall";
+	string course = "CM101";
+	Scoreboard score;
+
+	if (!score.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt")) 
+		cout << "NO SCOREBOARDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n";
+
+	score.View();
+}
+
 void StudentManagementSystem::ViewAttendanceList()
 {
 	while (true) {
@@ -326,7 +342,6 @@ void StudentManagementSystem::AddACourse()
 	}
 	
 }
-
 
 void StudentManagementSystem::EditCourse()
 {
@@ -476,7 +491,6 @@ void StudentManagementSystem::Menu(menu &main_menu) {
 	}
 }
 
-
 void StudentManagementSystem::Do(string &choose) {
 // STAFF
 	MenuFunction mf;
@@ -526,7 +540,7 @@ void StudentManagementSystem::Do(string &choose) {
 
 void StudentManagementSystem::Run()
 {
-	MenuFunction mf;
+	/*MenuFunction mf;
 	Reload();
 	acclist.Reload();
 	while (1) {
@@ -545,7 +559,7 @@ void StudentManagementSystem::Run()
 			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
 		}	
 		Menu(main_menu);
-	}
+	}*/
 	//ImportScoreboard();
 	//ExportScoreboard();
 }
