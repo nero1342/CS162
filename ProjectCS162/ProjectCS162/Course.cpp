@@ -181,7 +181,7 @@ void Course::DeleteCourse()
 	vector<string> studentlist;
 	while (in >> tmp) studentlist.push_back(tmp);
 	in.close();
-	
+
 	Student x;
 	for (auto i : studentlist)
 	{
@@ -408,7 +408,39 @@ void AttendanceList::UpdateAttend(vector<int>& a, string & ID)
 
 void AttendanceList::View()
 {
-	cout << "Bi lua r";
+	vector<string> attendance_matrix;
+	stringstream ff;
+
+	ff << left << setw(5) << "No"
+		<< left << setw(15) << "Student ID"
+		<< left << setw(30) << "Name";
+	for (int i = 1; i <= 10; ++i) {
+		ff << left << setw(10) << "Week " + to_string(i);
+	}
+	ff << endl;
+
+	string feature;
+	getline(ff, feature);
+	attendance_matrix.push_back(feature);
+	int cnt = 0;
+	for (Attendance att_student : attend) {
+		vector<int> att_result = att_student.GetAttend();
+		Student student;
+		student.SetStudentID(att_student.GetStudentID());
+		student.Reload();
+		ff << left << setw(5) << ++cnt
+			<< left << setw(15) << student.getStudentID()
+			<< left << setw(30) << student.getLastname() + ' ' + student.getFirstname();
+		for (int i = 1; i <= 10; ++i) {
+			ff << left << setw(10) << att_result[i - 1];
+		}
+		ff << endl;
+		getline(ff, feature);
+		attendance_matrix.push_back(feature);
+	}
+	attendance_matrix.push_back("RETURN");
+	menu att_menu("ATTENDANCE LIST", attendance_matrix, 2);
+	while (menu_choose(att_menu) != "RETURN");
 }
 
 void Scoreboard::ImportScoreboard(string year, string & sem, string & course, string & name)
