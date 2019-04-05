@@ -540,7 +540,7 @@ void StudentManagementSystem::Do(string &choose) {
 
 void StudentManagementSystem::Run()
 {
-	/*MenuFunction mf;
+	MenuFunction mf;
 	Reload();
 	acclist.Reload();
 	while (1) {
@@ -559,7 +559,7 @@ void StudentManagementSystem::Run()
 			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
 		}	
 		Menu(main_menu);
-	}*/
+	}
 	//ImportScoreboard();
 	//ExportScoreboard();
 }
