@@ -67,9 +67,6 @@ void StudentManagementSystem::EditExistStudent(){
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
 	EditInfo(student);
-	// cai nay cung khong can
-	// class cuoi cung chi luu ID lai thoi
-	//
 	student.SaveData();
 }
 
@@ -87,6 +84,8 @@ void StudentManagementSystem::RemoveStudent() {
 	acclist.Reload();
 	acclist.Remove(student.getStudentID());
 	classlist.RemoveStudent(student);
+
+	// Remove this student in all course he enrolled
 }
 
 void StudentManagementSystem::ChangeClassOfStudent() {
@@ -301,13 +300,9 @@ void StudentManagementSystem::ViewAllLecturers()
 	menu import_menu("VIEW ALL LECTURERS", listLecturer, 1);
 	while (menu_choose(import_menu) != "RETURN");
 }
+
 void StudentManagementSystem::ImportCourse()
 {
-	/*
-		get info of the year
-		get info of the semester
-		get info of the course to import
-	*/
 	while (true) {
 		string year = ViewAcademicYear();
 		if (year == "RETURN") return;
@@ -329,11 +324,6 @@ void StudentManagementSystem::ImportCourse()
 
 void StudentManagementSystem::AddACourse()
 {
-	/*
-		get info for the Course
-		pass by ref
-		Course tmp(....)
-	*/
 	while (true) {
 		string year = ViewAcademicYear();
 		if (year == "RETURN") break;
@@ -344,6 +334,8 @@ void StudentManagementSystem::AddACourse()
 			// Show info new Course here
 			Course tmp;
 			tmp.SetID("");
+			tmp.SetYear(year);
+			tmp.SetSemester(sem);
 			tmp.NewCourseInfo();
 			if (tmp.GetCourseID() == "") return;
 			//
@@ -377,6 +369,7 @@ void StudentManagementSystem::EditCourse()
 
 void StudentManagementSystem::RemoveCourse()
 {
+
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
@@ -389,6 +382,8 @@ void StudentManagementSystem::AddAStudentToCourse()
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
 	Course course;
+	//course.SetYear(year);
+	//course.SetSemester(sem);
 	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
 	course.Reload(in);
 	in.close();
@@ -404,6 +399,9 @@ void StudentManagementSystem::AddAStudentToCourse()
 	student.Reload();
 				
 	//Add student to course, add attendance here
+	student.AddCourse(year + "\\" + sem + "\\" + course.GetCourseID());
+	student.SaveData();
+
 	course.AddNewStudent(student);
 	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
 	course.SaveData(ou);
@@ -421,17 +419,15 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 {
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
-	if (courseID == "RETURN") return;
-	Course course;
-	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
-	course.Reload(in);
-	in.close();
-				
+
+	Course course(year, sem, courseID);
+	
 	Student student;
 	student.SetStudentID(course.ViewListStudent());
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
-	student.RemoveCourse(courseID);
+	string path = year + "\\" + sem + "\\" + courseID;
+	student.RemoveCourse(path);
 	student.SaveData();
 
 	AttendanceList a;
@@ -513,6 +509,13 @@ void StudentManagementSystem::Lecturer_ViewCourse() {
 	}
 }
 
+void StudentManagementSystem::Student_ViewSchedule()
+{
+	Student student(AccountLogin.getUsername());
+	student.ViewSchedule();
+
+}
+
 void StudentManagementSystem::Lecturer_ViewAttendance() {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
@@ -534,7 +537,6 @@ void StudentManagementSystem::Lecturer_ViewScoreboard() {
 
 	//Show scoreboard of courseID here
 }
-
 
 void StudentManagementSystem::Menu(menu &main_menu) {
 	while (1) {
@@ -594,7 +596,10 @@ void StudentManagementSystem::Do(string &choose) {
 		if (choose == "VIEW ATTENDANCE LIST") ViewAttendanceList();
 		if (choose == "EXPORT ATTENDANCE LIST") ExportAttendaceList();
 // STUDENT
-
+	if (choose == "CHECK-IN");
+	if (choose == "VIEW CHECK-IN RESULT");
+	if (choose == "VIEW SCHEDULES") Student_ViewSchedule();
+	if (choose == "VIEW SCORES OF A COURSE");
 // LECTURER
 	if (choose == "VIEW LIST OF COURSES") Lecturer_ViewCourse();
 	if (choose == "VIEW ATTENDANCE LIST OF A COURSE") Lecturer_ViewAttendance();

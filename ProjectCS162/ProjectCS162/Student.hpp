@@ -13,9 +13,11 @@ private:
     //
     string Class;
 	//
-	vector<string> Course;
+	vector<string> course;
 public:
 
+	Student();
+	Student(string StudentID);
 	void Reload();
 	void SaveData();
 
@@ -38,6 +40,8 @@ public:
     string getGender();
     string getDoB();
     string getClass();
+
+	void ViewSchedule();
 };
 
 #endif /* Student_hpp */

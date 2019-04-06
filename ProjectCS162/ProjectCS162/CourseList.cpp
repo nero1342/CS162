@@ -35,7 +35,8 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 	{
 		Course tmp;
 		tmp.ReadInput(in);
-
+		tmp.SetYear(year);
+		tmp.SetSemester(sem);
 		course.push_back(tmp);
 	}
 	in.close();
@@ -51,7 +52,7 @@ void CourseList::ImportCourse(string year, string &sem, string & name)
 	{
 		course[i].Import();
 		course[i].CreateAttendanceList(yearsem);
-		course[i].CreateAccountForLecturer(year, sem);
+		course[i].CreateAccountForLecturer();
 	}
 	for (auto i : course)
 	{
@@ -82,22 +83,24 @@ void CourseList::RemoveCourse(string year, string & sem, string & name)
 	}
 	Save(year, sem);
 
-	year = "Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt";
-	ifstream in(year);
+	string path = "Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt";
+	ifstream in(path);
 	Course tmp;
+	tmp.SetYear(year);
+	tmp.SetSemester(sem);
 	tmp.Reload(in);
 	in.close();
 
-	DeleteFile(year.c_str());
-	while (!year.empty() && year.back() != '.') year.pop_back();
-	year.pop_back();
-	year += "-attendancelist.txt";
-	DeleteFile(year.c_str());
+	DeleteFile(path.c_str());
+	while (!path.empty() && path.back() != '.') path.pop_back();
+	path.pop_back();
+	path += "-attendancelist.txt";
+	DeleteFile(path.c_str());
 
-	while (!year.empty() && year.back() != '-') year.pop_back();
-	year.pop_back();
-	year += "-scoreboard.txt";
-	DeleteFile(year.c_str());
+	while (!path.empty() && path.back() != '-') path.pop_back();
+	path.pop_back();
+	path += "-scoreboard.txt";
+	DeleteFile(path.c_str());
 
 	tmp.DeleteCourse();
 }

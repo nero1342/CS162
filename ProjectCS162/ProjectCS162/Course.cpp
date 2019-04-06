@@ -158,13 +158,13 @@ void Course::Import()
 		x.SetStudentID(i);
 		listOfStudent.push_back(x.getStudentID());
 		x.Reload();
-		x.AddCourse(ID);
+		x.AddCourse(year + "\\" + semester + "\\" + ID);
 		x.SaveData();
 	}
 
 }
 
-void Course::CreateAccountForLecturer(string year, string sem)
+void Course::CreateAccountForLecturer()
 {
 	Lecturer lect(lecturer);
 	AccountList acclist;
@@ -173,25 +173,18 @@ void Course::CreateAccountForLecturer(string year, string sem)
 	acclist.SaveData();
 	//
 	lect.Reload();
-	lect.AddCourse(year + "\\" + sem + "\\" + ID);
+	lect.AddCourse(year + "\\" + semester + "\\" + ID);
 	lect.SaveData();
 }
 
 void Course::DeleteCourse()
 {
-	ifstream in("Data\\Class\\" + Class + ".txt");
-	string tmp;
-	vector<string> studentlist;
-	while (in >> tmp) studentlist.push_back(tmp);
-	in.close();
-
-	Student x;
-	for (auto i : studentlist)
+	for (string studentID : listOfStudent)
 	{
-		x.SetStudentID(i);
-		x.Reload();
-		x.RemoveCourse(ID);
-		x.SaveData();
+		Student student(studentID);
+		string courseID = year + "\\" + semester + "\\" + ID;
+		student.RemoveCourse(courseID);
+		student.SaveData();
 	}
 }
 
@@ -274,6 +267,34 @@ string Course::GetStudentID(int & pos)
 	return "";
 }
 
+string Course::GetName()
+{
+	return name;
+}
+
+string Course::GetLecturer()
+{
+	return lecturer;
+}
+
+string Course::GetDOW()
+{
+	return dayOfWeek;
+}
+
+string Course::GetStartHour()
+{
+	return startHour;
+}
+
+string Course::GetEndHour() {
+	return endHour;
+}
+
+string Course::GetRoom() {
+	return room;
+}
+
 void Course::RemoveStudent(string StudentID)
 {
 	int pos = 0;
@@ -286,13 +307,50 @@ void Course::RemoveStudent(string StudentID)
 	listOfStudent.pop_back();
 }
 
-Course::Course(string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
-	ID(a), name(b), Class(c), lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
+void Course::Reload()
+{
+	ifstream in("Data\\Course\\" + year + "\\" + semester + "\\" + ID + ".txt");
+	getline(in, ID);
+	getline(in, name);
+	getline(in, Class);
+	getline(in, lecturer);
+	getline(in, startDate);
+	getline(in, endDate);
+	getline(in, dayOfWeek);
+	getline(in, startHour);
+	getline(in, endHour);
+	getline(in, room);
+	string x;
+	while (in >> x) listOfStudent.push_back(x);
+}
+
+Course::Course(string& year, string& sem, string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
+	year(year), semester(sem), ID(a), name(b), Class(c), lecturer(d), startDate(e), endDate(f), dayOfWeek(g), startHour(h), endHour(i), room(j) {}
 
 Course::Course()
 {
+	
 }
 
+Course::Course(string ID):ID(ID)
+{
+	ifstream in("Data\\Course\\" + ID + ".txt");
+	Reload(in);
+}
+
+Course::Course(string year, string sem, string courseID):year(year), semester(sem), ID(courseID)
+{
+	Reload();
+}
+
+void Course::SetYear(string& newYear)
+{
+	year = newYear;
+}
+
+void Course::SetSemester(string& newSemester) {
+	semester = newSemester;
+}
 Attendance::Attendance()
 {
 	for (int i = 1; i <= 10; ++i) day.push_back(0);

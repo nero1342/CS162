@@ -1,4 +1,17 @@
 #include "Student.hpp"
+#include "menu.h"
+#include "control.h"
+#include <sstream>
+#include "Course.h"
+
+Student::Student()
+{
+}
+
+Student::Student(string StudentID):StudentID(StudentID)
+{
+	Reload();
+}
 
 void Student::Reload() {
 	ifstream cin("Data\\Student\\" + StudentID + ".txt");
@@ -11,9 +24,9 @@ void Student::Reload() {
 	getline(cin, Class);
 	//Course
 	string courseID;
-	Course.clear();
+	course.clear();
 	while (getline(cin, courseID)) {
-		Course.push_back(courseID);
+		course.push_back(courseID);
 	}
 	cin.close();
 }
@@ -27,7 +40,7 @@ void Student::SaveData()
 	cout << Gender << endl;
 	cout << DoB << endl;
 	cout << Class << endl;
-	for (string courseID : Course) {
+	for (string courseID : course) {
 		cout << courseID << endl;
 	}
 	cout.close();
@@ -70,18 +83,18 @@ void Student::SetClass(string newClass) {
     Class = newClass;
 }
 
-void Student::AddCourse(string course)
+void Student::AddCourse(string courseID)
 {
-	for (auto i : Course) if (i == course) return;
-	Course.push_back(course);
+	for (auto i : course) if (i == courseID) return;
+	course.push_back(courseID);
 }
 
-void Student::RemoveCourse(string & course)
+void Student::RemoveCourse(string & courseID)
 {
-	for (unsigned int i = 0; i < Course.size(); ++i) if (Course[i] == course)
+	for (unsigned int i = 0; i < course.size(); ++i) if (course[i] == courseID)
 	{
-		swap(Course[i], Course.back());
-		Course.pop_back();
+		swap(course[i], course.back());
+		course.pop_back();
 		break;
 	}
 }
@@ -108,4 +121,44 @@ string Student::getDoB() {
 
 string Student::getClass() {
     return Class;
+}
+
+void Student::ViewSchedule()
+{
+	string title = "SCHEDULE LIST OF " + Lastname + " " + Firstname + " - " + StudentID;
+	vector<string> schedule;
+	stringstream ff;
+
+	ff << left << setw(5) << "No"
+		<< left << setw(15) << "Course ID"
+		<< left << setw(30) << "Course Name"
+		<< left << setw(10) << "Class"
+		<< left << setw(10) << "Lecturer"
+		<< left << setw(10) << "DOW"
+		<< left << setw(10) << "Start Hour"
+		<< left << setw(10) << "End Hour"
+		<< left << setw(10) << "Room" << endl;
+
+	string feature;
+	getline(ff, feature);
+	schedule.push_back(feature);
+	int cnt = 0;
+	for (string courseID : course) {
+		Course myCourse(courseID);
+		ff << left << setw(5) << ++cnt
+			<< left << setw(15) << courseID
+			<< left << setw(30) << myCourse.GetName()
+			<< left << setw(10) << myCourse.GetClass()
+			<< left << setw(10) << myCourse.GetLecturer()
+			<< left << setw(10) << myCourse.GetDOW()
+			<< left << setw(10) << myCourse.GetStartHour()
+			<< left << setw(10) << myCourse.GetEndHour()
+			<< left << setw(10) << myCourse.GetRoom() << endl;
+		getline(ff, feature);
+		schedule.push_back(feature);
+	}
+	schedule.push_back("RETURN");
+	menu schedule_menu(title, schedule, 2);
+
+	while (menu_choose(schedule_menu) != "RETURN");
 }

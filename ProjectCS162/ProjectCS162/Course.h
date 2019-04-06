@@ -58,10 +58,16 @@ public:
 class Course
 {
 private:
+	string year, semester;
 	string ID, name, Class, lecturer, startDate, endDate, dayOfWeek, startHour, endHour, room;
 	vector<string> listOfStudent;
 public:
 
+	Course();
+	Course(string ID);
+	Course(string year, string sem, string courseID);
+	void SetYear(string& newYear);
+	void SetSemester(string& newSemester);
 	void SetName(string newname);
 	void SetClass(string newclass);
 	void SetLecturer(string newlecturer);
@@ -78,15 +84,22 @@ public:
 
 	string GetClass();
 	string GetStudentID(int &pos);
+	string GetName();
+	string GetLecturer();
+	string GetDOW();
+	string GetStartHour();
+	string GetEndHour();
+	string GetRoom();
+
 
 	void RemoveStudent(string StudentID);
-
+	void Reload();
 	void Reload(istream & in); 
 	void ReadInput(istream & in);  // this is for import only
 	void SaveData(ofstream & ou);
 
 	void Import();
-	void CreateAccountForLecturer(string year, string sem); 
+	void CreateAccountForLecturer(); 
 	void DeleteCourse();
 	void AddNewStudent(Student & x);
 
@@ -94,8 +107,7 @@ public:
 
 	void CreateAttendanceList(string link);
 
-	Course(string &, string &, string &, string &, string &, string &, string &, string &, string &, string &);
-	Course();
+	Course(string &, string &, string &, string &, string &, string &, string &, string &, string &, string &, string &, string &);
 };
 
 #endif
