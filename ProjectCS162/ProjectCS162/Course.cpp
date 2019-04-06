@@ -190,6 +190,7 @@ void Course::DeleteCourse()
 
 void Course::AddNewStudent(Student & x)
 {
+	for (auto i : listOfStudent) if (i == x.getStudentID()) return;
 	listOfStudent.push_back(x.getStudentID());
 }
 

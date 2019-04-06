@@ -283,7 +283,6 @@ void StudentManagementSystem::ViewAttendanceList()
 	a.View();
 }
 
-
 void StudentManagementSystem::CreateNewLecturer()
 {
 
