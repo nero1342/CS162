@@ -296,6 +296,17 @@ string Course::GetRoom() {
 	return room;
 }
 
+vector<string> Course::GetStudentList()
+{
+	return listOfStudent;
+}
+
+bool Course::HaveStudent(string StudentID)
+{
+	for (auto i : listOfStudent) if (i == StudentID) return true;
+	return false;
+}
+
 void Course::RemoveStudent(string StudentID)
 {
 	int pos = 0;
@@ -512,10 +523,19 @@ void Scoreboard::ImportScoreboard(string year, string & sem, string & course, st
 	while (name.back() != '.') name.pop_back();
 	name += "txt";
 
-	string tmp = "Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt";
-	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
-	DeleteFile(tmp.c_str());
+	Course tmp;
+	tmp.SetYear(year);
+	tmp.SetSemester(sem);
+	tmp.SetID(course);
+	tmp.Reload();
 
+	vector<string> tmpp = tmp.GetStudentList();
+	Scoreboard a;
+	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + name);
+	a.CleanUp(tmpp);
+	a.Save("Data\\Course\\" + year + "\\" + sem + "\\" + name);
+
+	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
 	system(year.c_str());
 }
 
@@ -539,6 +559,31 @@ bool Scoreboard::ExportScoreboard(string & year, string & sem, string & course)
 	Export(StudentID, Col, course + "-scoreboard", scoreboard);
 }
 
+void Scoreboard::CleanUp(vector<string> a)
+{
+	unsigned int i = 0;
+	while (i < StudentID.size()) 
+	{
+		bool found = false;
+		for (auto j : a)
+		{
+			if (StudentID[i] == j)
+			{
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			swap(StudentID[i], StudentID.back());
+			StudentID.pop_back();
+			swap(scoreboard[i], scoreboard.back());
+			scoreboard.pop_back();
+		}
+		else ++i;
+	}
+}
+
 bool Scoreboard::Reload(string link)
 {
 	ifstream in(link);
@@ -560,7 +605,22 @@ bool Scoreboard::Reload(string link)
 	in.close();
 }
 
+void Scoreboard::Save(string link)
+{
+	ofstream ou(link);
+	for (unsigned int i = 0; i < StudentID.size(); ++i)
+	{
+		ou << StudentID[i] << '\n';
+		for (unsigned int j = 0; j < scoreboard[i].size(); ++j) ou << scoreboard[i][j] << '\n';
+	}
+	ou.close();
+}
+
 void Scoreboard::View()
 {
 	cout << "liu liu\n";
+}
+
+void CleanUp(Scoreboard a, Course tmp)
+{
 }

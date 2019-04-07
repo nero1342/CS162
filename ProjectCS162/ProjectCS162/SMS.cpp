@@ -233,8 +233,6 @@ void StudentManagementSystem::ImportScoreboard()
 	while (courseID.back() != '\\') sem.push_back(courseID.back()), courseID.pop_back();
 	courseID.pop_back();
 	reverse(courseID.begin(), courseID.end());
-	reverse(sem.begin(), sem.end());
-	reverse(year.begin(), year.end());
 	//
 
 	Scoreboard a;

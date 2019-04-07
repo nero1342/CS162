@@ -16,7 +16,9 @@ public:
 	void ImportScoreboard(string year, string &sem, string &course, string &name);
 	bool ExportScoreboard(string & year, string &sem, string &course);
 
+	void CleanUp(vector<string> a);
 	bool Reload(string link);
+	void Save(string link);
 	void View();
 };
 
@@ -91,7 +93,8 @@ public:
 	string GetEndHour();
 	string GetRoom();
 
-
+	vector<string> GetStudentList();
+	bool HaveStudent(string StudentID);
 	void RemoveStudent(string StudentID);
 	void Reload();
 	void Reload(istream & in); 
