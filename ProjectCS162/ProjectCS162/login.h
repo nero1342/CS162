@@ -16,7 +16,9 @@ using namespace std;
 struct login {
 	string user, password;
 	string login_menu(AccountList &acclist);
-	string get_user(menu &login_menu);
-	string get_password(menu &login_menu);
+		
 };
+
+string get_user(menu &login_menu);
+string get_password(menu &login_menu);
 #endif // !LOGIN_H

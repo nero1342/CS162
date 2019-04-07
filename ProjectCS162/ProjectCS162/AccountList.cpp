@@ -7,7 +7,8 @@ Account AccountList::Find(string &username)
 
 void AccountList::ChangePass(string username, string newPassword)
 {
-	for (Account acc : list)
+	Reload();
+	for (Account& acc : list)
 		if (acc.getUsername() == username)
 		{
 			acc.ChangePassword(newPassword);

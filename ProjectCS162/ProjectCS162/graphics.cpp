@@ -13,22 +13,23 @@ void graphics::init_graphic() {
 	tool.hide_pointer();
 }
 
-void graphics::show_menu(menu x,int ok) {
+void graphics::show_menu(menu &x,int ok) {
 	window tool;
+	int startPointMenu = x.startPointInfo() - x.maxLength() - 2;
 	if (ok == 0) {
 		tool.clrscr();
-		tool.gotoXY(35, 5);
+		tool.gotoXY(x.startPointTitle(), 5);
 		cout << x.title;
 		for (int i = 0; i < x.name.size(); ++i) {
-			tool.gotoXY(25, x.begin + i);
+			tool.gotoXY(startPointMenu, x.begin + i);
 			cout << x.name[i];
 		}
 	}
 	for (int i = 0; i < x.name.size(); ++i) {
-		tool.gotoXY(22, x.begin + i);
+		tool.gotoXY(startPointMenu - 3, x.begin + i);
 		cout << " ";
 	}
-	tool.gotoXY(22, x.begin + x.chosen - 1);
+	tool.gotoXY(startPointMenu - 3, x.begin + x.chosen - 1);
 	cout << ">";
-	tool.gotoXY(25, 20);
+	tool.gotoXY(startPointMenu, 20);
 }

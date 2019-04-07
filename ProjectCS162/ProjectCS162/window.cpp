@@ -63,3 +63,18 @@ void window::hide_pointer() {
 	ConCurInf.bVisible = 0;
 	SetConsoleCursorInfo(hOut, &ConCurInf);
 }
+
+
+#define HOUT GetStdHandle(STD_OUTPUT_HANDLE)
+int window::GetRows() {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+	GetConsoleScreenBufferInfo(HOUT, &csbi);
+	return csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+}
+
+int window::GetColumns() {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(HOUT, &csbi);
+	return csbi.srWindow.Right - csbi.srWindow.Left + 1;
+}

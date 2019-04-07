@@ -78,6 +78,7 @@ void Course::NewCourseInfo() {
 	};
 	Menu.minchosen = 1;
 	Menu.chosen = 1;
+	Menu.maxLengthInfo = 30;
 	vector<string> answer;
 	answer.clear();
 	for (int i = 1; i <= 10; i++) answer.push_back("");

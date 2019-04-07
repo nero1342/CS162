@@ -30,6 +30,46 @@ vector<string> ListFileInDicrectory(string pattern) {
 	return result;
 }
 
+
+void StudentManagementSystem::ChangePassWord()
+{
+	menu Menu;
+	Menu.title = "CHANGE ACCOUNT PASSWORD";
+	Menu.name.clear();
+	Menu.name = {
+				 "Old Password:",
+				 "New Password:",
+				 "Confirm Password:",
+				 "Apply",
+				 "Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	Menu.maxLengthInfo = 30;
+	vector<string > answer;
+	answer.clear();
+	answer.push_back("");
+	answer.push_back("");
+	answer.push_back("");
+	while (true) {
+		if (fill_menu(Menu, answer, 1) == 0) return;
+		string oldPass = answer[0];
+		string newPass = answer[1];
+		string confirmNewPass = answer[2];
+		if (!AccountLogin.Login(AccountLogin.getUsername(), oldPass)) {
+			Message("Invalid current password.");
+			continue;
+		}
+		if (newPass != confirmNewPass) {
+			Message("Confirmation mismatched.");
+			continue;
+		}
+		AccountLogin.ChangePassword(newPass);
+		acclist.ChangePass(AccountLogin.getUsername(), newPass);
+		return;
+	}
+}
+
 void StudentManagementSystem::ImportClass() {
 	vector<string> listClass = ListFileInDicrectory("*.csv");
 	menu import_menu("Choose class", listClass, 1);
@@ -135,6 +175,7 @@ void StudentManagementSystem::CreateAcademicYear()
 	};
 	Menu.minchosen = 1;
 	Menu.chosen = 1;
+	Menu.maxLengthInfo = 30;
 	vector<string> answer;
 	answer.clear();
 	for (int i = 1; i <= 1; i++) answer.push_back("");
@@ -157,6 +198,7 @@ void StudentManagementSystem::CreateSemester()
 	};
 	Menu.minchosen = 1;
 	Menu.chosen = 1;
+	Menu.maxLengthInfo = 30;
 	vector<string> answer;
 	answer.clear();
 	for (int i = 1; i <= 1; i++) answer.push_back("");
@@ -546,8 +588,12 @@ void StudentManagementSystem::Menu(menu &main_menu) {
 }
 
 void StudentManagementSystem::Do(string &choose) {
+// COMMON
+	if (choose == "VIEW PROFILE INFO");
+	if (choose == "CHANGE PASSWORD") ChangePassWord();
 // STAFF
 	MenuFunction mf;
+	
 	// CLASS
 	if (choose == "CLASS") {
 		menu class_menu("STAFF MENU - CLASS", mf.CLASS_MENU, 1);
@@ -610,10 +656,9 @@ void StudentManagementSystem::Run()
 {
 	MenuFunction mf;
 	Reload();
-	acclist.Reload();
 	while (1) {
 		menu main_menu;
-
+		acclist.Reload();
 		login Log;
 		string accountLogin = Log.login_menu(acclist);
 		AccountLogin = acclist.Find(accountLogin);

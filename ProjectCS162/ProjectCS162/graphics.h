@@ -5,7 +5,7 @@
 #include"menu.h"
 struct graphics {
 	void init_graphic();
-	void show_menu(menu x,int ok);
+	void show_menu(menu &x,int ok);
 };
 
 #endif // !GRAPHICS_H

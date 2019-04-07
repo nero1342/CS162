@@ -15,10 +15,16 @@ public:
 	vector<string > name;
 	int chosen, minchosen;
 	const int begin = 10;
+	int maxLengthInfo = 0;
 
 	menu();
 	menu(string title, vector<string> &name, int minchosen);
 	void Assign(string _title, vector<string>& _name, int _minchosen);
+	int maxLength();
+
+	int startPointInfo();
+	int endPointInfo();
+	int startPointTitle();
 };
 
 void staff_menu(menu &now);
@@ -31,13 +37,17 @@ public:
 									"COURSES",
 									"SCOREBOARD",
 									"ATTENDANCE LIST",
+									"VIEW PROFILE INFO",
+									"CHANGE PASSWORD",
 									"LOGOUT" };
 
 	vector<string> STUDENT_MENU = { "CHECK-IN",
 									"VIEW CHECK-IN RESULT",
 									"VIEW SCHEDULES",
 									"VIEW SCORES OF A COURSE",
-									"RETURN" };
+									"VIEW PROFILE INFO",
+									"CHANGE PASSWORD",
+									"LOGOUT" };
 
 	vector<string> LECTURER_MENU = { "VIEW LIST OF COURSES",
 									"VIEW LIST OF STUDENTS OF A COURSE",
@@ -46,7 +56,9 @@ public:
 									"IMPORT SCOREBOARD OF A COURSE",
 									"EDIT GRADE OF A STUDENT",
 									"VIEW A SCOREBOARD",
-									"RETURN" };
+									"VIEW PROFILE INFO",
+									"CHANGE PASSWORD",
+									"LOGOUT" };
 
 	vector<string> CLASS_MENU = { "IMPORT CLASS",
 									"ADD NEW STUDENT",

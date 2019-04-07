@@ -16,7 +16,8 @@ private:
 	CourseList courselist;
 public:
     void Reload();
-    void ImportClass(); // Checked
+	void ChangePassWord();
+	void ImportClass(); // Checked
     void AddNewStudent(); // Checked
     void EditExistStudent();
     void RemoveStudent(); // Checked

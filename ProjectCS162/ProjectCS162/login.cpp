@@ -2,10 +2,11 @@
 
 string login::login_menu(AccountList &acclist) {
 	menu log_menu;
+	log_menu.maxLengthInfo = 30;
 	log_menu.title = "LOGIN";
 	log_menu.chosen = log_menu.minchosen = 1;
-	log_menu.name.push_back("USER");
-	log_menu.name.push_back("PASSWORD");
+	log_menu.name.push_back("USERNAME:");
+	log_menu.name.push_back("PASSWORD:");
 	log_menu.name.push_back("ENTER");
 	log_menu.name.push_back("EXIT");
 	graphics show;
@@ -14,6 +15,10 @@ string login::login_menu(AccountList &acclist) {
 	int ok = 0;
 	while (1) {
 		show.show_menu(log_menu, ok);
+		Guide({ 
+			"Press Enter at line USERNAME/PASSWORD to type",
+			"Choose ENTER to Login"
+			 });
 		ok = 1;
 		int key;
 		while (1) {
@@ -32,8 +37,7 @@ string login::login_menu(AccountList &acclist) {
 			}
 			if (log_menu.chosen == 3) {
 				if (acclist.Login(user, password)) return user;
-				tool.gotoXY(25, 25);
-				log_menu.name.push_back("sai pass cmnr");
+				Message("Invalid username or password.");
 				ok = 0;
 				continue;
 			}
@@ -45,10 +49,13 @@ string login::login_menu(AccountList &acclist) {
 	return "";
 }
 
-string login::get_user(menu &login_menu) {
+string get_user(menu &login_menu) {
 	string tmp = "";
 	window tool;
-	tool.gotoXY(100, login_menu.chosen + login_menu.begin - 1);
+	int startPoint = login_menu.startPointInfo();
+	int endPoint = login_menu.endPointInfo();
+
+	tool.gotoXY(endPoint, login_menu.chosen + login_menu.begin - 1);
 	cout << "<";
 	while (1) {
 		int key;
@@ -61,26 +68,29 @@ string login::get_user(menu &login_menu) {
 			if (tmp.size())tmp.pop_back();
 		}
 		else if (key == 13) {
-			tool.gotoXY(100, login_menu.chosen + login_menu.begin - 1);
+			tool.gotoXY(endPoint, login_menu.chosen + login_menu.begin - 1);
 			cout << " ";
 			return tmp;
 		}
 		else if (key >= 33 && key <= 126) {
-			if (tmp.size() == 30) continue;
+			if (tmp.size() == login_menu.maxLengthInfo) continue;
 			tmp = tmp + char(key);
 		}
-		tool.gotoXY(35, login_menu.chosen + login_menu.begin - 1);
-		for (int i = 1; i <= 30; ++i)
+		tool.gotoXY(startPoint, login_menu.chosen + login_menu.begin - 1);
+		for (int i = 1; i <= endPoint - startPoint; ++i)
 			cout << " ";
-		tool.gotoXY(35, login_menu.chosen + login_menu.begin - 1);
+		tool.gotoXY(startPoint, login_menu.chosen + login_menu.begin - 1);
 		cout << tmp;
 	}
 }
 
-string login::get_password(menu &login_menu) {
+string get_password(menu &login_menu) {
 	string tmp = "";
 	window tool;
-	tool.gotoXY(100, login_menu.chosen + login_menu.begin - 1);
+	int startPoint = login_menu.startPointInfo();
+	int endPoint = login_menu.endPointInfo();
+
+	tool.gotoXY(endPoint, login_menu.chosen + login_menu.begin - 1);
 	cout << "<";
 	while (1) {
 		int key;
@@ -93,18 +103,18 @@ string login::get_password(menu &login_menu) {
 			if (tmp.size())tmp.pop_back();
 		}
 		else if (key == 13) {
-			tool.gotoXY(100, login_menu.chosen + login_menu.begin - 1);
+			tool.gotoXY(endPoint, login_menu.chosen + login_menu.begin - 1);
 			cout << " ";
 			return tmp;
 		}
 		else if (key >= 33 && key <= 126) {
-			if (tmp.size() == 30) continue;
+			if (tmp.size() == login_menu.maxLengthInfo) continue;
 			tmp = tmp + char(key);
 		}
-		tool.gotoXY(35, login_menu.chosen + login_menu.begin - 1);
-		for (int i = 1; i <= 30; ++i)
+		tool.gotoXY(startPoint, login_menu.chosen + login_menu.begin - 1);
+		for (int i = 1; i <= endPoint - startPoint; ++i)
 			cout << " ";
-		tool.gotoXY(35, login_menu.chosen + login_menu.begin - 1);
+		tool.gotoXY(startPoint, login_menu.chosen + login_menu.begin - 1);
 		for (int i = 0; i < tmp.size(); ++i)
 			cout << "*";
 	}

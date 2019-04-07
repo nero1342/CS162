@@ -14,8 +14,10 @@ string menu_choose(menu &main_menu);
 void NewStudentInfo(Student &x);
 string get_info(menu &Menu, string old);
 void EditInfo(Student &x);
-bool fill_menu(menu &Menu, vector<string > &anwser);
+bool fill_menu(menu &Menu, vector<string > &anwser, bool isPassword = false);
 
 void Message(string message);
+
+void Guide(vector<string> v_guide);
 
 #endif // !CONTROL_H
