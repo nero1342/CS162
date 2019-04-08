@@ -123,6 +123,11 @@ string Student::getClass() {
     return Class;
 }
 
+vector<string> Student::GetCourse()
+{
+	return course;
+}
+
 void Student::ViewSchedule()
 {
 	string title = "SCHEDULE LIST OF " + Lastname + " " + Firstname + " - " + StudentID;

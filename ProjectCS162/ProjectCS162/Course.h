@@ -13,10 +13,10 @@ private:
 	vector<vector<int>> scoreboard;
 	vector<string> StudentID;
 public:
-	void ImportScoreboard(string year, string &sem, string &course, string &name);
+	void ImportScoreboard(string & year, string &sem, string &course, string &name);
 	bool ExportScoreboard(string & year, string &sem, string &course);
 
-	void CleanUp(vector<string> a);
+	void CleanUp(vector<string> listOfStudent);
 	bool Reload(string link);
 	void Save(string link);
 	void View();
@@ -36,7 +36,7 @@ public:
 
 	string GetStudentID();
 	vector<int> GetAttend();
-	void UpdateAttend(vector<int> & a);
+	void UpdateAttend(vector<int> & newDay);
 };
 
 class AttendanceList
@@ -44,7 +44,7 @@ class AttendanceList
 private:
 	vector<Attendance> attend;
 public:
-	void Add(Attendance x);
+	void Add(Attendance attendance);
 	void Remove(string ID);
 
 	void AddStudent(Student & x);

@@ -54,6 +54,7 @@ void Course::SetEndHour(string newEndHour)
 {
 	endHour = newEndHour;
 }
+
 void Course::SetRoom(string newRoom)
 {
 	room = newRoom;
@@ -247,15 +248,15 @@ string Course::ViewListStudent() {
 
 void Course::CreateAttendanceList(string link)
 {
-	AttendanceList a;
+	AttendanceList attendanceList;
 
 	for (auto i : listOfStudent)
 	{
-		Attendance tmp;
-		tmp.SetStudentID(i);
-		a.Add(tmp);
+		Attendance attendance;
+		attendance.SetStudentID(i);
+		attendanceList.Add(attendance);
 	}
-	a.SaveData(link + ID + "-attendancelist.txt");
+	attendanceList.SaveData(link + ID + "-attendancelist.txt");
 }
 
 string Course::GetClass()
@@ -364,6 +365,7 @@ void Course::SetYear(string& newYear)
 void Course::SetSemester(string& newSemester) {
 	semester = newSemester;
 }
+
 Attendance::Attendance()
 {
 	for (int i = 1; i <= 10; ++i) day.push_back(0);
@@ -402,15 +404,15 @@ vector<int> Attendance::GetAttend()
 	return day;
 }
 
-void Attendance::UpdateAttend(vector<int>& a)
+void Attendance::UpdateAttend(vector<int>& newDay)
 {
 	day.clear();
-	day = a;
+	day = newDay;
 }
 
-void AttendanceList::Add(Attendance x)
+void AttendanceList::Add(Attendance attendance)
 {
-	attend.push_back(x);
+	attend.push_back(attendance);
 }
 
 void AttendanceList::Remove(string ID)
@@ -517,27 +519,31 @@ void AttendanceList::View()
 	while (menu_choose(att_menu) != "RETURN");
 }
 
-void Scoreboard::ImportScoreboard(string year, string & sem, string & course, string & name)
+void Scoreboard::ImportScoreboard(string & year, string & sem, string & course, string & name)
 {
 	Import(name, "Data\\Course\\" + year + "\\" + sem + "\\");
 
 	while (name.back() != '.') name.pop_back();
 	name += "txt";
 
-	Course tmp;
-	tmp.SetYear(year);
-	tmp.SetSemester(sem);
-	tmp.SetID(course);
-	tmp.Reload();
+	Course courseTmp;
+	courseTmp.SetYear(year);
+	courseTmp.SetSemester(sem);
+	courseTmp.SetID(course);
+	courseTmp.Reload();
 
-	vector<string> tmpp = tmp.GetStudentList();
-	Scoreboard a;
-	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + name);
-	a.CleanUp(tmpp);
-	a.Save("Data\\Course\\" + year + "\\" + sem + "\\" + name);
+	vector<string> listOfStudent = courseTmp.GetStudentList();
 
-	year = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
-	system(year.c_str());
+	Scoreboard scoreboard;
+	scoreboard.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + name);
+	scoreboard.CleanUp(listOfStudent);
+	scoreboard.Save("Data\\Course\\" + year + "\\" + sem + "\\" + name);
+
+	string command = "Data\\Course\\" + year + "\\" + sem + "\\" + course + "-scoreboard.txt";
+	DeleteFile(command.c_str()); // This is to delete the old scoreboard file
+
+	command = "rename Data\\Course\\" + year + "\\" + sem + "\\" + name + " " + course + "-scoreboard.txt";
+	system(command.c_str());
 }
 
 bool Scoreboard::ExportScoreboard(string & year, string & sem, string & course)
@@ -560,13 +566,13 @@ bool Scoreboard::ExportScoreboard(string & year, string & sem, string & course)
 	Export(StudentID, Col, course + "-scoreboard", scoreboard);
 }
 
-void Scoreboard::CleanUp(vector<string> a)
+void Scoreboard::CleanUp(vector<string> listOfStudent)
 {
 	unsigned int i = 0;
 	while (i < StudentID.size()) 
 	{
 		bool found = false;
-		for (auto j : a)
+		for (auto j : listOfStudent)
 		{
 			if (StudentID[i] == j)
 			{

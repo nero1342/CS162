@@ -40,6 +40,7 @@ public:
     string getGender();
     string getDoB();
     string getClass();
+	vector<string> GetCourse();
 
 	void ViewSchedule();
 };

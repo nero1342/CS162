@@ -126,6 +126,19 @@ void StudentManagementSystem::RemoveStudent() {
 	classlist.RemoveStudent(student);
 
 	// Remove this student in all course he enrolled
+	Course course;
+	vector<string> courseList = student.GetCourse();
+	for (auto i : courseList)
+	{
+		ifstream in("Data\\Course\\" + i + ".txt");
+		course.Reload(in);
+		in.close();
+		course.RemoveStudent(student.getStudentID());
+
+		ofstream ou("Data\\Course\\" + i + ".txt");
+		course.SaveData(ou);
+		ou.close();
+	}
 }
 
 void StudentManagementSystem::ChangeClassOfStudent() {
@@ -298,9 +311,9 @@ void StudentManagementSystem::ExportAttendaceList()
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
-	AttendanceList a;
-	a.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
-	a.ExportAttend(courseID);
+	AttendanceList attendanceList;
+	attendanceList.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
+	attendanceList.ExportAttend(courseID);
 	Message("Export scoreboard succeeded");
 }
 
