@@ -48,6 +48,9 @@ public:
 	string ViewCourse(string &year, string &semester);
 	string ViewListStudentInCourse();
 	void EditGrade();
+	void Checkin();
+	void EditAttend();
+	void ViewCheckinResult();
 	void Lecturer_ViewCourse();
 	void Student_ViewSchedule();
 	void Do(string & choose);

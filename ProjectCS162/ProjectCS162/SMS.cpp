@@ -570,6 +570,57 @@ void StudentManagementSystem::EditGrade()
 	scoreboard.Save("Data\\Course\\" + course + "-scoreboard.txt");
 }
 
+void StudentManagementSystem::Checkin()
+{
+	/*
+		choose course        2018-2019\Fall\CM101
+	*/
+	string studentID;
+	string course;
+	AttendanceList attendanceList;
+	attendanceList.Reload("Data\\Course\\" + course + "-attendance.txt");
+	vector<int> attend = attendanceList.GetAttend(studentID);
+
+	/*
+		show and choose week to edit
+	*/
+	attendanceList.UpdateAttend(attend, studentID);
+	attendanceList.SaveData("Data\\Course\\" + course + "-attendance.txt");
+}
+
+void StudentManagementSystem::EditAttend()
+{
+	/*
+		choose course 
+		choose student
+	*/
+	string course;
+	string student;
+	AttendanceList attendanceList;
+	attendanceList.Reload("Data\\Course\\" + course + "-attendance.txt");
+	vector<int> attend = attendanceList.GetAttend(student);
+	/*
+		show vector attend and edit
+	*/
+	attendanceList.UpdateAttend(attend, student);
+	attendanceList.SaveData("Data\\Course\\" + course + "-attendance.txt");
+}
+
+void StudentManagementSystem::ViewCheckinResult()
+{
+	/*
+		choose course
+	*/
+	string course;
+	string student;
+	AttendanceList attendanceList;
+	attendanceList.Reload("Data\\Course\\" + course + "-attendance.txt");
+	vector<int> attend = attendanceList.GetAttend(student);
+	/*
+		show attend
+	*/
+}
+
 void StudentManagementSystem::Lecturer_ViewCourse() {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
