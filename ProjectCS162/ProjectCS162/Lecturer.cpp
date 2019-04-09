@@ -39,8 +39,10 @@ void Lecturer::SaveData()
 vector<string>& Lecturer::getListCourse() {
 	return Course;
 }
+
 void Lecturer::AddCourse(string CourseID) {
 	Reload();
+	for (auto i : Course) if (i == CourseID) return;
 	Course.push_back(CourseID);
 	SaveData();
 }

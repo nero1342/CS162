@@ -21,7 +21,7 @@ void CourseList::Save(string & year, string & sem)
 	ou.close();
 }
 
-void CourseList::ImportCourse(string year, string &sem, string & name)
+void CourseList::ImportCourse(string year, string & sem, string & name)
 {
 	string yearsem = "Data\\Course\\" + year + "\\" + sem + "\\";
 	Import(name, yearsem);
