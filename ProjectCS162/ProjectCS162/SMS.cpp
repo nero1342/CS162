@@ -545,8 +545,7 @@ string StudentManagementSystem::ViewListStudentInCourse()
 void StudentManagementSystem::Lecturer_ViewCourse() {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
-	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
-	string courseID = menu_choose(courseMenu);
+	string courseID = lecturer.ViewCourse();
 	if (courseID == "RETURN") return;
 
 	ifstream in("Data\\Course\\" + courseID + ".txt");
@@ -571,8 +570,7 @@ void StudentManagementSystem::Student_ViewSchedule()
 void StudentManagementSystem::Lecturer_ViewAttendance() {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
-	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
-	string courseID = menu_choose(courseMenu);
+	string courseID = lecturer.ViewCourse();
 	if (courseID == "RETURN") return;
 
 	AttendanceList a;
@@ -583,8 +581,7 @@ void StudentManagementSystem::Lecturer_ViewAttendance() {
 void StudentManagementSystem::Lecturer_ViewScoreboard() {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
-	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
-	string courseID = menu_choose(courseMenu);
+	string courseID = lecturer.ViewCourse();
 	if (courseID == "RETURN") return;
 
 	//Show scoreboard of courseID here

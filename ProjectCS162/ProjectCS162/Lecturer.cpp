@@ -1,4 +1,6 @@
 #include "Lecturer.hpp"
+#include "menu.h"
+#include "control.h"
 
 Lecturer::Lecturer()
 {
@@ -54,4 +56,12 @@ void Lecturer::DeleteCourse(string CourseID) {
 		++cnt;
 	}
 	SaveData();
+}
+
+string Lecturer::ViewCourse()
+{
+	vector<string> myCourse = Course;
+	myCourse.push_back("RETURN");
+	menu courseMenu("COURSES OF " + Name, myCourse, 1);
+	return menu_choose(courseMenu);
 }

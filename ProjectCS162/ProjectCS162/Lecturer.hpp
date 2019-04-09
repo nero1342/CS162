@@ -22,7 +22,7 @@ public:
 	void AddCourse(string CourseID);
 
 	void DeleteCourse(string CourseID);
-
+	string ViewCourse();
 };
 
 #endif /* Lecturer_hpp */
