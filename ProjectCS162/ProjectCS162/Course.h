@@ -16,6 +16,8 @@ public:
 	void ImportScoreboard(string & year, string &sem, string &course, string &name);
 	bool ExportScoreboard(string & year, string &sem, string &course);
 
+	vector<int> GetScore(string & student);
+	void UpdateScore(string & student, vector<int> & newScore);
 	void CleanUp(vector<string> listOfStudent);
 	bool Reload(string link);
 	void Save(string link);

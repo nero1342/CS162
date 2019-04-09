@@ -566,6 +566,23 @@ bool Scoreboard::ExportScoreboard(string & year, string & sem, string & course)
 	Export(StudentID, Col, course + "-scoreboard", scoreboard);
 }
 
+vector<int> Scoreboard::GetScore(string & student)
+{
+	for (unsigned int i = 0; i < StudentID.size(); ++i)
+		if (StudentID[i] == student) return scoreboard[i];
+	vector<int> tmp;
+	return tmp;
+}
+
+void Scoreboard::UpdateScore(string & student, vector<int>& newScore)
+{
+	for (unsigned int i = 0; i < StudentID.size(); ++i) if (StudentID[i] == student)
+	{
+		scoreboard[i] = newScore;
+		return;
+	}
+}
+
 void Scoreboard::CleanUp(vector<string> listOfStudent)
 {
 	unsigned int i = 0;

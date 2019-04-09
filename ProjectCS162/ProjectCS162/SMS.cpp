@@ -543,6 +543,33 @@ string StudentManagementSystem::ViewListStudentInCourse()
 	}
 }
 
+void StudentManagementSystem::EditGrade()
+{
+	/*
+		get info
+		choose course
+		choose student
+	*/
+	string course; // 2018-2019\\Fall\\CM101
+	Scoreboard scoreboard;
+	if (!scoreboard.Reload("Data\\Course\\" + course + "-scoreboard.txt"))
+	{
+		/*
+			error message no scoreboard for this class
+		*/
+	}
+	string studentID;
+	/*
+		get student ID
+	*/
+	vector<int> score = scoreboard.GetScore(studentID);
+	/*
+		show vector score and edit on score
+	*/
+	scoreboard.UpdateScore(studentID, score);
+	scoreboard.Save("Data\\Course\\" + course + "-scoreboard.txt");
+}
+
 void StudentManagementSystem::Lecturer_ViewCourse() {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
