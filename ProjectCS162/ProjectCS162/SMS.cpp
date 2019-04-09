@@ -271,12 +271,13 @@ void StudentManagementSystem::ImportScoreboard()
 {
 	Lecturer lecturer(AccountLogin.getUsername());
 	lecturer.Reload();
-	menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
-	string courseID = menu_choose(courseMenu);
+	/*menu courseMenu("COURSES OF " + lecturer.getName(), lecturer.getListCourse(), 1);
+	string courseID = menu_choose(courseMenu);*/
+	string courseID = lecturer.ViewCourse();
 	if (courseID == "RETURN") return;
 
 	vector<string> scoreboard = ListFileInDicrectory("*.csv");
-	menu import_menu("Choose class", scoreboard, 1);
+	menu import_menu("Choose scoreboard", scoreboard, 1);
 	string nameScoreboard = menu_choose(import_menu);
 	if (nameScoreboard == "RETURN") return;
 
@@ -363,7 +364,7 @@ void StudentManagementSystem::ImportCourse()
 			if (sem == "RETURN") break;
 			while (true) {
 				vector<string> listCourse = ListFileInDicrectory("*.csv");
-				menu import_menu("Choose class", listCourse, 1);
+				menu import_menu("Choose course", listCourse, 1);
 				string CourseID = menu_choose(import_menu);
 				if (CourseID == "RETURN") return;
 				courselist.ImportCourse(year, sem, CourseID);
