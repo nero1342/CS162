@@ -59,6 +59,8 @@ public:
 
 	void Lecturer_ViewScoreboard();
 
+	void Student_ViewScore();
+
 	void Menu(menu & x);
 
 	void Run();

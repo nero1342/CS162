@@ -670,6 +670,25 @@ void StudentManagementSystem::Lecturer_ViewScoreboard() {
 	else score.View(courseID);
 }
 
+void StudentManagementSystem::Student_ViewScore()
+{
+	string student;
+	/*
+		choose course     2018-2019\\Fall\\CM101
+	*/
+	string course;
+	Scoreboard scoreboard;
+	if (!scoreboard.Reload("Data\\Course\\" + course + "-scoreboard.txt"))
+	{
+		cout << "no scoreboard";
+		return;
+	}
+	vector<int> score = scoreboard.GetScore(student);
+	/*
+		show score
+	*/
+}
+
 void StudentManagementSystem::Menu(menu &main_menu) {
 	while (1) {
 		string choose = menu_choose(main_menu);
