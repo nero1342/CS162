@@ -325,7 +325,7 @@ void StudentManagementSystem::ViewScoreboard()
 	Scoreboard score;
 	if (!score.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-scoreboard.txt")) 
 		Message("You have no scoreboard here!!");
-	else score.View();
+	else score.View(courseID);
 }
 
 void StudentManagementSystem::ViewAttendanceList()
@@ -664,6 +664,12 @@ void StudentManagementSystem::Lecturer_ViewScoreboard() {
 	if (courseID == "RETURN") return;
 
 	//Show scoreboard of courseID here
+	/*string year, sem, courseID = ViewCourse(year, sem);
+	if (courseID == "RETURN") return;
+	Scoreboard score;
+	if (!score.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-scoreboard.txt"))
+		Message("You have no scoreboard here!!");
+	else score.View(courseID);*/
 }
 
 void StudentManagementSystem::Menu(menu &main_menu) {

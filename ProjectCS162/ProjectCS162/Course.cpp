@@ -640,9 +640,37 @@ void Scoreboard::Save(string link)
 	ou.close();
 }
 
-void Scoreboard::View()
-{
-	cout << "liu liu\n";
+void Scoreboard::View(string course){
+	menu board;
+	board.minchosen = 2;
+	board.chosen = 2;
+	board.maxLengthInfo = 30;
+	board.title = "SCORE BOARD OF COURSE " + course;
+	stringstream ff;
+	ff  << left << setw(5) << "No"
+		<< left << setw(15) << "Student ID"
+		<< left << setw(30) << "Midterm"
+		<< left << setw(10) << "Practice"
+		<< left << setw(10) << "Final" << "\n";
+	string feature;
+	getline(ff, feature);
+	board.name.clear();
+	board.name.push_back(feature);
+	for (int i = 0; i < StudentID.size(); ++i) {
+		ff << left << setw(5) << i + 1
+			<< left << setw(15) << StudentID[i]
+			<< left << setw(30) << scoreboard[i][0]
+			<< left << setw(10) << scoreboard[i][1]
+			<< left << setw(10) << scoreboard[i][2] << "\n";
+			getline(ff, feature);
+			board.name.push_back(feature);
+	}
+	board.name.push_back("RETURN");
+	while (1) {
+		string tmp = menu_choose(board);
+		if (tmp == "RETURN") return;
+	}
+
 }
 
 void CleanUp(Scoreboard a, Course tmp)

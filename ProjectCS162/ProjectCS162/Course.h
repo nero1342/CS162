@@ -21,7 +21,7 @@ public:
 	void CleanUp(vector<string> listOfStudent);
 	bool Reload(string link);
 	void Save(string link);
-	void View();
+	void View(string course);
 };
 
 class Attendance
