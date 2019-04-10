@@ -100,6 +100,54 @@ void Course::NewCourseInfo() {
 
 }
 
+
+void Course::EditCourseInfo() {
+	menu Menu;
+	Menu.title = "EDIT " + GetCourseID() + " INFOMATION";
+	Menu.name.clear();
+	Menu.name = { 
+			//	"Course ID:",
+				"Name:",
+				"Class:",
+				"Lecturer:",
+				"StartDate:",
+				"EndDate:",
+				"Day Of Week:",
+				"Start Hour:",
+				"End Hour:",
+				"Room:",
+				"Apply",
+				"Cancel"
+	};
+	Menu.maxLengthInfo = 30;
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	vector<string > answer;
+	answer.clear();
+
+	answer.push_back(GetName());
+	answer.push_back(GetClass());
+	answer.push_back(GetLecturer());
+	answer.push_back(GetStartDate());
+	answer.push_back(GetEndDate());
+	answer.push_back(GetDOW());
+	answer.push_back(GetStartHour());
+	answer.push_back(GetEndHour());
+	answer.push_back(GetRoom());
+	if (fill_menu(Menu, answer) == 0) return;
+	else {
+		SetName(answer[0]);
+		SetClass(answer[1]);
+		SetLecturer(answer[2]);
+		SetStartDate(answer[3]);
+		SetEndDate(answer[4]);
+		SetDOW(answer[5]);
+		SetStartHour(answer[6]);
+		SetEndHour(answer[7]);
+		SetRoom(answer[8]);
+		return;
+	}
+}
 void Course::Reload(istream & in)
 {
 	getline(in, ID);
@@ -283,6 +331,16 @@ string Course::GetLecturer()
 string Course::GetDOW()
 {
 	return dayOfWeek;
+}
+
+string Course::GetStartDate()
+{
+	return startDate;
+}
+
+string Course::GetEndDate()
+{
+	return endDate;
 }
 
 string Course::GetStartHour()
@@ -506,9 +564,10 @@ void AttendanceList::View()
 		student.Reload();
 		ff << left << setw(5) << ++cnt
 			<< left << setw(15) << student.getStudentID()
-			<< left << setw(30) << student.getLastname() + ' ' + student.getFirstname();
+			<< left << setw(32) << student.getLastname() + ' ' + student.getFirstname();
 		for (int i = 1; i <= 10; ++i) {
-			ff << left << setw(10) << att_result[i - 1];
+			char icon = (att_result[i - 1] == 0 ? '-' : (att_result[i - 1] == 1 ? 'X' : 'A'));
+			ff << left << setw(10) << icon;
 		}
 		ff << endl;
 		getline(ff, feature);
@@ -640,7 +699,8 @@ void Scoreboard::Save(string link)
 	ou.close();
 }
 
-void Scoreboard::View(string course){
+void Scoreboard::View(string course)
+{
 	menu board;
 	board.minchosen = 2;
 	board.chosen = 2;
@@ -670,9 +730,41 @@ void Scoreboard::View(string course){
 		string tmp = menu_choose(board);
 		if (tmp == "RETURN") return;
 	}
-
 }
 
+void Scoreboard::EditGrade(Student & student) {
+	menu Menu;
+	Menu.title = "EDIT GRADE - " + student.getFirstname() + ' ' + student.getLastname() + " - " + student.getStudentID();
+	Menu.name.clear();
+	Menu.name = { "Midterm: ",
+				"Practice: ",
+				"Final: ",
+				"Apply",
+				"Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	Menu.maxLengthInfo = 10;
+	vector<string> answer;
+	string studentID = student.getStudentID();
+	vector<int> score = GetScore(studentID);
+	answer.clear();
+	for (int i = 0; i < 3; ++i)
+		answer.push_back(to_string(score[i]));
+	
+	while (fill_menu(Menu, answer)) {
+		for (int i = 0; i < 3; ++i) {
+			score[i] = atof(answer[i].c_str());
+			if (to_string(score[i]) != answer[i]) {
+				// Check if convert unsuccessfully
+				Message("Something wrong here.");
+				continue;
+			}
+		}
+		UpdateScore(studentID, score);
+		return;
+	}
+}
 void CleanUp(Scoreboard a, Course tmp)
 {
 }

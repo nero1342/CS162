@@ -128,20 +128,19 @@ vector<string> Student::GetCourse()
 	return course;
 }
 
-void Student::ViewSchedule()
+string Student::ViewSchedule()
 {
 	string title = "SCHEDULE LIST OF " + Lastname + " " + Firstname + " - " + StudentID;
 	vector<string> schedule;
 	stringstream ff;
-
 	ff << left << setw(5) << "No"
-		<< left << setw(15) << "Course ID"
+		<< left << setw(30) << "Course ID"
 		<< left << setw(30) << "Course Name"
 		<< left << setw(10) << "Class"
-		<< left << setw(10) << "Lecturer"
+		<< left << setw(15) << "Lecturer"
 		<< left << setw(10) << "DOW"
-		<< left << setw(10) << "Start Hour"
-		<< left << setw(10) << "End Hour"
+		<< left << setw(12) << "Start Hour"
+		<< left << setw(12) << "End Hour"
 		<< left << setw(10) << "Room" << endl;
 
 	string feature;
@@ -151,13 +150,13 @@ void Student::ViewSchedule()
 	for (string courseID : course) {
 		Course myCourse(courseID);
 		ff << left << setw(5) << ++cnt
-			<< left << setw(15) << courseID
+			<< left << setw(30) << courseID
 			<< left << setw(30) << myCourse.GetName()
 			<< left << setw(10) << myCourse.GetClass()
-			<< left << setw(10) << myCourse.GetLecturer()
+			<< left << setw(15) << myCourse.GetLecturer()
 			<< left << setw(10) << myCourse.GetDOW()
-			<< left << setw(10) << myCourse.GetStartHour()
-			<< left << setw(10) << myCourse.GetEndHour()
+			<< left << setw(12) << myCourse.GetStartHour()
+			<< left << setw(12) << myCourse.GetEndHour()
 			<< left << setw(10) << myCourse.GetRoom() << endl;
 		getline(ff, feature);
 		schedule.push_back(feature);
@@ -165,5 +164,12 @@ void Student::ViewSchedule()
 	schedule.push_back("RETURN");
 	menu schedule_menu(title, schedule, 2);
 
-	while (menu_choose(schedule_menu) != "RETURN");
+	while (true) {
+		string result = menu_choose(schedule_menu);
+		if (result == "RETURN") return result;
+		ff << result;
+		int no;
+		ff >> no;
+		return course[no - 1];
+	}
 }

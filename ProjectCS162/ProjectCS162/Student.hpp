@@ -42,7 +42,7 @@ public:
     string getClass();
 	vector<string> GetCourse();
 
-	void ViewSchedule();
+	string ViewSchedule();
 };
 
 #endif /* Student_hpp */

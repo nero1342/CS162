@@ -93,7 +93,7 @@ string get_info(menu &Menu, string old) {
 			if (tmp.size())tmp.pop_back();
 		}
 		else if (key == 13) {
-			tool.gotoXY(100, Menu.chosen + Menu.begin - 1);
+			tool.gotoXY(endPoint, Menu.chosen + Menu.begin - 1);
 			cout << " ";
 			return tmp;
 		}

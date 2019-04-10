@@ -11,6 +11,7 @@ void graphics::init_graphic() {
 	SetConsoleMode(hin, ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT);
 	window tool;
 	tool.hide_pointer();
+	tool.clrscr();
 }
 
 void graphics::show_menu(menu &x,int ok) {
@@ -19,7 +20,11 @@ void graphics::show_menu(menu &x,int ok) {
 	if (ok == 0) {
 		tool.clrscr();
 		tool.gotoXY(x.startPointTitle(), 5);
+		tool.background(1);
+	//	tool.text_color(14);
 		cout << x.title;
+		tool.background(0);
+	//	tool.text_color(15);
 		for (int i = 0; i < x.name.size(); ++i) {
 			tool.gotoXY(startPointMenu, x.begin + i);
 			cout << x.name[i];

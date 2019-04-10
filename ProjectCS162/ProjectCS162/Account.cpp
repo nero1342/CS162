@@ -1,4 +1,5 @@
 #include "Account.hpp"
+#include "SHA1.hpp"
 
 Account::Account() {}
 
@@ -32,9 +33,11 @@ void Account::EditLink(string newLink) {
 
 void Account::ChangePassword(string newPassword)
 {
-	password = newPassword;
+	password = HashPassword(newPassword);
 }
 
 string HashPassword(string password) {
-    return password;
+	SHA1 checksum;
+	checksum.update(password);
+	return checksum.final();
 }

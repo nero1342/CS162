@@ -22,6 +22,7 @@ public:
 	bool Reload(string link);
 	void Save(string link);
 	void View(string course);
+	void EditGrade(Student & student);
 };
 
 class Attendance
@@ -94,12 +95,15 @@ public:
 	string GetStartHour();
 	string GetEndHour();
 	string GetRoom();
+	string GetStartDate();
+	string GetEndDate();
 
 	vector<string> GetStudentList();
 	bool HaveStudent(string StudentID);
 	void RemoveStudent(string StudentID);
 	void Reload();
-	void Reload(istream & in); 
+	void EditCourseInfo();
+	void Reload(istream & in);
 	void ReadInput(istream & in);  // this is for import only
 	void SaveData(ofstream & ou);
 

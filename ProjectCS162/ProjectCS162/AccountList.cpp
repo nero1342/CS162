@@ -27,7 +27,7 @@ bool AccountList::isExist(string username) {
 void AccountList::Add(Student student) {
     if (isExist(student.getStudentID())) return;
 	student.SaveData();
-    list.push_back(Account(student.getStudentID(), student.getDoB(), "Student", student.getClass()));
+    list.push_back(Account(student.getStudentID(), HashPassword(student.getDoB()), "Student", student.getClass()));
 }
 
 void AccountList::Edit(Student student) {
@@ -41,7 +41,7 @@ void AccountList::Edit(Student student) {
 
 void AccountList::Add(Lecturer lecturer) {
     if (isExist(lecturer.getName())) return;
-    list.push_back(Account(lecturer.getName(), lecturer.getName(), "Lecturer", "Lecturer"));
+    list.push_back(Account(lecturer.getName(), HashPassword(lecturer.getName()), "Lecturer", "Lecturer"));
 }
 
 bool AccountList::Login(string username, string password) {
@@ -63,6 +63,7 @@ void AccountList::Remove(string username) {
 void AccountList::Add(Account account)
 {
 	if (isExist(account.getUsername())) return;
+	account.ChangePassword(account.getPassword());
 	list.push_back(account);
 }
 

@@ -23,6 +23,7 @@ struct window{
 	void absorb_input();
 	void clrscr();
 	void gotoXY(int x, int y);
+	void background(int turnon);
 	void text_color(int color);
 	void appear_pointer();
 	void hide_pointer();

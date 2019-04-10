@@ -21,6 +21,7 @@ void window::absorb_input() {
 }
 
 void window::clrscr() {
+	system("cls"); return;
 	CONSOLE_SCREEN_BUFFER_INFO	csbiInfo;
 	HANDLE	hConsoleOut;
 	COORD	Home = { 0,0 };
@@ -39,6 +40,21 @@ void window::gotoXY(int x, int y) {
 		h = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD c = { x, y };
 	SetConsoleCursorPosition(h, c);
+}
+
+void window::background(int turnon) {
+	HANDLE m_hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	if (turnon)
+	SetConsoleTextAttribute(m_hConsole,
+		BACKGROUND_RED |
+		BACKGROUND_GREEN |
+		BACKGROUND_BLUE );
+	else // turnoff
+	SetConsoleTextAttribute(m_hConsole,
+		FOREGROUND_RED |
+		FOREGROUND_GREEN |
+		FOREGROUND_BLUE);
+
 }
 
 void window::text_color(int color) {
