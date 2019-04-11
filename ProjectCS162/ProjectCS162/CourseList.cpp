@@ -8,6 +8,7 @@ string CourseList::GetCourse(int pos)
 
 void CourseList::Load(string & year, string & sem)
 {
+	courseList.clear();
 	ifstream in("Data\\Course\\" + year + "\\" + sem + "\\CourseList.txt");
 	string x;
 	while (in >> x) courseList.push_back(x);
@@ -83,15 +84,16 @@ void CourseList::RemoveCourse(string year, string & sem, string & name)
 	}
 	Save(year, sem);
 
+	Course course;
+	course.SetYear(year);
+	course.SetSemester(sem);
+	course.SetID(name);
+	course.Reload();
+
 	string path = "Data\\Course\\" + year + "\\" + sem + "\\" + name + ".txt";
-	ifstream in(path);
-	Course tmp;
-	tmp.SetYear(year);
-	tmp.SetSemester(sem);
-	tmp.Reload(in);
-	in.close();
 
 	DeleteFile(path.c_str());
+
 	while (!path.empty() && path.back() != '.') path.pop_back();
 	path.pop_back();
 	path += "-attendancelist.txt";
@@ -102,7 +104,7 @@ void CourseList::RemoveCourse(string year, string & sem, string & name)
 	path += "-scoreboard.txt";
 	DeleteFile(path.c_str());
 
-	tmp.DeleteCourse();
+	course.DeleteCourse();
 }
 
 void CourseList::CreateAcademicYear(string &name)

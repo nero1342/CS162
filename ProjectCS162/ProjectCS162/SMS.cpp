@@ -431,7 +431,6 @@ void StudentManagementSystem::EditCourse()
 
 void StudentManagementSystem::RemoveCourse()
 {
-
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
@@ -459,7 +458,7 @@ void StudentManagementSystem::AddAStudentToCourse()
 	student.SetStudentID(myClass.ViewList());
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
-				
+				 
 	//Add student to course, add attendance here
 	student.AddCourse(year + "\\" + sem + "\\" + course.GetCourseID());
 	student.SaveData();
