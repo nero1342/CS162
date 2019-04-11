@@ -10,8 +10,6 @@ void StudentManagementSystem::Reload() {
 	acclist.Reload();
 	acclist.Add(Account("admin", "admin", "Staff", "Staff"));
 	acclist.SaveData();
-    //acclist.Reload();ss
-    //classlist.Reload();
 }
 
 vector<string> ListFileInDicrectory(string pattern) {
@@ -599,11 +597,7 @@ void StudentManagementSystem::EditAttend()
 	if (course == "RETURN") return;
 	AttendanceList attendanceList;
 	attendanceList.Reload("Data\\Course\\" + course + "-attendancelist.txt");
-	vector<int> attend = attendanceList.GetAttend(studentID);
-	/*
-		show vector attend and edit
-	*/
-	attendanceList.UpdateAttend(attend, studentID);
+	attendanceList.EditAttend(student);
 	attendanceList.SaveData("Data\\Course\\" + course + "-attendancelist.txt");
 }
 
@@ -646,7 +640,7 @@ void StudentManagementSystem::ViewCheckinResult()
 	vector<string> attendStatus;
 	for (int i = 0; i < (int) attend.size(); ++i) {
 		
-		attendStatus.push_back("Week " + to_string(i + 1) + ": " + (attend[i] == 0 ? "It's not time" : (attend[i] == 1 ? "Attend" : "Absent")));
+		attendStatus.push_back("Week " + to_string(i + 1) + ": " + (attend[i] == 0 ? "It's not show time" : (attend[i] == 1 ? "Attend" : "Absent")));
 	}
 	attendStatus.push_back("RETURN");
 	menu menuAttendStatus("ATTENDANCE OF " + student.getLastname() + ' '  + student.getFirstname() + " - " + studentID + " IN COURSE " + course, attendStatus, 1);
@@ -712,7 +706,7 @@ void StudentManagementSystem::Student_ViewScore()
 	Scoreboard scoreboard;
 	if (!scoreboard.Reload("Data\\Course\\" + courseID + "-scoreboard.txt"))
 	{
-		cout << "no scoreboard";
+		Message("This course has no score for you :'(");
 		return;
 	}
 	vector<int> score = scoreboard.GetScore(studentID);
@@ -735,6 +729,7 @@ void StudentManagementSystem::Student_ViewScore()
 	}
 	menu student_score;
 	student_score.minchosen = 2;
+	student_score.chosen = 2;
 	student_score.title = "SCORE OF " + studentID + " IN " + course;
 	getline(ff, feature);
 	student_score.name.clear();
@@ -819,7 +814,7 @@ void StudentManagementSystem::Do(string &choose) {
 // LECTURER
 	if (choose == "VIEW LIST OF COURSES") Lecturer_ViewCourse();
 	if (choose == "VIEW ATTENDANCE LIST OF A COURSE") Lecturer_ViewAttendance();
-	if (choose == "EDIT AN ATTENDANCE");
+	if (choose == "EDIT AN ATTENDANCE") EditAttend();
 	if (choose == "IMPORT SCOREBOARD OF A COURSE") ImportScoreboard();
 	if (choose == "EDIT GRADE OF A STUDENT") EditGrade();
 	if (choose == "VIEW A SCOREBOARD") Lecturer_ViewScoreboard();

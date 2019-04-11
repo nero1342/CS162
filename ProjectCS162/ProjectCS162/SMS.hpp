@@ -7,6 +7,7 @@
 #include "menu.h"
 #include "control.h"
 #include "login.h"
+#include <sstream>
 
 class StudentManagementSystem {
 private:
