@@ -468,6 +468,32 @@ void Attendance::UpdateAttend(vector<int>& newDay)
 	day = newDay;
 }
 
+void AttendanceList::EditAttend(Student & student) {
+	string studentID = student.getStudentID();
+	vector<int> attend = GetAttend(studentID);
+	vector<string> attendStatus;
+	for (int i = 0; i < (int)attend.size(); ++i) {
+
+		attendStatus.push_back("Week " + to_string(i + 1) + ": ");
+	}
+	vector<string> answer;
+	for (int i = 0; i < (int)attend.size(); ++i) {
+		answer.push_back((attend[i] == 0 ? "It's not show time" : (attend[i] == 1 ? "Attend" : "Absent")));
+	}
+	vector<string> chooselist = { "It's not show time", "Attend", "Absent" };
+	attendStatus.push_back("Apply");
+	attendStatus.push_back("RETURN");
+	menu menuAttendStatus("ATTENDANCE OF " + student.getLastname() + ' ' + student.getFirstname() + " - " + studentID, attendStatus, 1);
+	menuAttendStatus.maxLengthInfo = 30;
+	if (fill_menu2(menuAttendStatus, answer, chooselist)) {
+		for (int i = 0; i < (int)attend.size(); ++i) {
+			attend[i] = (answer[i] == "It's not show time") ? 0 : ((answer[i] == "Attend") ? 1 : 2);
+		}
+
+		UpdateAttend(attend, studentID);
+	}
+}
+
 void AttendanceList::Add(Attendance attendance)
 {
 	attend.push_back(attendance);

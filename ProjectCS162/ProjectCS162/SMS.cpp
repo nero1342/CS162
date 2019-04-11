@@ -571,18 +571,24 @@ void StudentManagementSystem::Checkin()
 
 void StudentManagementSystem::EditAttend()
 {
-	Student student(AccountLogin.getUsername());
-	string studentID = student.getStudentID();
-	string course = student.ViewSchedule();
-	if (course == "RETURN") return;
+	Lecturer lecturer(AccountLogin.getUsername());
+	lecturer.Reload();
+	string courseID = lecturer.ViewCourse();
+	if (courseID == "RETURN") return;
+	
+	ifstream in("Data\\Course\\" + courseID + ".txt");
+	Course course;
+	course.Reload(in);
+	in.close();
+
+	Student student;
+	student.SetStudentID(course.ViewListStudent());
+	if (student.getStudentID() == "RETURN") return;
+	
 	AttendanceList attendanceList;
-	attendanceList.Reload("Data\\Course\\" + course + "-attendancelist.txt");
-	vector<int> attend = attendanceList.GetAttend(studentID);
-	/*
-		show vector attend and edit
-	*/
-	attendanceList.UpdateAttend(attend, studentID);
-	attendanceList.SaveData("Data\\Course\\" + course + "-attendancelist.txt");
+	attendanceList.Reload("Data\\Course\\" + courseID + "-attendancelist.txt");
+	attendanceList.EditAttend(student);
+	attendanceList.SaveData("Data\\Course\\" + courseID + "-attendancelist.txt");
 }
 
 void StudentManagementSystem::EditGrade()
@@ -624,7 +630,7 @@ void StudentManagementSystem::ViewCheckinResult()
 	vector<string> attendStatus;
 	for (int i = 0; i < (int) attend.size(); ++i) {
 		
-		attendStatus.push_back("Week " + to_string(i + 1) + ": " + (attend[i] == 0 ? "It's not time" : (attend[i] == 1 ? "Attend" : "Absent")));
+		attendStatus.push_back("Week " + to_string(i + 1) + ": " + (attend[i] == 0 ? "It's not show time" : (attend[i] == 1 ? "Attend" : "Absent")));
 	}
 	attendStatus.push_back("RETURN");
 	menu menuAttendStatus("ATTENDANCE OF " + student.getLastname() + ' '  + student.getFirstname() + " - " + studentID + " IN COURSE " + course, attendStatus, 1);
@@ -768,7 +774,7 @@ void StudentManagementSystem::Do(string &choose) {
 // LECTURER
 	if (choose == "VIEW LIST OF COURSES") Lecturer_ViewCourse();
 	if (choose == "VIEW ATTENDANCE LIST OF A COURSE") Lecturer_ViewAttendance();
-	if (choose == "EDIT AN ATTENDANCE");
+	if (choose == "EDIT AN ATTENDANCE") EditAttend();
 	if (choose == "IMPORT SCOREBOARD OF A COURSE") ImportScoreboard();
 	if (choose == "EDIT GRADE OF A STUDENT") EditGrade();
 	if (choose == "VIEW A SCOREBOARD") Lecturer_ViewScoreboard();

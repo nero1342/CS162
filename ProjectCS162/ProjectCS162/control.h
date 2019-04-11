@@ -16,6 +16,10 @@ string get_info(menu &Menu, string old);
 void EditInfo(Student &x);
 bool fill_menu(menu &Menu, vector<string > &anwser, bool isPassword = false);
 
+bool fill_menu2(menu & Menu, vector<string>& answer, vector<string>& chooselist);
+
+string get_info2(menu & Menu, string & answer, vector<string>& chooselist);
+
 void Message(string message);
 
 void Guide(vector<string> v_guide);

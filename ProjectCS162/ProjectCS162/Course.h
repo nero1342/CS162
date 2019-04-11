@@ -47,6 +47,7 @@ class AttendanceList
 private:
 	vector<Attendance> attend;
 public:
+	void EditAttend(Student & student);
 	void Add(Attendance attendance);
 	void Remove(string ID);
 

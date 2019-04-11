@@ -161,6 +161,81 @@ bool fill_menu(menu &Menu, vector<string > &answer, bool isPassword) {
 	}
 }
 
+
+bool fill_menu2(menu &Menu, vector<string > &answer, vector<string> &chooselist) {
+	graphics show;
+	window tool;
+	show.init_graphic();
+	int ok = 0;
+	int startPoint = Menu.startPointInfo();
+	int endPoint = Menu.endPointInfo();
+
+	while (1) {
+		show.show_menu(Menu, ok);
+		if (!ok) {
+			for (int i = 0; i < answer.size(); ++i) {
+				tool.gotoXY(startPoint, i + Menu.begin);
+				cout << answer[i];
+			}
+		}
+		ok = 1;
+		int key;
+		while (1) {
+			key = menu_move(Menu);
+			if (key == -1) Sleep(1);
+			else break;
+		}
+		if (key) {
+			if (Menu.chosen == Menu.name.size()) return 0;
+			if (Menu.chosen == Menu.name.size() - 1) return 1;
+			answer[Menu.chosen - 1] = get_info2(Menu, answer[Menu.chosen - 1], chooselist);
+		}
+	}
+}
+
+string get_info2(menu &Menu, string & answer, vector<string> & chooselist) {
+	window tool;
+	int startPoint = Menu.startPointInfo();
+	int endPoint = Menu.endPointInfo();
+	tool.gotoXY(endPoint, Menu.chosen + Menu.begin - 1);
+	cout << "<";
+	tool.gotoXY(startPoint, Menu.chosen + Menu.begin - 1);
+	cout << answer;
+	while (1) {
+		int key;
+		while (1) {
+			key = tool.inputkey();
+			if (key == -1) Sleep(1);
+			else break;
+		}
+		if (key == 75) { // Left
+			for (int i = 0; i < chooselist.size(); ++i) {
+				if (answer == chooselist[i]) {
+					answer = chooselist[(i - 1 + chooselist.size()) % chooselist.size()];
+					break;
+				}
+			}
+		}
+		else if (key == 77) { // Right
+			for (int i = 0; i < chooselist.size(); ++i) {
+				if (answer == chooselist[i]) {
+					answer = chooselist[(i + 1) % chooselist.size()];
+					break;
+				}
+			}
+		}
+		else if (key == 13) { // Enter
+			tool.gotoXY(endPoint, Menu.chosen + Menu.begin - 1);
+			cout << " ";
+			return answer;
+		}
+		tool.gotoXY(startPoint, Menu.chosen + Menu.begin - 1);
+		for (int i = 1; i <= endPoint - startPoint; ++i) cout << " ";
+		tool.gotoXY(startPoint, Menu.chosen + Menu.begin - 1);
+		cout << answer;
+	}
+}
+
 void Message(string message) {
 	window Window;
 	Window.clrscr();
