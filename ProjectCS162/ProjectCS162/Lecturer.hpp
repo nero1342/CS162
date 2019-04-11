@@ -9,7 +9,7 @@ using namespace std;
 class Lecturer {
 private:
     string Name;
-	vector<string> Course;
+	vector<string> course;
 
 public:
 	Lecturer();

@@ -89,6 +89,7 @@ void Course::NewCourseInfo() {
 		SetName(answer[1]);
 		SetClass(answer[2]);
 		SetLecturer(answer[3]);
+		CreateAccountForLecturer();
 		SetStartDate(answer[4]);
 		SetEndDate(answer[5]);
 		SetDOW(answer[6]);
@@ -108,8 +109,6 @@ void Course::EditCourseInfo() {
 	Menu.name = { 
 			//	"Course ID:",
 				"Name:",
-				"Class:",
-				"Lecturer:",
 				"StartDate:",
 				"EndDate:",
 				"Day Of Week:",
@@ -122,12 +121,10 @@ void Course::EditCourseInfo() {
 	Menu.maxLengthInfo = 30;
 	Menu.minchosen = 1;
 	Menu.chosen = 1;
-	vector<string > answer;
+	vector<string> answer;
 	answer.clear();
 
 	answer.push_back(GetName());
-	answer.push_back(GetClass());
-	answer.push_back(GetLecturer());
 	answer.push_back(GetStartDate());
 	answer.push_back(GetEndDate());
 	answer.push_back(GetDOW());
@@ -137,14 +134,12 @@ void Course::EditCourseInfo() {
 	if (fill_menu(Menu, answer) == 0) return;
 	else {
 		SetName(answer[0]);
-		SetClass(answer[1]);
-		SetLecturer(answer[2]);
-		SetStartDate(answer[3]);
-		SetEndDate(answer[4]);
-		SetDOW(answer[5]);
-		SetStartHour(answer[6]);
-		SetEndHour(answer[7]);
-		SetRoom(answer[8]);
+		SetStartDate(answer[1]);
+		SetEndDate(answer[2]);
+		SetDOW(answer[3]);
+		SetStartHour(answer[4]);
+		SetEndHour(answer[5]);
+		SetRoom(answer[6]);
 		return;
 	}
 }
@@ -250,7 +245,7 @@ void Course::AddNewStudent(Student & x)
 }
 
 string Course::ViewListStudent() {
-	string title = "STUDENT LIST OF" + name;
+	string title = "STUDENT LIST OF " + name;
 	vector<string> matrix_class;
 	stringstream ff;
 
@@ -475,7 +470,7 @@ void Attendance::UpdateAttend(vector<int>& newDay)
 	day = newDay;
 }
 
-void AttendanceList::EditAttend(Student & student) {
+bool AttendanceList::EditAttend(Student & student) {
 	string studentID = student.getStudentID();
 	vector<int> attend = GetAttend(studentID);
 	vector<string> attendStatus;
@@ -498,7 +493,9 @@ void AttendanceList::EditAttend(Student & student) {
 		}
 
 		UpdateAttend(attend, studentID);
+		return true;
 	}
+	return false;
 }
 
 void AttendanceList::Add(Attendance attendance)
@@ -767,7 +764,7 @@ void Scoreboard::View(string course)
 	}
 }
 
-void Scoreboard::EditGrade(Student & student) {
+bool Scoreboard::EditGrade(Student & student) {
 	menu Menu;
 	Menu.title = "EDIT GRADE - " + student.getFirstname() + ' ' + student.getLastname() + " - " + student.getStudentID();
 	Menu.name.clear();
@@ -797,8 +794,9 @@ void Scoreboard::EditGrade(Student & student) {
 			}
 		}
 		UpdateScore(studentID, score);
-		return;
+		return true;
 	}
+	return false;
 }
 void CleanUp(Scoreboard a, Course tmp)
 {
