@@ -50,7 +50,6 @@ public:
 									"LOGOUT" };
 
 	vector<string> LECTURER_MENU = { "VIEW LIST OF COURSES",
-									"VIEW LIST OF STUDENTS OF A COURSE",
 									"VIEW ATTENDANCE LIST OF A COURSE",
 									"EDIT AN ATTENDANCE",
 									"IMPORT SCOREBOARD OF A COURSE",

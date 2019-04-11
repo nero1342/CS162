@@ -149,6 +149,7 @@ void StudentManagementSystem::RemoveStudent() {
 void StudentManagementSystem::ChangeClassOfStudent() {
     // Get info of student here
 	Class myClass;
+	//Message("Choose class of student need to change class");
 	myClass.SetName(classlist.ViewList());
 	if (myClass.GetName() == "RETURN") return;
 	Student student;
@@ -156,6 +157,7 @@ void StudentManagementSystem::ChangeClassOfStudent() {
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
     // Get name of new class
+	Message("Choose new class for this student");
     string newClass = classlist.ViewList();
 	if (newClass == "RETURN") return;
     //
@@ -165,7 +167,7 @@ void StudentManagementSystem::ChangeClassOfStudent() {
 	acclist.Reload();
     acclist.Edit(student);
     acclist.SaveData();
-	Message("Change class of student successfully.");
+	Message("Changed " + student.getStudentID() + " from class " + myClass.GetName() + " to class " + newClass + " successfully.");
 }
 
 void StudentManagementSystem::ViewListClasses()
@@ -350,14 +352,39 @@ void StudentManagementSystem::ViewAttendanceList()
 
 void StudentManagementSystem::CreateNewLecturer()
 {
+	// get info
+	menu Menu;
+	Menu.title = "NEW LECTURER INFOMATION";
+	Menu.name.clear();
+	Menu.name = { "Name:",
+				"Apply",
+				"Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	Menu.maxLengthInfo = 30;
+	vector<string> answer;
+	answer.clear();
+	for (int i = 1; i <= 1; i++) answer.push_back("");
 
+	if (fill_menu(Menu, answer) == 0) return;
+
+	Lecturer lecturer(answer[0]);
+	lecturer.SaveData();
+	acclist.Reload();
+	acclist.Add(lecturer); //Them account cho no
+	acclist.SaveData();
+	Message("Create New Lecturer succesfully.");
 }
 
 void StudentManagementSystem::ViewAllLecturers()
 {
 	vector<string> listLecturer = ListFileInDicrectory("Data\\Lecturer\\*.txt");
+	int cnt = 0;
 	for (string & lecturer : listLecturer) {
 		if (lecturer == "RETURN") continue;
+		++cnt;
+		lecturer = to_string(cnt) + ". " + lecturer;
 		while (!lecturer.empty() && lecturer.back() != '.') lecturer.pop_back();
 		if (!lecturer.empty()) lecturer.pop_back();
 	}
@@ -560,12 +587,7 @@ void StudentManagementSystem::Checkin()
 	if (course == "RETURN") return;
 	AttendanceList attendanceList;
 	attendanceList.Reload("Data\\Course\\" + course + "-attendancelist.txt");
-	vector<int> attend = attendanceList.GetAttend(studentID);
-
-	/*
-		show and choose week to edit
-	*/
-	attendanceList.UpdateAttend(attend, studentID);
+	attendanceList.EditAttend(student);
 	attendanceList.SaveData("Data\\Course\\" + course + "-attendancelist.txt");
 }
 
@@ -717,7 +739,7 @@ void StudentManagementSystem::Menu(menu &main_menu) {
 
 void StudentManagementSystem::Do(string &choose) {
 // COMMON
-	if (choose == "VIEW PROFILE INFO");
+	if (choose == "VIEW PROFILE INFO") ViewProfile();
 	if (choose == "CHANGE PASSWORD") ChangePassWord();
 // STAFF
 	MenuFunction mf;
@@ -780,6 +802,26 @@ void StudentManagementSystem::Do(string &choose) {
 	if (choose == "VIEW A SCOREBOARD") Lecturer_ViewScoreboard();
 }
 
+void StudentManagementSystem::ViewProfile() {
+	vector<string> myProfile;
+	if (AccountLogin.getType() == "Student") {
+		Student student(AccountLogin.getUsername());
+		student.Reload();
+		myProfile.push_back("Student ID: " + student.getStudentID());
+		myProfile.push_back("Lastname: " + student.getLastname());
+		myProfile.push_back("Firstname: " + student.getFirstname());
+		myProfile.push_back("Gender: " + student.getGender());
+		myProfile.push_back("Date of Birth: " + student.getDoB());
+		myProfile.push_back("Class :" + student.getClass());
+		myProfile.push_back("Type: Student");
+	}
+	else {
+		myProfile.push_back("Name: " + AccountLogin.getUsername());
+		myProfile.push_back("Type: " + AccountLogin.getType());
+	}
+	menu ViewProfileMenu("MY PROFILE", myProfile, 1);
+	menu_choose(ViewProfileMenu);
+}
 void StudentManagementSystem::Run()
 {
 	MenuFunction mf;
@@ -791,13 +833,13 @@ void StudentManagementSystem::Run()
 		string accountLogin = Log.login_menu(acclist);
 		AccountLogin = acclist.Find(accountLogin);
 		if (AccountLogin.getType() == "Staff") {
-			main_menu.Assign("STAFF MENU", mf.STAFF_MENU, 1);
+			main_menu.Assign("STAFF MENU - " + accountLogin, mf.STAFF_MENU, 1);
 		}
 		if (AccountLogin.getType() == "Student") {
-			main_menu.Assign("STUDENT MENU", mf.STUDENT_MENU, 1);
+			main_menu.Assign("STUDENT MENU - " + accountLogin, mf.STUDENT_MENU, 1);
 		}
 		if (AccountLogin.getType() == "Lecturer") {
-			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
+			main_menu.Assign("LECTURER MENU - " + accountLogin, mf.LECTURER_MENU, 1);
 		}	
 		Menu(main_menu);
 	}

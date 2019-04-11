@@ -63,6 +63,8 @@ public:
 
 	void Menu(menu & x);
 
+	void ViewProfile();
+
 	void Run();
 	/*
 		show login

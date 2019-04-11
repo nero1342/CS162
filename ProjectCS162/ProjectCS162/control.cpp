@@ -162,14 +162,14 @@ bool fill_menu(menu &Menu, vector<string > &answer, bool isPassword) {
 }
 
 
-bool fill_menu2(menu &Menu, vector<string > &answer, vector<string> &chooselist) {
+bool fill_menu_attend(menu &Menu, vector<string > &answer, vector<string> &chooselist) {
 	graphics show;
 	window tool;
 	show.init_graphic();
 	int ok = 0;
 	int startPoint = Menu.startPointInfo();
 	int endPoint = Menu.endPointInfo();
-
+	
 	while (1) {
 		show.show_menu(Menu, ok);
 		if (!ok) {
@@ -177,7 +177,13 @@ bool fill_menu2(menu &Menu, vector<string > &answer, vector<string> &chooselist)
 				tool.gotoXY(startPoint, i + Menu.begin);
 				cout << answer[i];
 			}
+
 		}
+		Guide({
+			"ENTER to choose week to edit/check-in",
+			"Move LEFT/RIGHT to change status of attendance",
+			"Move UP/DOWN to change week" 
+		});
 		ok = 1;
 		int key;
 		while (1) {
@@ -188,12 +194,12 @@ bool fill_menu2(menu &Menu, vector<string > &answer, vector<string> &chooselist)
 		if (key) {
 			if (Menu.chosen == Menu.name.size()) return 0;
 			if (Menu.chosen == Menu.name.size() - 1) return 1;
-			answer[Menu.chosen - 1] = get_info2(Menu, answer[Menu.chosen - 1], chooselist);
+			answer[Menu.chosen - 1] = get_info_attend(Menu, answer[Menu.chosen - 1], chooselist);
 		}
 	}
 }
 
-string get_info2(menu &Menu, string & answer, vector<string> & chooselist) {
+string get_info_attend(menu &Menu, string & answer, vector<string> & chooselist) {
 	window tool;
 	int startPoint = Menu.startPointInfo();
 	int endPoint = Menu.endPointInfo();

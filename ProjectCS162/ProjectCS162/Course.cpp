@@ -485,7 +485,7 @@ void AttendanceList::EditAttend(Student & student) {
 	attendStatus.push_back("RETURN");
 	menu menuAttendStatus("ATTENDANCE OF " + student.getLastname() + ' ' + student.getFirstname() + " - " + studentID, attendStatus, 1);
 	menuAttendStatus.maxLengthInfo = 30;
-	if (fill_menu2(menuAttendStatus, answer, chooselist)) {
+	if (fill_menu_attend(menuAttendStatus, answer, chooselist)) {
 		for (int i = 0; i < (int)attend.size(); ++i) {
 			attend[i] = (answer[i] == "It's not show time") ? 0 : ((answer[i] == "Attend") ? 1 : 2);
 		}
