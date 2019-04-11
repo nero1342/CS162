@@ -111,7 +111,7 @@ void StudentManagementSystem::EditExistStudent(){
 	student.Reload();
 	EditInfo(student);
 	student.SaveData();
-	Message("Edit student successfully.");
+	//Message("Edit student successfully.");
 }
 
 void StudentManagementSystem::RemoveStudent() {

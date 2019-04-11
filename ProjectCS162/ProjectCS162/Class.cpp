@@ -53,7 +53,7 @@ void Class::Remove(Student student) {
 }
 
 string Class::ViewList() {
-	string title = "STUDENT LIST OF" + name;
+	string title = "STUDENT LIST OF " + name;
 	vector<string> matrix_class;
 	Reload();
 	stringstream ff;

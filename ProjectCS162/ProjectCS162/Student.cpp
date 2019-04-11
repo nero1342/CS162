@@ -136,7 +136,6 @@ string Student::ViewSchedule()
 	ff << left << setw(5) << "No"
 		<< left << setw(30) << "Course ID"
 		<< left << setw(30) << "Course Name"
-		<< left << setw(10) << "Class"
 		<< left << setw(15) << "Lecturer"
 		<< left << setw(10) << "DOW"
 		<< left << setw(12) << "Start Hour"
@@ -152,7 +151,6 @@ string Student::ViewSchedule()
 		ff << left << setw(5) << ++cnt
 			<< left << setw(30) << courseID
 			<< left << setw(30) << myCourse.GetName()
-			<< left << setw(10) << myCourse.GetClass()
 			<< left << setw(15) << myCourse.GetLecturer()
 			<< left << setw(10) << myCourse.GetDOW()
 			<< left << setw(12) << myCourse.GetStartHour()

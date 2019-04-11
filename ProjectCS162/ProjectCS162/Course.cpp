@@ -549,7 +549,7 @@ void AttendanceList::View()
 		<< left << setw(15) << "Student ID"
 		<< left << setw(30) << "Name";
 	for (int i = 1; i <= 10; ++i) {
-		ff << left << setw(10) << "Week " + to_string(i);
+		ff << left << setw(7) << "Week " + to_string(i);
 	}
 	ff << endl;
 
@@ -567,7 +567,7 @@ void AttendanceList::View()
 			<< left << setw(32) << student.getLastname() + ' ' + student.getFirstname();
 		for (int i = 1; i <= 10; ++i) {
 			char icon = (att_result[i - 1] == 0 ? '-' : (att_result[i - 1] == 1 ? 'X' : 'A'));
-			ff << left << setw(10) << icon;
+			ff << left << setw(7) << icon;
 		}
 		ff << endl;
 		getline(ff, feature);
@@ -704,12 +704,11 @@ void Scoreboard::View(string course)
 	menu board;
 	board.minchosen = 2;
 	board.chosen = 2;
-	board.maxLengthInfo = 30;
-	board.title = "SCORE BOARD OF COURSE " + course;
+	board.title = "SCOREBOARD OF COURSE " + course;
 	stringstream ff;
 	ff  << left << setw(5) << "No"
 		<< left << setw(15) << "Student ID"
-		<< left << setw(30) << "Midterm"
+		<< left << setw(10) << "Midterm"
 		<< left << setw(10) << "Practice"
 		<< left << setw(10) << "Final" << "\n";
 	string feature;
@@ -719,7 +718,7 @@ void Scoreboard::View(string course)
 	for (int i = 0; i < StudentID.size(); ++i) {
 		ff << left << setw(5) << i + 1
 			<< left << setw(15) << StudentID[i]
-			<< left << setw(30) << scoreboard[i][0]
+			<< left << setw(10) << scoreboard[i][0]
 			<< left << setw(10) << scoreboard[i][1]
 			<< left << setw(10) << scoreboard[i][2] << "\n";
 			getline(ff, feature);
