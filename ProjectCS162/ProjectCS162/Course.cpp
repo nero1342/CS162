@@ -150,6 +150,7 @@ void Course::EditCourseInfo() {
 }
 void Course::Reload(istream & in)
 {
+	listOfStudent.clear();
 	getline(in, ID);
 	getline(in, name);
 	getline(in, Class);
@@ -236,6 +237,10 @@ void Course::DeleteCourse()
 		student.RemoveCourse(courseID);
 		student.SaveData();
 	}
+	Lecturer tmpLecturer(lecturer);
+	tmpLecturer.Reload();
+	tmpLecturer.DeleteCourse(year + "\\" + semester + "\\" + ID);
+	tmpLecturer.SaveData();
 }
 
 void Course::AddNewStudent(Student & x)
@@ -381,6 +386,7 @@ void Course::RemoveStudent(string StudentID)
 
 void Course::Reload()
 {
+	listOfStudent.clear();
 	ifstream in("Data\\Course\\" + year + "\\" + semester + "\\" + ID + ".txt");
 	getline(in, ID);
 	getline(in, name);
@@ -394,6 +400,7 @@ void Course::Reload()
 	getline(in, room);
 	string x;
 	while (in >> x) listOfStudent.push_back(x);
+	in.close();
 }
 
 Course::Course(string& year, string& sem, string & a, string & b, string & c, string & d, string & e, string & f, string & g, string & h, string & i, string & j) :
@@ -525,6 +532,7 @@ void AttendanceList::SaveData(string link)
 
 void AttendanceList::Reload(string link)
 {
+	attend.clear();
 	ifstream in(link);
 	string x;
 	while (in >> x)
@@ -695,6 +703,8 @@ void Scoreboard::CleanUp(vector<string> listOfStudent)
 
 bool Scoreboard::Reload(string link)
 {
+	StudentID.clear();
+	scoreboard.clear();
 	ifstream in(link);
 	if (!in.is_open()) return false;
 

@@ -19,3 +19,7 @@ No,Course ID,Course Name,Class,Lecturer Account,Start Date,End Date,Day Of Weak,
 18,PHS2b,Physics 2,18CTT2,NHNha,1/1/2019,1/3/2019,Tues,13:30,15:30,I61
 19,PHS3b,Physics 3,18CTT2,NHNha,2/3/2019,2/6/2019,Wed,13:30,15:30,I62
 20,CM101b,Communication Management,18CTT2,DNVu,20/8/2018,31/12/2018,Sat,13:30,15:30,I63
+21,CLS1,Civic Education 1,18CTT1,TNQThinh,20/8/2018,31/12/2018,Wed,8:00,11:00,I44
+22,CLS1b,Civic Education 1,18CTT2,TNQThinh,20/8/2018,31/12/2018,Sat,13:00,15:30,I31
+23,CLS2,Civic Education 2,18CTT1,TNQThinh,1/1/2019,1/3/2019,Wed,8:00,11:00,I44
+24,CLS2b,Civic Education 2,18CTT2,TNQThinh,1/1/2019,1/3/2019,Sat,13:00,15:30,I31
