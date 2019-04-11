@@ -350,7 +350,28 @@ void StudentManagementSystem::ViewAttendanceList()
 
 void StudentManagementSystem::CreateNewLecturer()
 {
+	// get info
+	menu Menu;
+	Menu.title = "NEW LECTURER INFOMATION";
+	Menu.name.clear();
+	Menu.name = { "Name:",
+				"Apply",
+				"Cancel"
+	};
+	Menu.minchosen = 1;
+	Menu.chosen = 1;
+	Menu.maxLengthInfo = 30;
+	vector<string> answer;
+	answer.clear();
+	for (int i = 1; i <= 1; i++) answer.push_back("");
 
+	if (fill_menu(Menu, answer) == 0) return;
+
+	Lecturer lecturer(answer[0]); 
+	acclist.Reload();
+	acclist.Add(lecturer); //Them account cho no
+	acclist.SaveData();
+	Message("Create New Lecturer succesfully.");
 }
 
 void StudentManagementSystem::ViewAllLecturers()
