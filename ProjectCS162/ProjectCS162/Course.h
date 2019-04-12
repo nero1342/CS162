@@ -22,7 +22,7 @@ public:
 	bool Reload(string link);
 	void Save(string link);
 	void View(string course);
-	void EditGrade(Student & student);
+	bool EditGrade(Student & student);
 };
 
 class Attendance
@@ -47,7 +47,7 @@ class AttendanceList
 private:
 	vector<Attendance> attend;
 public:
-	void EditAttend(Student & student);
+	bool EditAttend(Student & student);
 	void Add(Attendance attendance);
 	void Remove(string ID);
 

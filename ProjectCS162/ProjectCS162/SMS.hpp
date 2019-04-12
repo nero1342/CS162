@@ -7,6 +7,7 @@
 #include "menu.h"
 #include "control.h"
 #include "login.h"
+#include <sstream>
 
 class StudentManagementSystem {
 private:
@@ -62,6 +63,8 @@ public:
 	void Student_ViewScore();
 
 	void Menu(menu & x);
+
+	void ViewProfile();
 
 	void Run();
 	/*

@@ -10,8 +10,6 @@ void StudentManagementSystem::Reload() {
 	acclist.Reload();
 	acclist.Add(Account("admin", "admin", "Staff", "Staff"));
 	acclist.SaveData();
-    //acclist.Reload();ss
-    //classlist.Reload();
 }
 
 vector<string> ListFileInDicrectory(string pattern) {
@@ -98,7 +96,7 @@ void StudentManagementSystem::AddNewStudent() {
 	acclist.Add(student);
 	acclist.SaveData();
 	classlist.AddStudent(student);
-	Message("Add student to class successfully.");
+	Message("Add student " + student.getStudentID() + " to class " + myClass.GetName() + " successfully.");
 }
 
 void StudentManagementSystem::EditExistStudent(){
@@ -111,7 +109,6 @@ void StudentManagementSystem::EditExistStudent(){
 	student.Reload();
 	EditInfo(student);
 	student.SaveData();
-	//Message("Edit student successfully.");
 }
 
 void StudentManagementSystem::RemoveStudent() {
@@ -143,12 +140,13 @@ void StudentManagementSystem::RemoveStudent() {
 		course.SaveData(ou);
 		ou.close();
 	}
-	Message("Remove student out of class succesfully");
+	Message("Remove student " + student.getStudentID() + " out of class succesfully");
 }
 
 void StudentManagementSystem::ChangeClassOfStudent() {
     // Get info of student here
 	Class myClass;
+	//Message("Choose class of student need to change class");
 	myClass.SetName(classlist.ViewList());
 	if (myClass.GetName() == "RETURN") return;
 	Student student;
@@ -156,6 +154,7 @@ void StudentManagementSystem::ChangeClassOfStudent() {
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
     // Get name of new class
+	Message("Choose new class for this student");
     string newClass = classlist.ViewList();
 	if (newClass == "RETURN") return;
     //
@@ -165,7 +164,7 @@ void StudentManagementSystem::ChangeClassOfStudent() {
 	acclist.Reload();
     acclist.Edit(student);
     acclist.SaveData();
-	Message("Change class of student successfully.");
+	Message("Changed " + student.getStudentID() + " from class " + myClass.GetName() + " to class " + newClass + " successfully.");
 }
 
 void StudentManagementSystem::ViewListClasses()
@@ -367,7 +366,8 @@ void StudentManagementSystem::CreateNewLecturer()
 
 	if (fill_menu(Menu, answer) == 0) return;
 
-	Lecturer lecturer(answer[0]); 
+	Lecturer lecturer(answer[0]);
+	lecturer.SaveData();
 	acclist.Reload();
 	acclist.Add(lecturer); //Them account cho no
 	acclist.SaveData();
@@ -377,8 +377,11 @@ void StudentManagementSystem::CreateNewLecturer()
 void StudentManagementSystem::ViewAllLecturers()
 {
 	vector<string> listLecturer = ListFileInDicrectory("Data\\Lecturer\\*.txt");
+	int cnt = 0;
 	for (string & lecturer : listLecturer) {
 		if (lecturer == "RETURN") continue;
+		++cnt;
+		lecturer = to_string(cnt) + ". " + lecturer;
 		while (!lecturer.empty() && lecturer.back() != '.') lecturer.pop_back();
 		if (!lecturer.empty()) lecturer.pop_back();
 	}
@@ -428,6 +431,7 @@ void StudentManagementSystem::AddACourse()
 			courselist.Load(year, sem);
 			courselist.AddCourse(year, sem, tmp);
 			courselist.Save(year, sem);
+			Message("Add this course succesfully.");
 			return; 
 		}
 	}
@@ -448,19 +452,23 @@ void StudentManagementSystem::EditCourse()
 	ofstream ou(courseID);
 	Change.SaveData(ou);
 	ou.close();
+	Message("Edit this course successfully");
 }
 
 void StudentManagementSystem::RemoveCourse()
 {
+
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
 	courselist.RemoveCourse(year, sem, courseID);
+	Message("Remove this course successfully");
 }
 
 void StudentManagementSystem::AddAStudentToCourse()
 {
 	string year, sem;
+	Message("Choose course you want to add student");
 	string courseID = ViewCourse(year, sem);
 	if (courseID == "RETURN") return;
 	Course course;
@@ -471,6 +479,7 @@ void StudentManagementSystem::AddAStudentToCourse()
 	in.close();
 				
 	// Choose student from Class
+	Message("Choose student from existed classes to add to course");
 	Class myClass;
 	myClass.SetName(classlist.ViewList());
 	if (myClass.GetName() == "RETURN") return;
@@ -479,7 +488,7 @@ void StudentManagementSystem::AddAStudentToCourse()
 	student.SetStudentID(myClass.ViewList());
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
-				 
+				
 	//Add student to course, add attendance here
 	student.AddCourse(year + "\\" + sem + "\\" + course.GetCourseID());
 	student.SaveData();
@@ -493,17 +502,20 @@ void StudentManagementSystem::AddAStudentToCourse()
 	x.Reload("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
 	x.AddStudent(student);
 	x.SaveData("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + "-attendancelist.txt");
-
+	Message("Add student " + student.getStudentID() + " to course " + courseID + "successfully");
 	return;	
 }
 
 void StudentManagementSystem::RemoveAStudentFromCourse()
 {
+	Message("Choose course you want to add student");
 	string year, sem;
 	string courseID = ViewCourse(year, sem);
 
 	Course course(year, sem, courseID);
-	
+
+	Message("Choose student you want to remove from this course");
+
 	Student student;
 	student.SetStudentID(course.ViewListStudent());
 	if (student.getStudentID() == "RETURN") return;
@@ -521,6 +533,8 @@ void StudentManagementSystem::RemoveAStudentFromCourse()
 	ofstream ou("Data\\Course\\" + year + "\\" + sem + "\\" + courseID + ".txt");
 	course.SaveData(ou);
 	ou.close();	
+
+	Message("Remove student " + student.getStudentID() + " from course " + courseID + "successfully");
 }
 
 string StudentManagementSystem::ViewListCourse(string year, string semester)
@@ -532,9 +546,50 @@ string StudentManagementSystem::ViewListCourse(string year, string semester)
 	while (getline(fin, st)) {
 		list.push_back(st);
 	}
-	list.push_back("RETURN");
-	menu Menu(year + " - " + semester + " - COURSE", list, 1);
-	return menu_choose(Menu);
+	//list.push_back("RETURN");
+	//menu Menu(year + " - " + semester + " - COURSE", list, 1);
+	//return menu_choose(Menu);
+
+	string title = year + " - " + semester + " - COURSE";
+	stringstream ff;
+	ff << left << setw(5) << "No"
+		<< left << setw(30) << "Course ID"
+		<< left << setw(30) << "Course Name"
+		<< left << setw(15) << "Lecturer"
+		<< left << setw(10) << "DOW"
+		<< left << setw(12) << "Start Hour"
+		<< left << setw(12) << "End Hour"
+		<< left << setw(10) << "Room" << endl;
+
+	string feature;
+	getline(ff, feature);
+	vector<string> schedule;
+	schedule.push_back(feature);
+	int cnt = 0;
+	for (string courseID : list) {
+		Course myCourse(year, semester, courseID);
+		ff << left << setw(5) << ++cnt
+			<< left << setw(30) << courseID
+			<< left << setw(30) << myCourse.GetName()
+			<< left << setw(15) << myCourse.GetLecturer()
+			<< left << setw(10) << myCourse.GetDOW()
+			<< left << setw(12) << myCourse.GetStartHour()
+			<< left << setw(12) << myCourse.GetEndHour()
+			<< left << setw(10) << myCourse.GetRoom() << endl;
+		getline(ff, feature);
+		schedule.push_back(feature);
+	}
+	schedule.push_back("RETURN");
+	menu schedule_menu(title, schedule, 2);
+
+	while (true) {
+		string result = menu_choose(schedule_menu);
+		if (result == "RETURN") return result;
+		ff << result;
+		int no;
+		ff >> no;
+		return list[no - 1];
+	}
 }
 
 string StudentManagementSystem::ViewCourse(string &year, string &semester)
@@ -580,13 +635,10 @@ void StudentManagementSystem::Checkin()
 	if (course == "RETURN") return;
 	AttendanceList attendanceList;
 	attendanceList.Reload("Data\\Course\\" + course + "-attendancelist.txt");
-	vector<int> attend = attendanceList.GetAttend(studentID);
-
-	/*
-		show and choose week to edit
-	*/
-	attendanceList.UpdateAttend(attend, studentID);
-	attendanceList.SaveData("Data\\Course\\" + course + "-attendancelist.txt");
+	if (attendanceList.EditAttend(student)) {
+		attendanceList.SaveData("Data\\Course\\" + course + "-attendancelist.txt");
+		Message("Check-in successfully");
+	}
 }
 
 void StudentManagementSystem::EditAttend()
@@ -595,7 +647,7 @@ void StudentManagementSystem::EditAttend()
 	lecturer.Reload();
 	string courseID = lecturer.ViewCourse();
 	if (courseID == "RETURN") return;
-	
+
 	ifstream in("Data\\Course\\" + courseID + ".txt");
 	Course course;
 	course.Reload(in);
@@ -604,11 +656,13 @@ void StudentManagementSystem::EditAttend()
 	Student student;
 	student.SetStudentID(course.ViewListStudent());
 	if (student.getStudentID() == "RETURN") return;
-	
+
 	AttendanceList attendanceList;
 	attendanceList.Reload("Data\\Course\\" + courseID + "-attendancelist.txt");
-	attendanceList.EditAttend(student);
-	attendanceList.SaveData("Data\\Course\\" + courseID + "-attendancelist.txt");
+	if (attendanceList.EditAttend(student)) {
+		attendanceList.SaveData("Data\\Course\\" + courseID + "-attendancelist.txt");
+		Message("Edit attend of course " + courseID + "successfully");
+	}
 }
 
 void StudentManagementSystem::EditGrade()
@@ -634,7 +688,9 @@ void StudentManagementSystem::EditGrade()
 		Message(" There is no scoreboard for this class");
 		return;
 	}
-	scoreboard.EditGrade(student);
+	if (scoreboard.EditGrade(student)) {
+		Message("Edit grade of " + student.getStudentID() + " in course " + courseID + " successfully");
+	}
 	scoreboard.Save("Data\\Course\\" + courseID + "-scoreboard.txt");
 }
 
@@ -709,21 +765,51 @@ void StudentManagementSystem::Lecturer_ViewScoreboard() {
 
 void StudentManagementSystem::Student_ViewScore()
 {
-	string student;
-	/*
-		choose course     2018-2019\\Fall\\CM101
-	*/
-	string course;
+	Student student(AccountLogin.getUsername());
+	string studentID = student.getStudentID();
+	string courseID = student.ViewSchedule();
+	if (courseID == "RETURN") return;
 	Scoreboard scoreboard;
-	if (!scoreboard.Reload("Data\\Course\\" + course + "-scoreboard.txt"))
+	if (!scoreboard.Reload("Data\\Course\\" + courseID + "-scoreboard.txt"))
 	{
-		cout << "no scoreboard";
+		Message("This course has no score for you :'(");
 		return;
 	}
-	vector<int> score = scoreboard.GetScore(student);
-	/*
-		show score
-	*/
+	vector<int> score = scoreboard.GetScore(studentID);
+
+	stringstream ff;
+	ff<< left << setw(20) << "Midterm"
+		<< left << setw(20) << "Practice"
+		<< left << setw(20) << "Final" << "\n";
+	string feature;
+	string course = "";
+	for (int i = courseID.size() - 1; i >= 0; --i) {
+		int ok = 0;
+		if ((courseID[i] >= 'A'&&courseID[i] <= 'Z') ||
+			(courseID[i] >= 'a'&&courseID[i] <= 'a') ||
+			(courseID[i] >= '0'&&courseID[i] <= '9')) {
+			course = courseID[i] + course;
+			continue;
+		}
+		break;
+	}
+	menu student_score;
+	student_score.minchosen = 2;
+	student_score.chosen = 2;
+	student_score.title = "SCORE OF " + studentID + " IN " + course;
+	getline(ff, feature);
+	student_score.name.clear();
+	student_score.name.push_back(feature);
+	ff << left << setw(20) << score[0]
+		<< left << setw(20) << score[1]
+		<< left << setw(20) << score[2] << "\n";
+	getline(ff, feature);
+	student_score.name.push_back(feature);
+	student_score.name.push_back("RETURN");
+	while (1) {
+		string tmp = menu_choose(student_score);
+		if (tmp == "RETURN") return;
+	}
 }
 void StudentManagementSystem::Menu(menu &main_menu) {
 	while (1) {
@@ -737,7 +823,7 @@ void StudentManagementSystem::Menu(menu &main_menu) {
 
 void StudentManagementSystem::Do(string &choose) {
 // COMMON
-	if (choose == "VIEW PROFILE INFO");
+	if (choose == "VIEW PROFILE INFO") ViewProfile();
 	if (choose == "CHANGE PASSWORD") ChangePassWord();
 // STAFF
 	MenuFunction mf;
@@ -790,7 +876,7 @@ void StudentManagementSystem::Do(string &choose) {
 	if (choose == "CHECK-IN") Checkin();
 	if (choose == "VIEW CHECK-IN RESULT") ViewCheckinResult();
 	if (choose == "VIEW SCHEDULES") Student_ViewSchedule();
-	if (choose == "VIEW SCORES OF A COURSE");
+	if (choose == "VIEW SCORES OF A COURSE")Student_ViewScore();
 // LECTURER
 	if (choose == "VIEW LIST OF COURSES") Lecturer_ViewCourse();
 	if (choose == "VIEW ATTENDANCE LIST OF A COURSE") Lecturer_ViewAttendance();
@@ -800,6 +886,26 @@ void StudentManagementSystem::Do(string &choose) {
 	if (choose == "VIEW A SCOREBOARD") Lecturer_ViewScoreboard();
 }
 
+void StudentManagementSystem::ViewProfile() {
+	vector<string> myProfile;
+	if (AccountLogin.getType() == "Student") {
+		Student student(AccountLogin.getUsername());
+		student.Reload();
+		myProfile.push_back("Student ID: " + student.getStudentID());
+		myProfile.push_back("Lastname: " + student.getLastname());
+		myProfile.push_back("Firstname: " + student.getFirstname());
+		myProfile.push_back("Gender: " + student.getGender());
+		myProfile.push_back("Date of Birth: " + student.getDoB());
+		myProfile.push_back("Class :" + student.getClass());
+		myProfile.push_back("Type: Student");
+	}
+	else {
+		myProfile.push_back("Name: " + AccountLogin.getUsername());
+		myProfile.push_back("Type: " + AccountLogin.getType());
+	}
+	menu ViewProfileMenu("MY PROFILE", myProfile, 1);
+	menu_choose(ViewProfileMenu);
+}
 void StudentManagementSystem::Run()
 {
 	MenuFunction mf;
@@ -808,16 +914,17 @@ void StudentManagementSystem::Run()
 		menu main_menu;
 		acclist.Reload();
 		login Log;
+
 		string accountLogin = Log.login_menu(acclist);
 		AccountLogin = acclist.Find(accountLogin);
 		if (AccountLogin.getType() == "Staff") {
-			main_menu.Assign("STAFF MENU", mf.STAFF_MENU, 1);
+			main_menu.Assign("STAFF MENU - " + accountLogin, mf.STAFF_MENU, 1);
 		}
 		if (AccountLogin.getType() == "Student") {
-			main_menu.Assign("STUDENT MENU", mf.STUDENT_MENU, 1);
+			main_menu.Assign("STUDENT MENU - " + accountLogin, mf.STUDENT_MENU, 1);
 		}
 		if (AccountLogin.getType() == "Lecturer") {
-			main_menu.Assign("LECTURER MENU", mf.LECTURER_MENU, 1);
+			main_menu.Assign("LECTURER MENU - " + accountLogin, mf.LECTURER_MENU, 1);
 		}	
 		Menu(main_menu);
 	}
