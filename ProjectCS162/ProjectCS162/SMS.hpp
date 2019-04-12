@@ -40,7 +40,7 @@ public:
 	void ViewAllLecturers();
 	void ImportCourse(); 
 	void AddACourse();
-	void EditCourse(); // NOT TESTED YET :V AND NOT DONE YET :V
+	void EditCourse(); 
 	void RemoveCourse();
 	void AddAStudentToCourse();
 	void RemoveAStudentFromCourse();
