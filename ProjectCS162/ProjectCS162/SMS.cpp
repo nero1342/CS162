@@ -117,7 +117,6 @@ void StudentManagementSystem::RemoveStudent() {
 	myClass.SetName(classlist.ViewList());
 	if (myClass.GetName() == "RETURN") return;
 	Student student;
-	Student t = student;
 	student.SetStudentID(myClass.ViewList());
 	if (student.getStudentID() == "RETURN") return;
 	student.Reload();
@@ -139,6 +138,11 @@ void StudentManagementSystem::RemoveStudent() {
 		ofstream ou("Data\\Course\\" + i + ".txt");
 		course.SaveData(ou);
 		ou.close();
+
+		AttendanceList attendanceList;
+		attendanceList.Reload("Data\\Course\\" + i + "-attendancelist.txt");
+		attendanceList.Remove(student.getStudentID());
+		attendanceList.SaveData("Data\\Course\\" + i + "-attendancelist.txt");
 	}
 	Message("Remove student " + student.getStudentID() + " out of class succesfully");
 }
