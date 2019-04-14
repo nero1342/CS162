@@ -659,6 +659,7 @@ void StudentManagementSystem::EditAttend()
 
 	Student student;
 	student.SetStudentID(course.ViewListStudent());
+	student.Reload();
 	if (student.getStudentID() == "RETURN") return;
 
 	AttendanceList attendanceList;

@@ -46,7 +46,7 @@ void window::background(int turnon) {
 	HANDLE m_hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	if (turnon)
 	SetConsoleTextAttribute(m_hConsole,
-		BACKGROUND_RED |
+		//BACKGROUND_RED |
 		BACKGROUND_GREEN |
 		BACKGROUND_BLUE );
 	else // turnoff

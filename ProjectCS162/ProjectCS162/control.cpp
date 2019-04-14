@@ -6,7 +6,9 @@ int menu_move(menu &x) {
 	int key = move.inputkey();
 	if (key == -1) return key;
 	if (key == 72) if (x.chosen != x.minchosen) x.chosen--;
+	else x.chosen = x.name.size();
 	if (key == 80) if (x.chosen != x.name.size()) x.chosen++;
+	else x.chosen = x.minchosen;
 	if (key == 13) return 1;
 	return 0;
 }
@@ -20,7 +22,7 @@ void NewStudentInfo(Student &x) {
 				"Lastname:",
 				"Firstname:",
 				"Gender:",
-				"DoB:",
+				"DoB(yyyy-mm-dd):",
 				"Apply",
 				"Cancel"
 	};
